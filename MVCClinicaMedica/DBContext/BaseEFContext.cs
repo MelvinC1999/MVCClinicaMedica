@@ -1,4 +1,4 @@
-﻿using ClinicaMedica.Models;
+﻿using MVCClinicaMedica.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicaMedica.DBContext
+namespace MVCClinicaMedica.DBContext
 {
-    public partial class Context : DbContext
+    public partial class BaseEFContext : DbContext
     {
-        public Context()
+        public BaseEFContext()
         {
         }
 
 
-        public Context(DbContextOptions<Context> options)
+        public BaseEFContext(DbContextOptions<BaseEFContext> options)
             : base(options)
         {
         }
@@ -34,7 +34,7 @@ namespace ClinicaMedica.DBContext
         //    optionsBuilder.UseSqlServer(connectionString);
         //}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -44,7 +44,7 @@ namespace ClinicaMedica.DBContext
             string connectionString = configuration.GetConnectionString("DefaultConnection");
 
             optionsBuilder.UseSqlServer(connectionString);  // O el proveedor de base de datos que estés utilizando
-        }
+        }*/
 
         public virtual DbSet<Cita> Citas { get; set; }
         public virtual DbSet<TipoPago> TipoPagos { get; set; }
@@ -60,6 +60,9 @@ namespace ClinicaMedica.DBContext
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Perfil> Perfiles { get; set; }
         public virtual DbSet<Rol> Roles { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MVCClinicaMedica;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 
         // Para la tabla de rompimiento 

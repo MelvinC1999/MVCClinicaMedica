@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using MVCClinicaMedica.DBContext;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Conexión base de datos.
+builder.Services.AddDbContext<BaseEFContext>(options =>
+options.UseSqlServer("name=ConnectionStrings:Connection"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
