@@ -25,19 +25,19 @@ namespace MVCClinicaMedica.Controllers
             return View();
         }
 
-        [AutorizarUsuario(1)] // Permitir idOperacion 2 Registro y 3 Administrador
+        [AutorizarUsuario(1)] // Permitir idOperacion 1 
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [AutorizarUsuario(2)] // Permitir idOperacion 1 y 3
+        [AutorizarUsuario(2)] // Permitir idOperacion 1 y 2
         public IActionResult Estadisticas()
         {
             return View();
         }
 
-        [AutorizarUsuario(3)] // Permitir idOperacion 1 Consulta y 3
+        [AutorizarUsuario(3)] // Permitir idOperacion 1, 2 y 3
         public IActionResult Citas()
         {
             return View();
