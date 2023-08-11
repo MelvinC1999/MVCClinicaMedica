@@ -1,19 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.DBContext;
-
-using MVCClinicaMedica.Servicios.Contrato;
-using MVCClinicaMedica.Servicios.Implementacion;
-
+using MVCClinicaMedica.Repository.Servicios.Contrato;
+using MVCClinicaMedica.Repository.Servicios.Implementacion;
+using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los filtros
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Conexión base de datos.
 builder.Services.AddDbContext<BaseEFContext>(options =>
-options.UseSqlServer("name=ConnectionStrings:Connection"));
+    options.UseSqlServer("name=ConnectionStrings:Connection"));
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
@@ -24,37 +23,28 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-//Para que no puedas regresar al poner Cerrar Sesion
 builder.Services.AddControllersWithViews(options => {
     options.Filters.Add(
-            new ResponseCacheAttribute
-            {
-                NoStore = true,
-                Location = ResponseCacheLocation.None,
-            }
-        );
+        new ResponseCacheAttribute
+        {
+            NoStore = true,
+            Location = ResponseCacheLocation.None,
+        }
+    );
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseExceptionHandler("/Error/Index"); // Cambia "Index" por la acción adecuada en tu controlador Error
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

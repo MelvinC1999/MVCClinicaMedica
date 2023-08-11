@@ -2,11 +2,12 @@
 
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Utilitario;
-using MVCClinicaMedica.Servicios.Contrato;
 
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using MVCClinicaMedica.Repository.Servicios.Contrato;
+using System.Diagnostics;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -27,16 +28,28 @@ namespace MVCClinicaMedica.Controllers
         [HttpPost]
         public async Task<IActionResult> Registrarse(Usuario modelo)
         {
-            modelo.Password = Utilidades.EncriptarClave(modelo.Password);
+            try
+            {
+                // Asignar directamente idRol = 1 (Paciente)
+                modelo.idRol = 1;
 
-            Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modelo);
+                modelo.Password = Utilidades.EncriptarClave(modelo.Password);
 
-            if (usuario_creado.idUsuario > 0)
-                return RedirectToAction("IniciarSesion");
+                Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modelo);
 
-            ViewData["Mensaje"] = "No se pudo crear el usuario";
-            return View();
+                if (usuario_creado.idUsuario > 0)
+                    return RedirectToAction("IniciarSesion");
+
+                ViewData["Mensaje"] = "No se pudo crear el usuario";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewData["Mensaje"] = "Error al registrar el usuario: " + ex.Message;
+                return View();
+            }
         }
+
 
         public IActionResult IniciarSesion()
         {
@@ -48,15 +61,21 @@ namespace MVCClinicaMedica.Controllers
         {
             string claveEncriptada = Utilidades.EncriptarClave(clave);
 
+            Debug.WriteLine($"Intentando iniciar sesión con correo: {correo}");
+
             Usuario usuario_encontrado = await _usuarioServicio.GetUsuario(correo, claveEncriptada);
 
             if (usuario_encontrado == null)
             {
+                Debug.WriteLine("No se encontraron coincidencias");
                 ViewData["Mensaje"] = "No se encontraron coincidencias";
                 return View();
             }
 
-            List<Claim> claims = new List<Claim>() {
+            Debug.WriteLine($"Usuario encontrado con idRol: {usuario_encontrado.idRol}");
+
+            List<Claim> claims = new List<Claim>()
+            {
                 new Claim(ClaimTypes.Name, usuario_encontrado.Correo)
             };
 
@@ -70,7 +89,7 @@ namespace MVCClinicaMedica.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 properties
-                );
+            );
 
             return RedirectToAction("Index", "Home");
         }

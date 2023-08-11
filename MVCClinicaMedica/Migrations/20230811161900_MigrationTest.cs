@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MVCClinicaMedica.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class MigrationTest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,19 @@ namespace MVCClinicaMedica.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Operaciones",
+                columns: table => new
+                {
+                    idOperacion = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreOperacion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operaciones", x => x.idOperacion);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pacientes",
                 columns: table => new
                 {
@@ -65,8 +78,7 @@ namespace MVCClinicaMedica.Migrations
                 {
                     idRol = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreRol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DescripcionRol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    NombreRol = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,20 +96,6 @@ namespace MVCClinicaMedica.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposPagos", x => x.idTipoPago);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    idUsuario = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.idUsuario);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,29 +143,50 @@ namespace MVCClinicaMedica.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Perfiles",
+                name: "Rol_Operaciones",
                 columns: table => new
                 {
-                    idPerfil = table.Column<int>(type: "int", nullable: false)
+                    idRolOperacion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuariosidUsuario = table.Column<int>(type: "int", nullable: true),
-                    idUsuario = table.Column<int>(type: "int", nullable: false),
-                    RolesidRol = table.Column<int>(type: "int", nullable: true),
+                    idRol = table.Column<int>(type: "int", nullable: false),
+                    idOperacion = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rol_Operaciones", x => x.idRolOperacion);
+                    table.ForeignKey(
+                        name: "FK_Rol_Operaciones_Operaciones_idOperacion",
+                        column: x => x.idOperacion,
+                        principalTable: "Operaciones",
+                        principalColumn: "idOperacion",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rol_Operaciones_Roles_idRol",
+                        column: x => x.idRol,
+                        principalTable: "Roles",
+                        principalColumn: "idRol",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    idUsuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     idRol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Perfiles", x => x.idPerfil);
+                    table.PrimaryKey("PK_Usuarios", x => x.idUsuario);
                     table.ForeignKey(
-                        name: "FK_Perfiles_Roles_RolesidRol",
-                        column: x => x.RolesidRol,
+                        name: "FK_Usuarios_Roles_idRol",
+                        column: x => x.idRol,
                         principalTable: "Roles",
-                        principalColumn: "idRol");
-                    table.ForeignKey(
-                        name: "FK_Perfiles_Usuarios_UsuariosidUsuario",
-                        column: x => x.UsuariosidUsuario,
-                        principalTable: "Usuarios",
-                        principalColumn: "idUsuario");
+                        principalColumn: "idRol",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -355,19 +374,24 @@ namespace MVCClinicaMedica.Migrations
                 column: "EspecialidadesidEspecialidad");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Perfiles_RolesidRol",
-                table: "Perfiles",
-                column: "RolesidRol");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Perfiles_UsuariosidUsuario",
-                table: "Perfiles",
-                column: "UsuariosidUsuario");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RegistrosMedicos_HistoriasClinicasidHistoria",
                 table: "RegistrosMedicos",
                 column: "HistoriasClinicasidHistoria");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rol_Operaciones_idOperacion",
+                table: "Rol_Operaciones",
+                column: "idOperacion");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rol_Operaciones_idRol",
+                table: "Rol_Operaciones",
+                column: "idRol");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_idRol",
+                table: "Usuarios",
+                column: "idRol");
         }
 
         /// <inheritdoc />
@@ -380,10 +404,13 @@ namespace MVCClinicaMedica.Migrations
                 name: "Facturas");
 
             migrationBuilder.DropTable(
-                name: "Perfiles");
+                name: "RegistrosMedicos");
 
             migrationBuilder.DropTable(
-                name: "RegistrosMedicos");
+                name: "Rol_Operaciones");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "EquiposMedicos");
@@ -395,13 +422,13 @@ namespace MVCClinicaMedica.Migrations
                 name: "Consultorios");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Usuarios");
-
-            migrationBuilder.DropTable(
                 name: "HistoriasClinicas");
+
+            migrationBuilder.DropTable(
+                name: "Operaciones");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "TiposPagos");

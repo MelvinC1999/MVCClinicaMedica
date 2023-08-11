@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using MVCClinicaMedica.Servicios.Contrato;
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.DBContext;
+using MVCClinicaMedica.Repository.Servicios.Contrato;
 
-namespace MVCClinicaMedica.Servicios.Implementacion
+namespace MVCClinicaMedica.Repository.Servicios.Implementacion
 {
     public class UsuarioService : IUsuarioService
     {

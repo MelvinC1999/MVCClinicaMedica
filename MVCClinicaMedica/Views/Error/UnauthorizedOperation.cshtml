@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Error Page";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewBag.operacion != "")
+{
+    <p>
+        Operacion @ViewBag.operacion
+    </p>
+}
+@if (ViewBag.msjeErrorExcepcion != "")
+{
+    <p>
+        @ViewBag.msjeErrorExcepcion
+    </p>
+}
+<p>Use this page to detail your site's privacy policy.</p>
