@@ -1,14 +1,42 @@
 using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.DBContext;
 
+using MVCClinicaMedica.Servicios.Contrato;
+using MVCClinicaMedica.Servicios.Implementacion;
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Conexión base de datos.
 builder.Services.AddDbContext<BaseEFContext>(options =>
 options.UseSqlServer("name=ConnectionStrings:Connection"));
 
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Inicio/IniciarSesion";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Para que no puedas regresar al poner Cerrar Sesion
+builder.Services.AddControllersWithViews(options => {
+    options.Filters.Add(
+            new ResponseCacheAttribute
+            {
+                NoStore = true,
+                Location = ResponseCacheLocation.None,
+            }
+        );
+});
 
 var app = builder.Build();
 
@@ -25,10 +53,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
 
 app.Run();

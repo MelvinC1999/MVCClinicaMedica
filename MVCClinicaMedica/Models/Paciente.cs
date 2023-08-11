@@ -54,6 +54,4 @@ namespace MVCClinicaMedica.Models
         public string? Correo { get; set; }
 
     }
-
-
 }
