@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.Models;
 
-namespace MVCClinicaMedica.Servicios.Contrato
+namespace MVCClinicaMedica.Repository.Servicios.Contrato
 {
     public interface IUsuarioService
     {

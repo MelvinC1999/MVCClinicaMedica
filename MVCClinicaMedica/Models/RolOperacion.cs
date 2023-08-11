@@ -8,29 +8,25 @@ using System.Threading.Tasks;
 
 namespace MVCClinicaMedica.Models
 {
-    [Table("Usuarios")]
-    public class Usuario
+    [Table("Rol_Operaciones")]
+    public class RolOperacion
     {
+        // atributos
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int idUsuario { get; set; }
-
-        //[Required(ErrorMessage = "El nombre de usuario es requerido")]
-
-        [StringLength(50)]
-        //validar tipo correo REGEX
-        [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida")]
-        public string? Correo { get; set; }
-
-        [StringLength(2000)]
-        [Required(ErrorMessage = "La contraseña es requerida")]
-        public string? Password { get; set; }
+        public int idRolOperacion { get; set; }
 
         [Column("idRol")]
         public int idRol { get; set; }
         //Relacion muchos a uno 
         [ForeignKey("idRol")]
         public virtual Rol? Roles { get; set; }
+
+        [Column("idOperacion")]
+        public int idOperacion { get; set; }
+        //Relacion muchos a uno 
+        [ForeignKey("idOperacion")]
+        public virtual Operacion? Operaciones { get; set; }
 
     }
 }

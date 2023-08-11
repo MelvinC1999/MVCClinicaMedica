@@ -20,7 +20,10 @@ namespace MVCClinicaMedica.Models
         [StringLength(50)]
         public string? NombreRol { get; set; }
 
-        [StringLength(50)]
-        public string? DescripcionRol { get; set; }
+        //Relacion uno a muchos
+        public virtual ICollection<RolOperacion> RolOperaciones { get; set; } = new List<RolOperacion>();
+
+        //Relacion uno a muchos
+        public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
     }
 }

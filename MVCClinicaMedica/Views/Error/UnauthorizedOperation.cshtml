@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "No tienes los permisos necesarios para navegar por esta página";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewBag.operacion != "")
+{
+    <p>
+        @ViewBag.operacion
+    </p>
+}
+@if (ViewBag.msjeErrorExcepcion != "")
+{
+    <p>
+        @ViewBag.msjeErrorExcepcion
+    </p>
+}
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Regresar</a>                     
+                    </ul>
+                </div>
+
+                <img src="~/img/auto.png" /></>
