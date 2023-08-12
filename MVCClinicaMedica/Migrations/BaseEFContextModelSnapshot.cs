@@ -59,7 +59,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("TiposPagosidTipoPago");
 
-                    b.ToTable("Citas");
+                    b.ToTable("Citas", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Consultorio", b =>
@@ -83,7 +83,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("MedicosidMedico");
 
-                    b.ToTable("Consultorios");
+                    b.ToTable("Consultorios", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.EquipoMedico", b =>
@@ -105,7 +105,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idEquipo");
 
-                    b.ToTable("EquiposMedicos");
+                    b.ToTable("EquiposMedicos", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.EquipoMedicoConsultorio", b =>
@@ -122,7 +122,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("idConsultorio");
 
-                    b.ToTable("EquiposMedicosConsultorios");
+                    b.ToTable("EquiposMedicosConsultorios", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Especialidad", b =>
@@ -140,7 +140,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idEspecialidad");
 
-                    b.ToTable("Especialidades");
+                    b.ToTable("Especialidades", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Factura", b =>
@@ -188,7 +188,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("PacientesidPaciente");
 
-                    b.ToTable("Facturas");
+                    b.ToTable("Facturas", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.HistoriaClinica", b =>
@@ -214,7 +214,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("PacientesidPaciente");
 
-                    b.ToTable("HistoriasClinicas");
+                    b.ToTable("HistoriasClinicas", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Medico", b =>
@@ -260,7 +260,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("EspecialidadesidEspecialidad");
 
-                    b.ToTable("Medicos");
+                    b.ToTable("Medicos", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Paciente", b =>
@@ -314,7 +314,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idPaciente");
 
-                    b.ToTable("Pacientes");
+                    b.ToTable("Pacientes", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Perfil", b =>
@@ -343,7 +343,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("UsuariosidUsuario");
 
-                    b.ToTable("Perfiles");
+                    b.ToTable("Perfiles", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.RegistroMedico", b =>
@@ -369,7 +369,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasIndex("HistoriasClinicasidHistoria");
 
-                    b.ToTable("RegistrosMedicos");
+                    b.ToTable("RegistrosMedicos", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Rol", b =>
@@ -391,7 +391,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idRol");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.TipoPago", b =>
@@ -409,7 +409,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idTipoPago");
 
-                    b.ToTable("TiposPagos");
+                    b.ToTable("TiposPagos", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Usuario", b =>
@@ -430,7 +430,7 @@ namespace MVCClinicaMedica.Migrations
 
                     b.HasKey("idUsuario");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Cita", b =>

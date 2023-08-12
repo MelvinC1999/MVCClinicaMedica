@@ -1,0 +1,36 @@
+﻿@model MedicoCitasViewModel
+
+<div class="container">
+    <div class="row">
+        <!-- Parte Izquierda - Lista de Citas -->
+        <div class="col-md-3">
+            <ul class="list-group">
+                @foreach (var cita in Model.Citas)
+                {
+                    <li class="list-group-item">@cita.Fecha</li>
+                }
+            </ul>
+        </div>
+
+        <!-- Parte Derecha - Detalles del Paciente e Historia Clínica -->
+        <div class="col-md-9">
+            <!-- Aquí puedes mostrar los detalles del médico y luego los detalles de cada cita -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Model.Medico.Nombre @Model.Medico.Apellido</h4>
+                    <p>Horario: @Model.Medico.Horario</p>
+                </div>
+            </div>
+
+            @foreach (var cita in Model.Citas)
+            {
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Cita del @cita.Fecha</h5>
+                        <!-- Mostrar más detalles de la cita aquí -->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
