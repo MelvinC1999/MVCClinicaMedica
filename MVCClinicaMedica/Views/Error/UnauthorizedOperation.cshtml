@@ -1,52 +1,30 @@
-﻿@{
-<<<<<<< HEAD
-<<<<<<< HEAD
+@{
     ViewData["Title"] = "No tienes los permisos necesarios para navegar por esta página";
-=======
-    ViewData["Title"] = "Error Page";
->>>>>>> 4b204d8af20e99b9356deca0c9801d581622d34b
-=======
-    ViewData["Title"] = "No tienes los permisos necesarios para navegar por esta página";
->>>>>>> 253d803f89a62510e719e8b3a14d3655b328286a
 }
+
 <h1>@ViewData["Title"]</h1>
 
-@if (ViewBag.operacion != "")
+@if (!string.IsNullOrEmpty(ViewBag.operacion))
 {
     <p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        @ViewBag.operacion
-=======
-        Operacion @ViewBag.operacion
->>>>>>> 4b204d8af20e99b9356deca0c9801d581622d34b
-=======
-        @ViewBag.operacion
->>>>>>> 253d803f89a62510e719e8b3a14d3655b328286a
+        Operación: @ViewBag.operacion
     </p>
 }
-@if (ViewBag.msjeErrorExcepcion != "")
+
+@if (!string.IsNullOrEmpty(ViewBag.msjeErrorExcepcion))
 {
     <p>
         @ViewBag.msjeErrorExcepcion
     </p>
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 253d803f89a62510e719e8b3a14d3655b328286a
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Regresar</a>                     
-                    </ul>
-                </div>
 
-<<<<<<< HEAD
-                <img src="~/img/auto.png" /></>
-=======
-<p>Use this page to detail your site's privacy policy.</p>
->>>>>>> 4b204d8af20e99b9356deca0c9801d581622d34b
-=======
-                <img src="~/img/auto.png" /></>
->>>>>>> 253d803f89a62510e719e8b3a14d3655b328286a
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Regresar</a>
+        </li>
+    </ul>
+</div>
+
+<img src="~/img/auto.png" />
+
