@@ -19,12 +19,12 @@ namespace MVCClinicaMedica.Models
         // FK
         // tabla hijo de Usuario
         public virtual Usuario? Usuarios { get; set; }
-        [ForeignKey("idUsuario")]
+        [ForeignKey("Usuario")]
         public int idUsuario { get; set; }
 
         // tabla hijo de Rol
         public virtual Rol? Roles { get; set; }
-        [ForeignKey("idRol")]
+        [ForeignKey("Rol")]
         public int idRol { get; set; }
     }
 }

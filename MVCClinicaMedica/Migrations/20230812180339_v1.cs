@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MVCClinicaMedica.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,7 +52,8 @@ namespace MVCClinicaMedica.Migrations
                     EstadoCivil = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    HistoriaClinica = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,23 +126,23 @@ namespace MVCClinicaMedica.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HistoriasClinicas",
+                name: "RegistrosMedicos",
                 columns: table => new
                 {
-                    idHistoria = table.Column<int>(type: "int", nullable: false)
+                    idRegistro = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Historial = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    PacientesidPaciente = table.Column<int>(type: "int", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     idPaciente = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HistoriasClinicas", x => x.idHistoria);
+                    table.PrimaryKey("PK_RegistrosMedicos", x => x.idRegistro);
                     table.ForeignKey(
-                        name: "FK_HistoriasClinicas_Pacientes_PacientesidPaciente",
-                        column: x => x.PacientesidPaciente,
+                        name: "FK_RegistrosMedicos_Pacientes_idPaciente",
+                        column: x => x.idPaciente,
                         principalTable: "Pacientes",
-                        principalColumn: "idPaciente");
+                        principalColumn: "idPaciente",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,26 +223,6 @@ namespace MVCClinicaMedica.Migrations
                         column: x => x.MedicosidMedico,
                         principalTable: "Medicos",
                         principalColumn: "idMedico");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RegistrosMedicos",
-                columns: table => new
-                {
-                    idRegistro = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    HistoriasClinicasidHistoria = table.Column<int>(type: "int", nullable: true),
-                    idHistoria = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RegistrosMedicos", x => x.idRegistro);
-                    table.ForeignKey(
-                        name: "FK_RegistrosMedicos_HistoriasClinicas_HistoriasClinicasidHistoria",
-                        column: x => x.HistoriasClinicasidHistoria,
-                        principalTable: "HistoriasClinicas",
-                        principalColumn: "idHistoria");
                 });
 
             migrationBuilder.CreateTable(
@@ -345,11 +326,6 @@ namespace MVCClinicaMedica.Migrations
                 column: "PacientesidPaciente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoriasClinicas_PacientesidPaciente",
-                table: "HistoriasClinicas",
-                column: "PacientesidPaciente");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Medicos_EspecialidadesidEspecialidad",
                 table: "Medicos",
                 column: "EspecialidadesidEspecialidad");
@@ -365,9 +341,9 @@ namespace MVCClinicaMedica.Migrations
                 column: "UsuariosidUsuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistrosMedicos_HistoriasClinicasidHistoria",
+                name: "IX_RegistrosMedicos_idPaciente",
                 table: "RegistrosMedicos",
-                column: "HistoriasClinicasidHistoria");
+                column: "idPaciente");
         }
 
         /// <inheritdoc />
@@ -401,16 +377,13 @@ namespace MVCClinicaMedica.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "HistoriasClinicas");
+                name: "Pacientes");
 
             migrationBuilder.DropTable(
                 name: "TiposPagos");
 
             migrationBuilder.DropTable(
                 name: "Medicos");
-
-            migrationBuilder.DropTable(
-                name: "Pacientes");
 
             migrationBuilder.DropTable(
                 name: "Especialidades");

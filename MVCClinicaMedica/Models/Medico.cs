@@ -42,5 +42,7 @@ namespace MVCClinicaMedica.Models
         public virtual Especialidad? Especialidades { get; set; }
         [ForeignKey("idEspecialidad")]
         public int idEspecialidad { get; set; }
+
+        public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

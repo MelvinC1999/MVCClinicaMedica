@@ -29,7 +29,7 @@ namespace MVCClinicaMedica.Models
 
         // tabla hijo de Medico
         public virtual Medico? Medicos { get; set; }
-        [ForeignKey("idMedico")]
+        [ForeignKey("Medico")]
         public int idMedico { get; set; }
 
 

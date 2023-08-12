@@ -53,5 +53,11 @@ namespace MVCClinicaMedica.Models
         [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida")]
         public string? Correo { get; set; }
 
+        
+        [StringLength(100)]
+        public string? HistoriaClinica { get; set; }
+
+        // Propiedad de navegación para los registros médicos
+        public virtual ICollection<RegistroMedico> RegistrosMedicos { get; set; } = new List<RegistroMedico>();
     }
 }

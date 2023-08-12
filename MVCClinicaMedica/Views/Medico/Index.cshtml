@@ -1,36 +1,78 @@
-﻿@model MedicoCitasViewModel
+﻿@*@model List<Cita>
 
-<div class="container">
-    <div class="row">
-        <!-- Parte Izquierda - Lista de Citas -->
-        <div class="col-md-3">
-            <ul class="list-group">
-                @foreach (var cita in Model.Citas)
-                {
-                    <li class="list-group-item">@cita.Fecha</li>
-                }
-            </ul>
-        </div>
-
-        <!-- Parte Derecha - Detalles del Paciente e Historia Clínica -->
-        <div class="col-md-9">
-            <!-- Aquí puedes mostrar los detalles del médico y luego los detalles de cada cita -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">@Model.Medico.Nombre @Model.Medico.Apellido</h4>
-                    <p>Horario: @Model.Medico.Horario</p>
-                </div>
-            </div>
-
-            @foreach (var cita in Model.Citas)
+<div class="row">
+    <div class="col-md-3">
+        <h3>Citas</h3>
+        <ul class="list-group">
+            @foreach (var cita in Model)
             {
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Cita del @cita.Fecha</h5>
-                        <!-- Mostrar más detalles de la cita aquí -->
-                    </div>
-                </div>
+                <li class="list-group-item cita-item" data-cita-id="@cita.idCita">@cita.Fecha.ToShortDateString()</li>
             }
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div id="detalles-cita">
+            <!-- Detalles de la cita se cargarán aquí -->
         </div>
     </div>
 </div>
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var citaItems = document.querySelectorAll(".cita-item");
+            citaItems.forEach(function (citaItem) {
+                citaItem.addEventListener("click", function () {
+                    var idCita = citaItem.getAttribute("data-cita-id");
+                    fetch("/Medico/DetallesCita?idCita=" + idCita)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById("detalles-cita").innerHTML = data;
+                        })
+                        .catch(error => console.error("Error:", error));
+                });
+            });
+        });
+</script>*@
+
+@model List<Cita>
+
+<h2>Listado de Citas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Medico</th>
+            <th>Paciente</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cita in Model)
+        {
+            <tr class="cita-row" data-id-cita="@cita.idCita">
+                <td>@cita.idCita</td>
+                <td>@cita.Fecha.ToShortDateString()</td>
+                <td>@cita.Medico?.Nombre</td>
+                <td>@cita.Paciente?.Nombre</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var citaRows = document.querySelectorAll(".cita-row");
+        citaRows.forEach(function (citaRow) {
+            citaRow.addEventListener("click", function () {
+                var idCita = citaRow.getAttribute("data-id-cita");
+                window.location.href = "/Medico/DetallesCita?idCita=" + idCita;
+            });
+        });
+    });
+</script>
+
+
+
+

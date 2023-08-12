@@ -1,0 +1,28 @@
+﻿@model List<MVCClinicaMedica.Models.RegistroMedico>
+
+<h3>Detalles del paciente</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var registro in Model)
+        {
+            <tr>
+                <td>@registro.Descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Agregar Registro Médico</h3>
+<form>
+    <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+

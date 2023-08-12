@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -14,18 +14,20 @@ namespace MVCClinicaMedica.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            // Supongamos que tienes el ID del médico actual (ajusta esto según tu lógica)
-            int idMedico = 1;
+            var citas = _context.Citas
+                .Include(c => c.Medico)
+                .Include(c => c.Paciente)
+                .ToList();
 
-            var viewModel = new MedicoCitasViewModel
-            {
-                Citas = _context.Citas.Where(c => c.idMedico == idMedico).ToList(),
-                Medico = _context.Medicos.FirstOrDefault(m => m.idMedico == idMedico)
-            };
+            return View(citas);
+        }
 
-            return View(viewModel);
+        public ActionResult DetallesCita(int idCita)
+        {
+            TempData["idCita"] = idCita;
+            return RedirectToAction("Detalles", "Paciente");
         }
     }
 }

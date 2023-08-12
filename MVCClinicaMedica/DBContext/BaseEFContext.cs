@@ -53,7 +53,7 @@ namespace MVCClinicaMedica.DBContext
         public virtual DbSet<Consultorio> Consultorios { get; set; }
         public virtual DbSet<Medico> Medicos { get; set; }
         public virtual DbSet<RegistroMedico> RegistrosMedicos { get; set; }
-        public virtual DbSet<HistoriaClinica> HistoriasClinicas { get; set; }
+        //public virtual DbSet<HistoriaClinica> HistoriasClinicas { get; set; }
         public virtual DbSet<EquipoMedico> EquiposMedicos { get; set; }
         public virtual DbSet<EquipoMedicoConsultorio> EquiposMedicosConsultorios { get; set; }
         public virtual DbSet<Especialidad> Especialidades { get; set; }
@@ -62,7 +62,7 @@ namespace MVCClinicaMedica.DBContext
         public virtual DbSet<Rol> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DBConsultorio;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ClinicaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 
         // Para la tabla de rompimiento 
