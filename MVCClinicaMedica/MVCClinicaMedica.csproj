@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="LogicBusnies\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
