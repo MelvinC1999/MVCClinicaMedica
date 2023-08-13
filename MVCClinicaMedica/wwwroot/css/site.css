@@ -16,3 +16,22 @@ html {
 body {
   margin-bottom: 60px;
 }
+.derecha {
+    position: absolute;
+    top: 198px; /* Ajusta la distancia desde la parte superior */
+    left: 700px; /* Ajusta la distancia desde la izquierda */
+    /* Otros estilos que desees aplicar */
+}
+.identi {
+    position: absolute;
+    top: 240px; /* Ajusta la distancia desde la parte superior */
+    left: 700px; /* Ajusta la distancia desde la izquierda */
+    /* Otros estilos que desees aplicar */
+}
+.cuadro {
+    width: 1000px;
+    height: 93px;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    padding: 10px;
+}

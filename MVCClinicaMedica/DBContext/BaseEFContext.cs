@@ -41,7 +41,7 @@ namespace MVCClinicaMedica.DBContext
                 .AddJsonFile("Config/appsettings.json")  // Ruta al archivo de configuración
                 .Build();
 
-            string connectionString = configuration.GetConnectionString("DefaultConnection");
+            string connectionString = configuration.GetConnectionString("DefaultCo nnection");
 
             optionsBuilder.UseSqlServer(connectionString);  // O el proveedor de base de datos que estés utilizando
         }*/
@@ -63,7 +63,9 @@ namespace MVCClinicaMedica.DBContext
         public virtual DbSet<Operacion> Operaciones { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-TCDAN7Q\\SQLEXPRESS;Initial Catalog=MVCClinicaMedica1;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+
+        => optionsBuilder.UseSqlServer("Data Source=USER-PC\\SQLEXPRESS01;Initial Catalog=CentroM;Integrated Security=True;TrustServerCertificate=true");
+
 
 
         // Para la tabla de rompimiento 

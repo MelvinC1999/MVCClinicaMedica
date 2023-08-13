@@ -1,0 +1,101 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Factura
+@{
+    ViewBag.Title = "Facturacion";
+}
+
+<head>
+    <title>Factura</title>
+    <link rel="stylesheet" type="text/css" href="/css/site.css">
+</head>
+<body>
+    <h1>Factura</h1>
+    @* Formulario para búsqueda por cédula *@
+    <form action="@Url.Action("BuscarCed", "Facturas")" method="post">
+        <input type="text" name="cedula" placeholder="Ingrese el número de cédula">
+        <button type="submit">Buscar</button>
+    </form>
+
+    @* Mostrar los resultados *@
+    <table>
+        @if (ViewBag.Pacientes != null)
+        {
+            foreach (var paciente in ViewBag.Pacientes)
+            {
+                <tr>
+                    <td name="idPaciente">@paciente.idPaciente</td>
+                    <td>@paciente.Nombre</td>
+                    <td>@paciente.Cedula</td>
+                    <!-- Otros campos -->
+                </tr>
+            }
+        }
+    </table>
+    @*-----------------------------*@
+    <form method="post" asp-action="Guardar">
+        <div class="cuadro">
+            <p><b>Fecha: </b>@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</p>
+            <input type="hidden" name="fecha" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")">
+            <p><b>Tipo de servicio:</b></p>
+            <p class="derecha"><b>Cliente:</b></p>
+            <p class="identi"><b>Identificacion:</b></p>
+        </div>
+        <h4 style="vertical-align: top; padding-top: 30px"><b>Observaciones</b></h4>
+        <h5 style="vertical-align: top; padding-top: 150px"><b>Estado De Pago</b></h5>
+        <div style="position: absolute; top: 500px; left: 250px">
+            <select name="EstadoPago" id="estadoPago" onchange="handleEstadoPago()">
+                <option value="pendiente">Pendiente</option>
+                <option value="pagado">Pagado</option>
+            </select>
+        </div>
+
+        <h4 style="vertical-align: top; padding-top: 10px"><b>Medios De Pago</b></h4>
+        <h5 style="vertical-align: top; padding-top: 1px; padding-left: 600px"><b>Valor</b></h5>
+        <h5><b>Efectivo</b></h5>
+        <h5>Total+iva</h5>
+        <div style="position: absolute; top: 616px">
+            <input disabled type="text" id="miCuadro" style="position: absolute; top: 0px; left: 585px;width: 100px; height: 22px;" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
+        </div>
+        <b><p id="resultadoParrafo" style="position: absolute; top: 639px; left: 660px;width: 100px; height: 22px;"></p></b>
+        <input type="submit" value="Imprimir Factura">
+    </form>
+    
+    <script>
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                var cuadro = document.getElementById("miCuadro");
+                var valor = parseFloat(cuadro.value);
+
+                if (!isNaN(valor)) {
+                    var resultado = valor * 0.12;
+                    valor = valor + resultado;
+                    var parrafo = document.getElementById("resultadoParrafo");
+                    parrafo.textContent = valor;
+                    cuadro.disabled = true;
+                    // Prevenir el comportamiento predeterminado del Enter
+                    event.preventDefault();
+                }
+            }
+        }
+        function handleEstadoPago() {
+            var estadoPago = document.getElementById("estadoPago");
+            var cuadro = document.getElementById("miCuadro");
+            var parrafo = document.getElementById("resultadoParrafo");
+
+            if (estadoPago.value === "pagado") {
+                cuadro.disabled = false;
+                parrafo.textContent = "";
+            } else {
+                cuadro.disabled = true;
+                cuadro.value = "";
+                parrafo.textContent = "";
+            }
+        }
+    </script>
+</body>
+
