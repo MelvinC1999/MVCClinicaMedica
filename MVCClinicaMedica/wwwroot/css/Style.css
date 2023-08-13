@@ -1,0 +1,53 @@
+.background-radial-gradient {
+    background-color: hsl(218, 41%, 15%);
+    background-image: radial-gradient(650px circle at 0% 0%, hsl(218, 41%, 35%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%), radial-gradient(1250px circle at 100% 100%, hsl(218, 41%, 45%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%);
+}
+
+#radius-shape-1 {
+    height: 220px;
+    width: 220px;
+    top: -60px;
+    left: -130px;
+    background: radial-gradient(#44006b, #ad1fff);
+    overflow: hidden;
+}
+
+#radius-shape-2 {
+    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+    bottom: -60px;
+    right: -110px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(#44006b, #ad1fff);
+    overflow: hidden;
+}
+
+.bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.5) !important; /* Ajusta el valor de opacidad aquí */
+    backdrop-filter: saturate(200%) blur(40px);
+}
+
+.card {
+    width: 70%; /* Ajusta el ancho según tus necesidades */
+    max-width: 500px; /* Establece un ancho máximo para mantener la legibilidad en pantallas grandes */
+    margin: 0 auto; /* Centra la tarjeta horizontalmente */
+}
+
+
+body {
+    background-image: src(/img/background.jpg); /* Ruta a tu imagen en wwwroot */
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-size: 25px;
+}
+
+/* Personaliza el estilo de los campos de entrada y las etiquetas según sea necesario */
+.form-label {
+    color: hsl(218, 81%, 95%);
+}
+
+.form-control {
+    background-color: hsla(0, 0%, 100%, 0.9) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+    color: hsl(218, 81%, 15%);
+}

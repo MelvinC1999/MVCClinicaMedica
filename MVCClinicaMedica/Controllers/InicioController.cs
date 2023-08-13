@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using MVCClinicaMedica.Repository.Servicios.Contrato;
 using System.Diagnostics;
+using MVCClinicaMedica.Validador;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -30,6 +31,17 @@ namespace MVCClinicaMedica.Controllers
         {
             try
             {
+                if (!ValidadorCorreo.EsCorreoValido(modelo.Correo))
+                {
+                    ViewData["Mensaje"] = "Correo inválido. Por favor, ingresa un correo válido.";
+                    return View("Registrarse", modelo);
+                }
+
+                if (!ValidadorPassword.EsPasswordValido(modelo.Password))
+                {
+                    ViewData["Mensaje"] = "Contraseña inválida. La contraseña debe tener al menos 8 caracteres.";
+                    return View();
+                }
                 // Asignar directamente idRol = 1 (Paciente)
                 modelo.idRol = 1;
 
@@ -41,12 +53,12 @@ namespace MVCClinicaMedica.Controllers
                     return RedirectToAction("IniciarSesion");
 
                 ViewData["Mensaje"] = "No se pudo crear el usuario";
-                return View();
+                return View("Registrarse", modelo); // Devuelve la vista con el mensaje
             }
             catch (Exception ex)
             {
                 ViewData["Mensaje"] = "Error al registrar el usuario: " + ex.Message;
-                return View();
+                return View("Registrarse", modelo); // Devuelve la vista con el mensaje
             }
         }
 

@@ -14,6 +14,7 @@ html {
 }
 
 body {
+<<<<<<< HEAD
   margin-bottom: 60px;
 }
 .derecha {
@@ -35,3 +36,35 @@ body {
     border: 2px solid #333;
     padding: 10px;
 }
+=======
+    margin-bottom: 60px;
+    background-color: #cef1fc;
+}
+
+h1 {
+    margin: auto;
+    width: 640px;
+    padding: 50px;
+    font-family: 'Arial', sans-serif;
+    color: #33475b;
+}
+
+
+/* Index.cshtml */
+
+.portada {
+    width: 200px;
+    height: 50px;
+    float: left;
+}
+
+.medio {
+    width: 1050px;
+    height: 500px;
+    display: block;
+    margin: auto;
+}
+
+/* _Layout.cshtlm */
+
+>>>>>>> origin/MergeRickMelvinV1

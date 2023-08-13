@@ -22,7 +22,7 @@ namespace MVCClinicaMedica.Models
         [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida")]
         public string? Correo { get; set; }
 
-        [StringLength(2000)]
+        [StringLength(1000)]
         [Required(ErrorMessage = "La contraseña es requerida")]
         public string? Password { get; set; }
 

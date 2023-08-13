@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -10,47 +9,50 @@
     <meta name="viewport" content="width=device-width" />
     <title>IniciarSesion</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Style.css" /> <!-- Enlace al archivo CSS externo -->
 </head>
-<body>
+<body style="background-image: url('/img/background.jpg'); background-size: cover; background-repeat: no-repeat;">
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" style="color: hsl(218, 81%, 15%);">
+        <div class="row gx-lg-5 align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                <!-- Tu contenido aquí -->
+            </div>
 
-    <div class="container mt-5 pt-5">
-
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-4 col-md-6">
-
-                <div class="card">
-                    <div class="card-header">
-                        Iniciar Sesion
-                    </div>
-                    <div class="card-body">
-
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <!-- Radius shapes y formulario aquí -->
+                <div class="card bg-glass">
+                    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" style="color: hsl(218, 81%, 15%);">
                         <form asp-controller="Inicio" asp-action="IniciarSesion" method="post">
+                            <div class="form-outline mb-4">
+                                <input type="email" id="correo" name="correo" class="form-control" style="background-color: hsla(0, 0%, 100%, 0.9) !important; backdrop-filter: saturate(200%) blur(25px); color: hsl(218, 81%, 15%);" />
+                                <label class="form-label" for="correo" style="color: hsl(218, 81%, 50%);">Correo</label>
+                            </div>
 
-                            <input class="form-control mb-3" type="text" placeholder="Correo" required name="correo" />
-                            <input class="form-control mb-3" type="password" placeholder="Contraseña" required name="clave" />
+                            <div class="form-outline mb-4">
+                                <input type="password" id="clave" name="clave" class="form-control" style="background-color: hsla(0, 0%, 100%, 0.9) !important; backdrop-filter: saturate(200%) blur(25px); color: hsl(218, 81%, 15%);" />
+                                <label class="form-label" for="clave" style="color: hsl(218, 81%, 50%);">Contraseña</label>
+                            </div>
                             <div class="d-grid gap-2 mb-3">
-                                <button class="btn btn-primary" type="submit">Iniciar Sesion</button>
+                                <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
                             </div>
                             @if (ViewData["Mensaje"] != null)
                             {
-                                
+
                                 <div class="form-group">
                                     <div class="alert alert-danger" role="alert">
                                         @ViewData["Mensaje"]
                                     </div>
                                 </div>
                             }
-                            ¿No tienes una cuenta? <a href="@Url.Action("Registrarse","Inicio")"> Registraste!</a>
-
-                        </form>
-
+                            <div class="text-center mt-3">
+                                <!-- Ajusta el valor mt-3 para controlar el margen superior -->
+                                <p>¿No tienes una cuenta? <a href="@Url.Action("Registrarse","Inicio")" class="btn btn-secondary btn-sm">Registrarte</a></p>
+                            </div>
+                        </form>                      
                     </div>
-
                 </div>
-
             </div>
         </div>
-
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

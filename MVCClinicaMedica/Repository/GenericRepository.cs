@@ -11,7 +11,11 @@ namespace MVCClinicaMedica.Repository
 
         public GenericRepository()
         {
+<<<<<<< HEAD
             _context = new BaseEFContext(); ;
+=======
+            _context = new BaseEFContext();
+>>>>>>> origin/MergeRickMelvinV1
             dbSet = _context.Set<T>();
         }
 
@@ -97,6 +101,10 @@ namespace MVCClinicaMedica.Repository
             _context.SaveChanges();
         }
 
+<<<<<<< HEAD
+=======
+        //Carga Eager
+>>>>>>> origin/MergeRickMelvinV1
         public T LoadEager<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
             IQueryable<T> query = _context.Set<T>();
@@ -130,5 +138,9 @@ namespace MVCClinicaMedica.Repository
             }
             return query;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/MergeRickMelvinV1
     }
 }
