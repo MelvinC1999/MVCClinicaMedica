@@ -16,7 +16,7 @@ namespace MVCClinicaMedica.BusinessLogic
         {
             var medico = medicoRepo.Get(idMedico);
 
-            return medico.Citas.ToList();
+            return medico.Citas.ToList();   
         }
         public List<RegistroMedico> ObtenerRegistros(int idPaciente)
         {

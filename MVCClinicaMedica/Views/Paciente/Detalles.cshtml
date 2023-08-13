@@ -45,7 +45,7 @@
         @foreach (var registro in Model.Paciente?.RegistrosMedicos)
         {
             <tr>
-                @*<td>@registro.Fecha.ToShortDateString()</td>*@
+                <td>@registro.Fecha.ToShortDateString()</td>
                 <td>@registro.Descripcion</td>
             </tr>
         }

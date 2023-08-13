@@ -2,24 +2,29 @@
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using Microsoft.EntityFrameworkCore;
+using MVCClinicaMedica.Repository;
 
 namespace MVCClinicaMedica.Controllers
 {
     public class MedicoController : Controller
     {
-        private readonly BaseEFContext _context;
+        CitasRepo citasRepo = new CitasRepo();
 
-        public MedicoController(BaseEFContext context)
-        {
-            _context = context;
-        }
+        //private readonly BaseEFContext _context;
 
-        public ActionResult Index()
+        //public MedicoController(BaseEFContext context)
+        //{
+        //    _context = context;
+        //}
+
+        public ActionResult Index(int idMedico)
         {
-            var citas = _context.Citas
-                .Include(c => c.Medico)
-                .Include(c => c.Paciente)
-                .ToList();
+            var citas = citasRepo.ObtenerCitasMedico(idMedico);
+            //var citas = _context.Citas
+            //    .Include(c => c.Medico)
+            //    .Include(c => c.Paciente)
+            //    .Where(c => c.idMedico == 3)
+            //    .ToList();
 
             return View(citas);
         }

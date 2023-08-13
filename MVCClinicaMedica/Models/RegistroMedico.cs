@@ -20,7 +20,9 @@ namespace MVCClinicaMedica.Models
         [StringLength(200)]
         public string? Descripcion { get; set; }
 
-
+        [Required(ErrorMessage = "La fecha es requerida")]
+        [DataType(DataType.Date)]
+        public DateTime Fecha { get; set; }
         public virtual Paciente? Paciente { get; set; }
         [ForeignKey("Paciente")]
         public int idPaciente { get; set; }
