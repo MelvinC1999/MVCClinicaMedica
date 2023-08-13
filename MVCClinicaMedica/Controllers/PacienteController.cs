@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
+using MVCClinicaMedica.Repository;
 using MVCClinicaMedica.Servicios.Contrato;
 using MVCClinicaMedica.Utilitario;
 using System;
@@ -22,11 +23,15 @@ namespace MVCClinicaMedica.Controllers
             return View();
         }
 
+        CitasRepo citasRepo = new CitasRepo();
 
-        // Ver citas-----------------------------
+        public ActionResult Detalles()
+        {
+            int idCita = (int)TempData["idCita"];
+            var cita = citasRepo.ObtenerCitaDeep(idCita);
 
-
-        // solo indica la fecha // idPaciente = 3
+            return View(cita);
+        }
 
         public async Task<IActionResult> VerCitas(int idPaciente, Paciente paciente)
         {
@@ -42,9 +47,9 @@ namespace MVCClinicaMedica.Controllers
 
             var medicosListas = medicoBL.ObtenerListaMedicos();
 
-            foreach ( var item in medicosListas)
+            foreach (var item in medicosListas)
             {
-                Console.WriteLine(" hola nombre "+item.idMedico);
+                Console.WriteLine(" hola nombre " + item.idMedico);
             }
 
             Console.WriteLine(paciente.Cedula);
@@ -56,33 +61,14 @@ namespace MVCClinicaMedica.Controllers
 
             var citas = await citaBL.ObtenerCitasPorIdPaciente(idpacienteCedula);
 
-            //if (idpacienteCedula == -1)
-            //{
-            //    Console.WriteLine("Cedula incorrecta. La cedula se tuvo que llenar con -1");
-
-            //}
-            //else
-            //{
-            //    var citas = await citaBL.ObtenerCitasPorIdPaciente(idpacienteCedula);
-            //}
-
-        CitasRepo citasRepo = new CitasRepo();
-
-        public ActionResult Detalles()
-        {
-            int idCita = (int)TempData["idCita"];
-            var cita = citasRepo.ObtenerCitaDeep(idCita);
+        
             ViewData["citas"] = citas;
             ViewData["pacientes"] = pacientesListas;
             ViewData["medicos"] = medicosListas;
 
             return View(citas);
-            return View(cita);
         }
 
-
-
     }
-
 }
 
