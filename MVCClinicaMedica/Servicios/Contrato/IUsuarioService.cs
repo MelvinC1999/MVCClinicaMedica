@@ -9,4 +9,5 @@ namespace MVCClinicaMedica.Servicios.Contrato
         Task<Usuario> SaveUsuario(Usuario modelo);
 
     }
+
 }

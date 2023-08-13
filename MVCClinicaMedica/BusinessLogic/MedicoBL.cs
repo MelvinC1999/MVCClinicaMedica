@@ -1,47 +1,35 @@
-﻿using MVCClinicaMedica.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Repository;
+using System.Xml;
 
-namespace MVCClinicaMedica.BusinessLogic
+public class MedicoBL
 {
-    internal class MedicoBL
+    private readonly BaseEFContext _dbContext;
+    IGenericRepository<Medico> repoMedico = new GenericRepository<Medico>();
+
+    /// <summary>
+    /// Retorno la lsita de los medicos para enviarselo a la vista por ViewBag
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    public List<Medico> ObtenerListaMedicos()
     {
-
-        MedicoRepo medicoRepo = new MedicoRepo();
-        PacienteRepo pacienteRepo = new PacienteRepo();
-
-
-        public List<Cita> ObtenerCitasMedico(int idMedico)
+        List<Medico> listarMedicos = repoMedico.GetAll().ToList();
+        foreach (var item in listarMedicos)
         {
-            var medico = medicoRepo.Get(idMedico);
-
-            return medico.Citas.ToList();   
+            Console.WriteLine("Id Medico: |" + item.Nombre + "|");
         }
-        public List<RegistroMedico> ObtenerRegistros(int idPaciente)
-        {
-            var paciente = pacienteRepo.Get(idPaciente);
-            return paciente.RegistrosMedicos.ToList();
-        }
-        public void ImprimirRegistrosDePaciente(int idPaciente)
-        {
-            var paciente = pacienteRepo.Get(idPaciente);
-            var registros = paciente.RegistrosMedicos.ToList();
-            foreach (var registro in registros)
-            {
-                Console.WriteLine($"id : {registro.idRegistro} descripcion: {registro.Descripcion}");
-            }
-        }
-        public void ImprimirCitasDeMedico(int idMedico)
-        {
-            var medico = medicoRepo.Get(idMedico);
-            var citas = medico.Citas.ToList();
-            foreach (var cita in citas)
-            {
-                Console.WriteLine($"id : {cita.idCita} Fecha: {cita.Fecha} Medico: {cita.idMedico} Paciente: {cita.idPaciente}");
-            }
-        }
-
-
+        return listarMedicos;
     }
+
+    public MedicoBL(BaseEFContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+
+
+}
 }
