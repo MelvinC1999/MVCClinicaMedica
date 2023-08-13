@@ -24,5 +24,6 @@ namespace MVCClinicaMedica.Models
 
         [Required(ErrorMessage = "La contraseña es requerida")]
         public string? Password { get; set; }
+
     }
 }

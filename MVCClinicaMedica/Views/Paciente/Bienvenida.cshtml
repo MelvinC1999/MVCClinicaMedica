@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Bienvenido Paciente";
+    Layout = null;
+}
+@model Paciente
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Bienvenido Paciente</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('https://cuidadores.unir.net/images/formacion/Cursos/bienestarfamiliar.jpg'); /* Cambia la ruta de la imagen de fondo */
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mensaje {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .botones {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .boton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            .boton:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="mensaje">
+        <h1>Bienvenido Paciente</h1>
+    </div>
+    
+@*    <-- extraer el id del paciente que entre para pasarle a los botones y que no este quemado el val -->
+*@    
+    <form method="post" asp-action="VerCitas">
+        <div>
+
+            <span asp-validation-for="Cedula" class="text-danger"></span>
+            <label for="Name">Cedula del Paciente</label>
+            <input asp-for="Cedula" class="form-control" type="text" maxlength="10" />
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Ver Citas Medicas" class="btn btn-primary" />
+        </div>
+    </form>
+     
+    
+
+  @*  <div class="botones">
+        <a href="@Url.Action("VerCitas", "Paciente", new { idPaciente = 4 })" class="boton">Ver Citas del Paciente 3</a>
+    </div>*@
+
+</body>
+</html>

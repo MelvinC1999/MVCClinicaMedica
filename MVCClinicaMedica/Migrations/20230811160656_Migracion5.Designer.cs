@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCClinicaMedica.Migrations
 {
     [DbContext(typeof(BaseEFContext))]
-    [Migration("20230810162453_Migrations")]
-    partial class Migrations
+    [Migration("20230811160656_Migracion5")]
+    partial class Migracion5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
