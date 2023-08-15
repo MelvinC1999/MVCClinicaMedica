@@ -1,0 +1,53 @@
+﻿@model Cita
+
+<h2>Detalles de la Cita</h2>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <td>@Model.idCita</td>
+    </tr>
+    <tr>
+        <th>Fecha</th>
+        <td>@Model.Fecha.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <th>Paciente</th>
+        <td>@Model.Paciente?.Nombre</td>
+    </tr>
+</table>
+
+<h3>Detalles del Paciente</h3>
+<table class="table">
+    <tr>
+        <th>Nombre</th>
+        <td>@Model.Paciente?.Nombre</td>
+    </tr>
+    <tr>
+        <th>Edad</th>
+        <td>@Model.Paciente?.Edad</td>
+    </tr>
+    <tr>
+        <th>Historia Clínica</th>
+        <td>@Model.Paciente?.HistoriaClinica</td>
+    </tr>
+</table>
+
+<h3>Historias Clínicas</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var registro in Model.Paciente?.RegistrosMedicos)
+        {
+            <tr>
+                <td>@registro.Fecha.ToShortDateString()</td>
+                <td>@registro.Descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -53,7 +53,7 @@ namespace MVCClinicaMedica.DBContext
         public virtual DbSet<Consultorio> Consultorios { get; set; }
         public virtual DbSet<Medico> Medicos { get; set; }
         public virtual DbSet<RegistroMedico> RegistrosMedicos { get; set; }
-        public virtual DbSet<HistoriaClinica> HistoriasClinicas { get; set; }
+        //public virtual DbSet<HistoriaClinica> HistoriasClinicas { get; set; }
         public virtual DbSet<EquipoMedico> EquiposMedicos { get; set; }
         public virtual DbSet<EquipoMedicoConsultorio> EquiposMedicosConsultorios { get; set; }
         public virtual DbSet<Especialidad> Especialidades { get; set; }

@@ -24,19 +24,19 @@ namespace MVCClinicaMedica.Models
         //  FK
 
         // tabla hijo de Medico
-        public virtual Medico? Medicos { get; set; }
-        [ForeignKey("idMedico")]
+        public virtual Medico? Medico { get; set; }
+        [ForeignKey("Medico")]
         public int idMedico { get; set; }
 
         // tabla hijo de TipoPago
-        public virtual TipoPago? TiposPagos { get; set; }
-        [ForeignKey("idTipoPago")]
+        public virtual TipoPago? TipoPago { get; set; }
+        [ForeignKey("TipoPago")]
         public int idTipoPago { get; set; }
 
 
         // tabla hijo de Paciente
-        public virtual Paciente? Pacientes { get; set; }
-        [ForeignKey("idPaciente")]
+        public virtual Paciente? Paciente { get; set; }
+        [ForeignKey("Paciente")]
         public int idPaciente { get; set; }
     }
 }

@@ -17,14 +17,14 @@ namespace MVCClinicaMedica.Models
         public int idRegistro { get; set; }
 
         [Required(ErrorMessage = "La descripción es requerida")]
-        [StringLength(1000)]
+        [StringLength(200)]
         public string? Descripcion { get; set; }
 
-
-        // FK
-        // Tabla hija de HistoriaClinica
-        public virtual HistoriaClinica? HistoriasClinicas { get; set; }
-        [ForeignKey("idHistoriaClinica")]
-        public int idHistoria { get; set; }
+        [Required(ErrorMessage = "La fecha es requerida")]
+        [DataType(DataType.Date)]
+        public DateTime Fecha { get; set; }
+        public virtual Paciente? Paciente { get; set; }
+        [ForeignKey("Paciente")]
+        public int idPaciente { get; set; }
     }
 }

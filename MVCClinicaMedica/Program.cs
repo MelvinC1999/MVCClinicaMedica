@@ -31,7 +31,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<FacturaBL>();
 builder.Services.AddScoped<ClienteBL>();
 //Para que no puedas regresar al poner Cerrar Sesion
-builder.Services.AddControllersWithViews(options => {
+builder.Services.AddControllersWithViews(options =>
+{
     options.Filters.Add(
         new ResponseCacheAttribute
         {
@@ -59,6 +60,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
+    //pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
