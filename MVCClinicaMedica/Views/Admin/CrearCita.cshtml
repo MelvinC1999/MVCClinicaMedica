@@ -1,0 +1,131 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Cita
+@{
+    ViewData["Title"] = "Crear Citas";
+    var medicoslist = ViewBag.Medicos;
+}
+
+<div class="contairner">
+    <h3>
+        Crear de Citas
+    </h3>
+    <br />
+    <a asp-controller="Admin" asp-action="Citas" class="btn btn-primary" width="10">Volver</a>
+</div>
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
+
+<div class="contairner">
+    <!--En esta parte hay 4 formas para mostrar los mensajes de las validadciones solo estan valiendo dos-->
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <!-- <div asp-validation-summary="All" class="text-danger">-->
+
+
+    <div asp-validation-for="new" class="text-danger">
+    </div>
+    <div asp-validation-summary="All" class="text-danger">
+    </div>
+    <!--otra manera de mostrar error-->
+    <span class="text-danger">  @TempData["messageTD"] </span>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-8">
+            <form method="post" asp-action="GuardarCita">
+                <div class="form-group">
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                    <label asp-for="Fecha" class="control-label"></label>
+                    <input asp-for="Fecha" id="datepicker" class="form-control" />
+
+                </div>
+                <!-- Combo box para los horarios -->
+                <div class="form-group">
+                    <span asp-validation-for="Medicos.Horario" class="text-danger"></span>
+                    <label>Horario de Medicos</label>
+                    <select id="Horario" class="form-control" asp-for="Medicos">
+                        <option value="">Selecciona un horario</option>
+                        @foreach (var horario in ViewBag.Horarios)
+                        {
+                            <option value="@horario">@horario</option>
+                        }
+                    </select>
+                </div>
+                
+                @*@foreach (var medico in medicoslist)
+                {
+                    <p>Id: @medico.idMedico, Nombre: @medico.Nombre</p>
+                }*@
+                <!-- Combo box para los médicos -->
+                <div class="form-group">
+                    <span asp-validation-for="idMedico" class="text-danger"></span>
+                    <label>Lista de Medicos</label>
+                    <select id="Medico" class="form-control" asp-for="idMedico">
+                        <option value="">Selecciona un médico</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <span asp-validation-for="idPaciente" class="text-danger"></span>
+                    <label>Pacientes Registrados</label>
+                    <!--Aqqui hay un ViewBag ojo mijin-->
+                    <select class="form-control" asp-for="idPaciente" asp-items="ViewBag.Pacientes">
+                        <option disabled selected value="">Seleccionar un Paciente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <span asp-validation-for="idTipoPago" class="text-danger"></span>
+                    <label>Tipo de Pago</label>
+                    <!--Aqqui hay un ViewBag ojo mijin-->
+                    <select class="form-control" asp-for="idTipoPago" asp-items="ViewBag.TipoPagos">
+                        <option disabled selected value="">Seleccionar PAGO</option>
+                    </select>
+                </div>
+                
+
+                <div class="form-group">
+                    <input type="submit" value="Crear Cita" class="btn btn-primary" />
+                </div>
+                
+
+            </form>
+
+        </div>
+        @section Scripts {
+            <script>
+                $(function () {
+                    // Obtener la lista de médicos desde el ViewBag
+                    var medicos = @Html.Raw(Json.Serialize(ViewBag.Medicos));
+                    
+                    // Manejar el evento change del combo box de Horario
+                    $('#Horario').change(function () {
+                        // Obtener el horario seleccionado
+                        var horarioSeleccionado = $(this).val();
+                        
+                        // Filtrar los médicos por el horario seleccionado
+                        var medicosFiltrados = medicos.filter(function (m) {
+                            console.log(horarioSeleccionado);
+                            //aqui esta el error******************************************************************
+                            console.log(m);
+                            return m.horario == horarioSeleccionado;
+                        });
+                        // Actualizar el combo box de Médico con los médicos filtrados
+                        var options = '<option disabled=true value="">Selecciona un médico</option>';
+                        console.log(medicosFiltrados);
+                        medicosFiltrados.forEach(function (m) {
+                            console.log("m" + m.idMedico);
+                            options += '<option value="' + m.idMedico + '">' + m.nombre + ' (' + m.especialidades.descripcion + ')</option>';
+                        });
+                        $('#Medico').html(options);
+                    });
+                });
+            </script>
+        }
+        
+    </div>
+</div>
