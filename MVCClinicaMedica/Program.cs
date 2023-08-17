@@ -2,14 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Repository.Servicios.Contrato;
 using MVCClinicaMedica.Repository.Servicios.Implementacion;
-using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los filtros
+using MVCClinicaMedica.Filtros; // Aseg?rate de importar el namespace de los filtros
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MVCClinicaMedica.BussinesLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Conexión base de datos.
+// Conexion base de datos.
 builder.Services.AddDbContext<BaseEFContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:Connection"));
 
@@ -31,8 +31,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<FacturaBL>();
 builder.Services.AddScoped<ClienteBL>();
 //Para que no puedas regresar al poner Cerrar Sesion
-builder.Services.AddControllersWithViews(options =>
-{
+builder.Services.AddControllersWithViews(options => {
     options.Filters.Add(
         new ResponseCacheAttribute
         {
@@ -46,7 +45,7 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error/Index"); // Cambia "Index" por la acción adecuada en tu controlador Error
+    app.UseExceptionHandler("/Error/Index"); // Cambia "Index" por la acci?n adecuada en tu controlador Error
     app.UseHsts();
 }
 
@@ -60,6 +59,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    //pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.Run();
