@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Authentication;
 using MVCClinicaMedica.Repository.Servicios.Contrato;
 using System.Diagnostics;
 using MVCClinicaMedica.Validador;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVCClinicaMedica.Controllers
 {
+
     public class InicioController : Controller
     {
         private readonly IUsuarioService _usuarioServicio;
