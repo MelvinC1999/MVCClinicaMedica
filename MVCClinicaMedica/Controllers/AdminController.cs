@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCClinicaMedica.DBContext;
-using MVCClinicaMedica.LogicBusnies;
 using MVCClinicaMedica.Models;
 using static System.Formats.Asn1.AsnWriter;
 using System.Transactions;
+using MVCClinicaMedica.BusinessLogic;
 
 namespace MVCClinicaMedica.Controllers
 {
     public class AdminController : Controller
     {
         BaseEFContext context = new BaseEFContext();
-        CitasBL citaBL = new CitasBL();
+        CitaBL citaBL = new CitaBL();
         MedicoBL medicoBL = new MedicoBL(); 
         PacienteBL pacienteBL = new PacienteBL();
         TipoPagoBL pagoBL = new TipoPagoBL();

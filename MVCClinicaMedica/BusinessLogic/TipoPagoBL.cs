@@ -2,13 +2,13 @@
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Repository;
 
-namespace MVCClinicaMedica.LogicBusnies
+namespace MVCClinicaMedica.BusinessLogic
 {
     public class TipoPagoBL
     {
-        public TipoPagoBL() 
+        public TipoPagoBL()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;   
+            Console.ForegroundColor = ConsoleColor.Blue;
         }
         IGenericRepository<TipoPago> repoPago = new GenericRepository<TipoPago>();
         TipoPago tipoPago = new TipoPago();

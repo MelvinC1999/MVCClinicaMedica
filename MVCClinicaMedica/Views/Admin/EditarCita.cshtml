@@ -70,9 +70,9 @@
                 </div>
                 <!-- Combo box para los horarios -->
                 <div class="form-group">
-                    <span asp-validation-for="Medicos.Horario" class="text-danger"></span>
+                    <span asp-validation-for="Medico.Horario" class="text-danger"></span>
                     <label>Horario de Medicos</label>
-                    <select id="Horario" class="form-control" asp-for="Medicos">
+                    <select id="Horario" class="form-control" asp-for="Medico">
                         <option value="">Selecciona un horario</option>
                         @foreach (var horario in ViewBag.Horarios)
                         {

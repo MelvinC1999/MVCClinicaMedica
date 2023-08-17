@@ -9,7 +9,13 @@ public class PacienteBL
 {
     private readonly BaseEFContext _dbContext;
     IGenericRepository<Paciente> repoPaciente = new GenericRepository<Paciente>();
-
+    ///******************************************************KART LINUX ***********************************************
+    
+    ///****************************************************************************************************************
+    /// <summary>
+    /// Constructor con parametro
+    /// </summary>
+    /// <param name="dbContext"></param>
     public PacienteBL(BaseEFContext dbContext)
     {
         _dbContext = dbContext;
@@ -40,6 +46,22 @@ public class PacienteBL
             return -1;
         }
     }
-
-
+    ///******************************************************KART LINUX **********************************************
+    public PacienteBL()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+    }
+    public List<Paciente> retornarPacientesBL()
+    {
+        List<Paciente> listarPacientes = repoPaciente.GetAll().ToList();
+        foreach (var item in listarPacientes)
+        {
+            Console.WriteLine("Id Paciente: |" + item.idPaciente + "|" +
+                " Nombre: |" + item.Nombre + "|" +
+                " Apellido: |" + item.Apellido + "|" +
+                " Cedula: |" + item.Cedula + "|");
+        }
+        return listarPacientes;
+    }
+    ///****************************************************************************************************************
 }
