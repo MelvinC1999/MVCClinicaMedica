@@ -1,0 +1,54 @@
+﻿@model List<Usuario>
+@{
+    ViewData["Title"] = "Administrador de usuarios";
+}
+@{
+    var listUsuarios = (List<Usuario>)ViewData["Usuarios"];
+    var listRoles = (List<Rol>)ViewData["Roles"];
+}
+<h1>Administrador de usuarios</h1>
+<div class="container">   
+    <a asp-controller="Usuario" asp-action="CrearUsuario" class="btn btn-primary">Crear Doctor</a>
+    <br />
+    <br />
+</div>
+<h3>Usuarios</h3>
+<div class="container">
+    <div class="col-lg-10 mb-9 mb-lg-0 position-relative">
+        <div class="row">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Correo</th>
+                            <th>Nombre del Rol</th>
+                            <th>Operaciones permitidas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Correo</td>
+                                <td>@listRoles.FirstOrDefault( m => m.idRol == item.idRol)?.NombreRol</td>
+                                <td></td>
+                                <td>
+                                    <a asp-controller="Admin" asp-action="EditarUsuario" asp-route-idUsuario="@item.idUsuario"
+                                       class="btn btn-primary">Editar Usuario</a>
+                                    <a asp-controller="Admin" asp-action="EliminarUsuario" asp-route-idUsuario="@item.idUsuario"
+                                       class="btn btn-primary">Eliminar Usuario</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No existen usuarios registrados.</p>
+            }
+        </div>
+    </div>
+</div>

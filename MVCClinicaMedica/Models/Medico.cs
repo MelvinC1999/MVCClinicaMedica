@@ -39,10 +39,11 @@ namespace MVCClinicaMedica.Models
 
         // FK
         // tabla hijo de Especialidad
-        public virtual Especialidad? Especialidades { get; set; }
-        [ForeignKey("Especialidad")]
+        [Column("idEspecialidad")]
         public int idEspecialidad { get; set; }
 
-        
+        [ForeignKey("idEspecialidad")]
+        public virtual Especialidad? Especialidades { get; set; }
+
     }
 }
