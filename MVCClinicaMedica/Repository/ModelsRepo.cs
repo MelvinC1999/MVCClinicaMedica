@@ -12,8 +12,8 @@ namespace MVCClinicaMedica.Repository
             using (var context = new BaseEFContext())
             {
                 return context.Citas
-                    .Include(c => c.Medico)
-                    .Include(c => c.Paciente)
+                    .Include(c => c.Medicos)
+                    .Include(c => c.Pacientes)
                     .Where(c => c.idMedico == 3)
                     .ToList();
             }
@@ -23,7 +23,7 @@ namespace MVCClinicaMedica.Repository
             using (var context = new BaseEFContext())
             {
                 return context.Citas
-                .Include(c => c.Paciente)
+                .Include(c => c.Pacientes)
                 .ThenInclude(p => p.RegistrosMedicos)
                 .FirstOrDefault(c => c.idCita == idCita);
             }

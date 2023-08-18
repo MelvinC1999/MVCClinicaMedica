@@ -11,12 +11,12 @@ namespace MVCClinicaMedica.Models
     [Table("Citas")]
     public class Cita
     {
-        //  atributos
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idCita { get; set; }
 
+        [Column("Fecha")]
         [Required(ErrorMessage = "La fecha es requerida")]
         [DataType(DataType.Date)]
         public DateTime Fecha { get; set; }
@@ -24,19 +24,22 @@ namespace MVCClinicaMedica.Models
         //  FK
 
         // tabla hijo de Medico
-        public virtual Medico? Medico { get; set; }
-        [ForeignKey("Medico")]
+        [Column("idMedico")]
         public int idMedico { get; set; }
-
+        [ForeignKey("idMedico")]
+        public virtual Medico? Medicos { get; set; }
+        
         // tabla hijo de TipoPago
-        public virtual TipoPago? TipoPago { get; set; }
-        [ForeignKey("TipoPago")]
+        [Column("idTipoPago")]
         public int idTipoPago { get; set; }
-
+        [ForeignKey("idTipoPago")]
+        public virtual TipoPago? TiposPagos { get; set; }
 
         // tabla hijo de Paciente
-        public virtual Paciente? Paciente { get; set; }
-        [ForeignKey("Paciente")]
+        [Column("idPaciente")]
         public int idPaciente { get; set; }
+        [ForeignKey("idPaciente")]
+        public virtual Paciente? Pacientes { get; set; }
+             
     }
 }

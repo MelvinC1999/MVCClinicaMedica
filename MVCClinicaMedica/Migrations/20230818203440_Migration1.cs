@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MVCClinicaMedica.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationTest : Migration
+    public partial class Migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,7 +65,8 @@ namespace MVCClinicaMedica.Migrations
                     EstadoCivil = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    HistoriaClinica = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,37 +110,38 @@ namespace MVCClinicaMedica.Migrations
                     Telefono = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Horario = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    EspecialidadesidEspecialidad = table.Column<int>(type: "int", nullable: true),
                     idEspecialidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicos", x => x.idMedico);
                     table.ForeignKey(
-                        name: "FK_Medicos_Especialidades_EspecialidadesidEspecialidad",
-                        column: x => x.EspecialidadesidEspecialidad,
+                        name: "FK_Medicos_Especialidades_idEspecialidad",
+                        column: x => x.idEspecialidad,
                         principalTable: "Especialidades",
-                        principalColumn: "idEspecialidad");
+                        principalColumn: "idEspecialidad",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HistoriasClinicas",
+                name: "RegistrosMedicos",
                 columns: table => new
                 {
-                    idHistoria = table.Column<int>(type: "int", nullable: false)
+                    idRegistro = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Historial = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    PacientesidPaciente = table.Column<int>(type: "int", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     idPaciente = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HistoriasClinicas", x => x.idHistoria);
+                    table.PrimaryKey("PK_RegistrosMedicos", x => x.idRegistro);
                     table.ForeignKey(
-                        name: "FK_HistoriasClinicas_Pacientes_PacientesidPaciente",
-                        column: x => x.PacientesidPaciente,
+                        name: "FK_RegistrosMedicos_Pacientes_idPaciente",
+                        column: x => x.idPaciente,
                         principalTable: "Pacientes",
-                        principalColumn: "idPaciente");
+                        principalColumn: "idPaciente",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +177,7 @@ namespace MVCClinicaMedica.Migrations
                     idUsuario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     idRol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -196,31 +198,31 @@ namespace MVCClinicaMedica.Migrations
                     idCita = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MedicosidMedico = table.Column<int>(type: "int", nullable: true),
                     idMedico = table.Column<int>(type: "int", nullable: false),
-                    TiposPagosidTipoPago = table.Column<int>(type: "int", nullable: true),
                     idTipoPago = table.Column<int>(type: "int", nullable: false),
-                    PacientesidPaciente = table.Column<int>(type: "int", nullable: true),
                     idPaciente = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Citas", x => x.idCita);
                     table.ForeignKey(
-                        name: "FK_Citas_Medicos_MedicosidMedico",
-                        column: x => x.MedicosidMedico,
+                        name: "FK_Citas_Medicos_idMedico",
+                        column: x => x.idMedico,
                         principalTable: "Medicos",
-                        principalColumn: "idMedico");
+                        principalColumn: "idMedico",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Citas_Pacientes_PacientesidPaciente",
-                        column: x => x.PacientesidPaciente,
+                        name: "FK_Citas_Pacientes_idPaciente",
+                        column: x => x.idPaciente,
                         principalTable: "Pacientes",
-                        principalColumn: "idPaciente");
+                        principalColumn: "idPaciente",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Citas_TiposPagos_TiposPagosidTipoPago",
-                        column: x => x.TiposPagosidTipoPago,
+                        name: "FK_Citas_TiposPagos_idTipoPago",
+                        column: x => x.idTipoPago,
                         principalTable: "TiposPagos",
-                        principalColumn: "idTipoPago");
+                        principalColumn: "idTipoPago",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,37 +232,17 @@ namespace MVCClinicaMedica.Migrations
                     idConsultorio = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PrecioConsulta = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    MedicosidMedico = table.Column<int>(type: "int", nullable: true),
                     idMedico = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consultorios", x => x.idConsultorio);
                     table.ForeignKey(
-                        name: "FK_Consultorios_Medicos_MedicosidMedico",
-                        column: x => x.MedicosidMedico,
+                        name: "FK_Consultorios_Medicos_idMedico",
+                        column: x => x.idMedico,
                         principalTable: "Medicos",
-                        principalColumn: "idMedico");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RegistrosMedicos",
-                columns: table => new
-                {
-                    idRegistro = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    HistoriasClinicasidHistoria = table.Column<int>(type: "int", nullable: true),
-                    idHistoria = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RegistrosMedicos", x => x.idRegistro);
-                    table.ForeignKey(
-                        name: "FK_RegistrosMedicos_HistoriasClinicas_HistoriasClinicasidHistoria",
-                        column: x => x.HistoriasClinicasidHistoria,
-                        principalTable: "HistoriasClinicas",
-                        principalColumn: "idHistoria");
+                        principalColumn: "idMedico",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,52 +278,52 @@ namespace MVCClinicaMedica.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MontoTotal = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     EstadoPago = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    PacientesidPaciente = table.Column<int>(type: "int", nullable: true),
                     idPaciente = table.Column<int>(type: "int", nullable: false),
-                    ConsultoriosidConsultorio = table.Column<int>(type: "int", nullable: true),
                     idConsultorio = table.Column<int>(type: "int", nullable: false),
-                    CitasidCita = table.Column<int>(type: "int", nullable: true),
                     idCita = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Facturas", x => x.idFactura);
                     table.ForeignKey(
-                        name: "FK_Facturas_Citas_CitasidCita",
-                        column: x => x.CitasidCita,
+                        name: "FK_Facturas_Citas_idCita",
+                        column: x => x.idCita,
                         principalTable: "Citas",
-                        principalColumn: "idCita");
+                        principalColumn: "idCita",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Facturas_Consultorios_ConsultoriosidConsultorio",
-                        column: x => x.ConsultoriosidConsultorio,
+                        name: "FK_Facturas_Consultorios_idConsultorio",
+                        column: x => x.idConsultorio,
                         principalTable: "Consultorios",
-                        principalColumn: "idConsultorio");
+                        principalColumn: "idConsultorio",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Facturas_Pacientes_PacientesidPaciente",
-                        column: x => x.PacientesidPaciente,
+                        name: "FK_Facturas_Pacientes_idPaciente",
+                        column: x => x.idPaciente,
                         principalTable: "Pacientes",
-                        principalColumn: "idPaciente");
+                        principalColumn: "idPaciente",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_MedicosidMedico",
+                name: "IX_Citas_idMedico",
                 table: "Citas",
-                column: "MedicosidMedico");
+                column: "idMedico");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_PacientesidPaciente",
+                name: "IX_Citas_idPaciente",
                 table: "Citas",
-                column: "PacientesidPaciente");
+                column: "idPaciente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_TiposPagosidTipoPago",
+                name: "IX_Citas_idTipoPago",
                 table: "Citas",
-                column: "TiposPagosidTipoPago");
+                column: "idTipoPago");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultorios_MedicosidMedico",
+                name: "IX_Consultorios_idMedico",
                 table: "Consultorios",
-                column: "MedicosidMedico");
+                column: "idMedico");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquiposMedicosConsultorios_idConsultorio",
@@ -349,34 +331,29 @@ namespace MVCClinicaMedica.Migrations
                 column: "idConsultorio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Facturas_CitasidCita",
+                name: "IX_Facturas_idCita",
                 table: "Facturas",
-                column: "CitasidCita");
+                column: "idCita");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Facturas_ConsultoriosidConsultorio",
+                name: "IX_Facturas_idConsultorio",
                 table: "Facturas",
-                column: "ConsultoriosidConsultorio");
+                column: "idConsultorio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Facturas_PacientesidPaciente",
+                name: "IX_Facturas_idPaciente",
                 table: "Facturas",
-                column: "PacientesidPaciente");
+                column: "idPaciente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoriasClinicas_PacientesidPaciente",
-                table: "HistoriasClinicas",
-                column: "PacientesidPaciente");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Medicos_EspecialidadesidEspecialidad",
+                name: "IX_Medicos_idEspecialidad",
                 table: "Medicos",
-                column: "EspecialidadesidEspecialidad");
+                column: "idEspecialidad");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistrosMedicos_HistoriasClinicasidHistoria",
+                name: "IX_RegistrosMedicos_idPaciente",
                 table: "RegistrosMedicos",
-                column: "HistoriasClinicasidHistoria");
+                column: "idPaciente");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rol_Operaciones_idOperacion",
@@ -422,22 +399,19 @@ namespace MVCClinicaMedica.Migrations
                 name: "Consultorios");
 
             migrationBuilder.DropTable(
-                name: "HistoriasClinicas");
-
-            migrationBuilder.DropTable(
                 name: "Operaciones");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
+                name: "Pacientes");
+
+            migrationBuilder.DropTable(
                 name: "TiposPagos");
 
             migrationBuilder.DropTable(
                 name: "Medicos");
-
-            migrationBuilder.DropTable(
-                name: "Pacientes");
 
             migrationBuilder.DropTable(
                 name: "Especialidades");

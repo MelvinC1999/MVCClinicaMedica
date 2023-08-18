@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MVCClinicaMedica.BussinesLogic;
 
 namespace MVCClinicaMedica.Models
 {
@@ -52,12 +53,14 @@ namespace MVCClinicaMedica.Models
         [StringLength(50)]
         [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida")]
         public string? Correo { get; set; }
-
         
-        [StringLength(100)]
+        [StringLength(1000)]
         public string? HistoriaClinica { get; set; }
 
         // Propiedad de navegación para los registros médicos
         public virtual ICollection<RegistroMedico> RegistrosMedicos { get; set; } = new List<RegistroMedico>();
+        public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
+        public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+
     }
 }

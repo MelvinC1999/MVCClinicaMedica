@@ -16,10 +16,12 @@ namespace MVCClinicaMedica.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idEquipo { get; set; }
 
+        [Column("NombreEquipo")]
         [Required(ErrorMessage = "El nombre de equipo es requerido")]
         [StringLength(50)]
         public string? NombreEquipo { get; set; }
 
+        [Column("DescripcionEquipo")]
         [StringLength(200)]
         public string? DescripcionEquipo { get; set; }
 

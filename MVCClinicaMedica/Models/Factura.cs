@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVCClinicaMedica.Models
 {
@@ -29,25 +30,24 @@ namespace MVCClinicaMedica.Models
         [StringLength(20)]
         public string? EstadoPago { get; set; }
 
-
         // FK
         // tabla hijo de Paciente
-        public virtual Paciente? Pacientes { get; set; }
-        [ForeignKey("Paciente")]
+        [Column("idPaciente")]
         public int idPaciente { get; set; }
-
+        [ForeignKey("idPaciente")]
+        public virtual Paciente? Pacientes { get; set; }
 
         // tabla hijo de Consultorio
-        public virtual Consultorio? Consultorios { get; set; }
-        [ForeignKey("Consultorio")]
+        [Column("idConsultorio")]
         public int idConsultorio { get; set; }
-
+        [ForeignKey("idConsultorio")]
+        public virtual Consultorio? Consultorios { get; set; }
 
         // tabla hijo de Cita
-        public virtual Cita? Citas { get; set; }
-        [ForeignKey("Cita")]
+        [Column("idCita")]
         public int idCita { get; set; }
-
+        [ForeignKey("idCita")]
+        public virtual Cita? Citas { get; set; }
 
     }
 }

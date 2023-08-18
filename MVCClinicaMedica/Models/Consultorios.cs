@@ -18,22 +18,18 @@ namespace MVCClinicaMedica.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idConsultorio { get; set; }
 
-
-
         [Required(ErrorMessage = "El precio de consulta es requerido")]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal PrecioConsulta { get; set; }
 
-
         // FK
 
         // tabla hijo de Medico
-        public virtual Medico? Medicos { get; set; }
-        [ForeignKey("Medico")]
+        [Column("idMedico")]
         public int idMedico { get; set; }
-
-
-
+        [ForeignKey("idMedico")]
+        public virtual Medico? Medicos { get; set; }
+        
         // padre de uno a muchos con la tabla de rompimiento "EquipoMedicoConsultorio"
         public virtual ICollection<EquipoMedicoConsultorio> EquiposMedicosConsultorios { get; set; } = new List<EquipoMedicoConsultorio>();
     }

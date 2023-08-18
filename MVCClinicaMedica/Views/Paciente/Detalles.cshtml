@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <th>Paciente</th>
-        <td>@Model.Paciente?.Nombre</td>
+        <td>@Model.Pacientes?.Nombre</td>
     </tr>
 </table>
 
@@ -21,15 +21,15 @@
 <table class="table">
     <tr>
         <th>Nombre</th>
-        <td>@Model.Paciente?.Nombre</td>
+        <td>@Model.Pacientes?.Nombre</td>
     </tr>
     <tr>
         <th>Edad</th>
-        <td>@Model.Paciente?.Edad</td>
+        <td>@Model.Pacientes?.Edad</td>
     </tr>
     <tr>
         <th>Historia Clínica</th>
-        <td>@Model.Paciente?.HistoriaClinica</td>
+        <td>@Model.Pacientes?.HistoriaClinica</td>
     </tr>
 </table>
 
@@ -42,7 +42,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var registro in Model.Paciente?.RegistrosMedicos)
+        @foreach (var registro in Model.Pacientes?.RegistrosMedicos)
         {
             <tr>
                 <td>@registro.Fecha.ToShortDateString()</td>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCClinicaMedica.Migrations
 {
     [DbContext(typeof(BaseEFContext))]
-    [Migration("20230817001634_HistorialClinico")]
-    partial class HistorialClinico
+    [Migration("20230818203440_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,16 +34,20 @@ namespace MVCClinicaMedica.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idCita"));
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Fecha");
 
                     b.Property<int>("idMedico")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idMedico");
 
                     b.Property<int>("idPaciente")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idPaciente");
 
                     b.Property<int>("idTipoPago")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idTipoPago");
 
                     b.HasKey("idCita");
 
@@ -64,18 +68,16 @@ namespace MVCClinicaMedica.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idConsultorio"));
 
-                    b.Property<int?>("MedicosidMedico")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("PrecioConsulta")
                         .HasColumnType("decimal(10, 2)");
 
                     b.Property<int>("idMedico")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idMedico");
 
                     b.HasKey("idConsultorio");
 
-                    b.HasIndex("MedicosidMedico");
+                    b.HasIndex("idMedico");
 
                     b.ToTable("Consultorios");
                 });
@@ -90,12 +92,14 @@ namespace MVCClinicaMedica.Migrations
 
                     b.Property<string>("DescripcionEquipo")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DescripcionEquipo");
 
                     b.Property<string>("NombreEquipo")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("NombreEquipo");
 
                     b.HasKey("idEquipo");
 
@@ -130,7 +134,8 @@ namespace MVCClinicaMedica.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Descripcion");
 
                     b.HasKey("idEspecialidad");
 
@@ -145,12 +150,6 @@ namespace MVCClinicaMedica.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idFactura"));
 
-                    b.Property<int?>("CitasidCita")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ConsultoriosidConsultorio")
-                        .HasColumnType("int");
-
                     b.Property<string>("EstadoPago")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -162,25 +161,25 @@ namespace MVCClinicaMedica.Migrations
                     b.Property<decimal>("MontoTotal")
                         .HasColumnType("decimal(10, 2)");
 
-                    b.Property<int?>("PacientesidPaciente")
-                        .HasColumnType("int");
-
                     b.Property<int>("idCita")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idCita");
 
                     b.Property<int>("idConsultorio")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idConsultorio");
 
                     b.Property<int>("idPaciente")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idPaciente");
 
                     b.HasKey("idFactura");
 
-                    b.HasIndex("CitasidCita");
+                    b.HasIndex("idCita");
 
-                    b.HasIndex("ConsultoriosidConsultorio");
+                    b.HasIndex("idConsultorio");
 
-                    b.HasIndex("PacientesidPaciente");
+                    b.HasIndex("idPaciente");
 
                     b.ToTable("Facturas");
                 });
@@ -203,9 +202,6 @@ namespace MVCClinicaMedica.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("EspecialidadesidEspecialidad")
-                        .HasColumnType("int");
-
                     b.Property<string>("Horario")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -222,11 +218,12 @@ namespace MVCClinicaMedica.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("idEspecialidad")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idEspecialidad");
 
                     b.HasKey("idMedico");
 
-                    b.HasIndex("EspecialidadesidEspecialidad");
+                    b.HasIndex("idEspecialidad");
 
                     b.ToTable("Medicos");
                 });
@@ -289,8 +286,8 @@ namespace MVCClinicaMedica.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("HistoriaClinica")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -324,7 +321,8 @@ namespace MVCClinicaMedica.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("idPaciente")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("idPaciente");
 
                     b.HasKey("idRegistro");
 
@@ -424,36 +422,38 @@ namespace MVCClinicaMedica.Migrations
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Cita", b =>
                 {
-                    b.HasOne("MVCClinicaMedica.Models.Medico", "Medico")
+                    b.HasOne("MVCClinicaMedica.Models.Medico", "Medicos")
                         .WithMany()
                         .HasForeignKey("idMedico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVCClinicaMedica.Models.Paciente", "Paciente")
-                        .WithMany()
+                    b.HasOne("MVCClinicaMedica.Models.Paciente", "Pacientes")
+                        .WithMany("Citas")
                         .HasForeignKey("idPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVCClinicaMedica.Models.TipoPago", "TipoPago")
+                    b.HasOne("MVCClinicaMedica.Models.TipoPago", "TiposPagos")
                         .WithMany()
                         .HasForeignKey("idTipoPago")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Medico");
+                    b.Navigation("Medicos");
 
-                    b.Navigation("Paciente");
+                    b.Navigation("Pacientes");
 
-                    b.Navigation("TipoPago");
+                    b.Navigation("TiposPagos");
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Consultorio", b =>
                 {
                     b.HasOne("MVCClinicaMedica.Models.Medico", "Medicos")
-                        .WithMany()
-                        .HasForeignKey("MedicosidMedico");
+                        .WithMany("Consultorios")
+                        .HasForeignKey("idMedico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medicos");
                 });
@@ -481,15 +481,21 @@ namespace MVCClinicaMedica.Migrations
                 {
                     b.HasOne("MVCClinicaMedica.Models.Cita", "Citas")
                         .WithMany()
-                        .HasForeignKey("CitasidCita");
+                        .HasForeignKey("idCita")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MVCClinicaMedica.Models.Consultorio", "Consultorios")
                         .WithMany()
-                        .HasForeignKey("ConsultoriosidConsultorio");
+                        .HasForeignKey("idConsultorio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MVCClinicaMedica.Models.Paciente", "Pacientes")
-                        .WithMany()
-                        .HasForeignKey("PacientesidPaciente");
+                        .WithMany("Facturas")
+                        .HasForeignKey("idPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Citas");
 
@@ -502,20 +508,22 @@ namespace MVCClinicaMedica.Migrations
                 {
                     b.HasOne("MVCClinicaMedica.Models.Especialidad", "Especialidades")
                         .WithMany()
-                        .HasForeignKey("EspecialidadesidEspecialidad");
+                        .HasForeignKey("idEspecialidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Especialidades");
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.RegistroMedico", b =>
                 {
-                    b.HasOne("MVCClinicaMedica.Models.Paciente", "Paciente")
+                    b.HasOne("MVCClinicaMedica.Models.Paciente", "Pacientes")
                         .WithMany("RegistrosMedicos")
                         .HasForeignKey("idPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Paciente");
+                    b.Navigation("Pacientes");
                 });
 
             modelBuilder.Entity("MVCClinicaMedica.Models.RolOperacion", b =>
@@ -558,6 +566,11 @@ namespace MVCClinicaMedica.Migrations
                     b.Navigation("EquiposMedicosConsultorios");
                 });
 
+            modelBuilder.Entity("MVCClinicaMedica.Models.Medico", b =>
+                {
+                    b.Navigation("Consultorios");
+                });
+
             modelBuilder.Entity("MVCClinicaMedica.Models.Operacion", b =>
                 {
                     b.Navigation("RolOperaciones");
@@ -565,6 +578,10 @@ namespace MVCClinicaMedica.Migrations
 
             modelBuilder.Entity("MVCClinicaMedica.Models.Paciente", b =>
                 {
+                    b.Navigation("Citas");
+
+                    b.Navigation("Facturas");
+
                     b.Navigation("RegistrosMedicos");
                 });
 

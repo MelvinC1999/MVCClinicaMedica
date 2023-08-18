@@ -14,13 +14,13 @@ namespace MVCClinicaMedica.Models
         // la clave principal es una combinacion de esta tabla es una combinacion entre EquipoMedico y Consultorio
         [Key]
         [Column(Order = 0)]
-        [ForeignKey("EquipoMedico")]
+        [ForeignKey("idEquipo")]
         public int idEquipo { get; set; }
         public virtual EquipoMedico? EquiposMedicos { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        [ForeignKey("Consultorio")]
+        [ForeignKey("idConsultorio")]
         public int idConsultorio { get; set; }
         public virtual Consultorio? Consultorios { get; set; }
     }

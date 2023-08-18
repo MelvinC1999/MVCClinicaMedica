@@ -17,6 +17,7 @@ namespace MVCClinicaMedica.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idEspecialidad { get; set; }
 
+        [Column("Descripcion")]
         [Required(ErrorMessage = "La descripción es requerida")]
         [StringLength(100)]
         public string? Descripcion { get; set; }
