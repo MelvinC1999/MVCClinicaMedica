@@ -68,7 +68,7 @@ namespace MVCClinicaMedica.Controllers
             var itemsPacientes = pacientsList.Select(p => new SelectListItem
             {
                 Value = p.idPaciente.ToString(),
-                Text = p.Nombre + " " + p.Apellido + "    Cedula: " + p.Cedula + "    Email: " + p.Correo
+                Text = p.Nombre + " " + p.Apellido + " Cedula: " + p.Cedula + " Email: " + p.Correo
             }).ToList();
             ViewBag.Pacientes = itemsPacientes;
             ///
@@ -191,6 +191,12 @@ namespace MVCClinicaMedica.Controllers
             citaBL.EliminarCitaDB(id);
             citaBL.GuadarCambios();
             return RedirectToAction("Citas");
+        }
+        ///------------------------------------------------------------------------------------------------
+        //NOTIFIACIONES
+        public IActionResult Notificaciones()
+        {
+            return View();
         }
     }
 }

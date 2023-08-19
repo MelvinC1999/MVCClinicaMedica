@@ -31,14 +31,29 @@ public class PacienteBL
         return listarPacientes;
     }
 
+    // cambio return 0 cuando la cedula no existe en la bdd
+    public bool CedulaEsValida(string cedula)
+    {
+        var dbContext = new BaseEFContext();
+        return dbContext.Set<Paciente>().Any(e => e.Cedula == cedula);
+    }
 
-    // arreglar try y catch
     public int BuscarPacientePorCedula(string cedula)
     {
-        try { 
-        var cedulaEncontrada = _dbContext.Set<Paciente>().FirstOrDefault(e => e.Cedula == cedula);
-        return cedulaEncontrada.idPaciente;
+        try
+        {
+            var cedulaEncontrada = _dbContext.Set<Paciente>().FirstOrDefault(e => e.Cedula == cedula);
 
+
+
+            if (cedulaEncontrada != null)
+            {
+                return cedulaEncontrada.idPaciente;
+            }
+            else
+            {
+                return 0; // Cédula no encontrada
+            }
         }
         catch (Exception ex)
         {
