@@ -63,7 +63,7 @@ namespace MVCClinicaMedica.DBContext
         public virtual DbSet<Operacion> Operaciones { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-TCDAN7Q\\SQLEXPRESS;Initial Catalog=MVCClinicaMedica1;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=MELVIN\\SQLEXPRESS;Initial Catalog=MVCClinicaMedica;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 
         // Para la tabla de rompimiento 
