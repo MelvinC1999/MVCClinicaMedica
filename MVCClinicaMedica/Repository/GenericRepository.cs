@@ -12,9 +12,8 @@ namespace MVCClinicaMedica.Repository
         public GenericRepository()
         {
 
-            _context = new BaseEFContext(); ;
+            _context = new BaseEFContext(); 
 
-            _context = new BaseEFContext();
 
             dbSet = _context.Set<T>();
         }

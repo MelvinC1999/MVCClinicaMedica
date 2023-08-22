@@ -6,20 +6,20 @@ using MVCClinicaMedica.Repository;
 
 namespace MVCClinicaMedica.Controllers
 {
-    public class MedicoController : Controller
+    internal class MedicoController : Controller
     {
-        CitasRepo citasRepo = new CitasRepo();
+        readonly CitasRepo _citasRepo;
 
         //private readonly BaseEFContext _context;
 
-        //public MedicoController(BaseEFContext context)
-        //{
-        //    _context = context;
-        //}
+        public MedicoController(CitasRepo citasRepo)
+        {
+            _citasRepo = citasRepo;
+        }
 
         public ActionResult Index(int idMedico)
         {
-            var citas = citasRepo.ObtenerCitasMedico(idMedico);
+            var citas = _citasRepo.ObtenerCitasMedico(idMedico);
             //var citas = _context.Citas
             //    .Include(c => c.Medico)
             //    .Include(c => c.Paciente)

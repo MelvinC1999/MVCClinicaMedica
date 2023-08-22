@@ -6,6 +6,7 @@ using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los fil
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<FacturaBL>();
 builder.Services.AddScoped<ClienteBL>();
+builder.Services.AddScoped<CitasRepo>();
 //Para que no puedas regresar al poner Cerrar Sesion
 builder.Services.AddControllersWithViews(options =>
 {
@@ -60,6 +62,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
+    //pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
+pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
