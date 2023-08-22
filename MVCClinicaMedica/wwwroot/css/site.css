@@ -14,8 +14,8 @@ html {
 }
 
 body {
-<<<<<<< HEAD
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #cef1fc;
 }
 .derecha {
     position: absolute;
@@ -36,10 +36,7 @@ body {
     border: 2px solid #333;
     padding: 10px;
 }
-=======
-    margin-bottom: 60px;
-    background-color: #cef1fc;
-}
+
 
 h1 {
     margin: auto;
@@ -67,4 +64,4 @@ h1 {
 
 /* _Layout.cshtlm */
 
->>>>>>> origin/MergeRickMelvinV1
+/* >>>>>>> origin/MergeRickMelvinV1 */
