@@ -5,10 +5,12 @@
 @{
     var listUsuarios = (List<Usuario>)ViewData["Usuarios"];
     var listRoles = (List<Rol>)ViewData["Roles"];
+    var listOperaciones = (List<Operacion>)ViewData["Operaciones"];
+    var listRolOperaciones = (List<RolOperacion>)ViewData["RolOperaciones"];
 }
 <h1>Administrador de usuarios</h1>
-<div class="container">   
-    <a asp-controller="Usuario" asp-action="CrearUsuario" class="btn btn-primary">Crear Doctor</a>
+<div class="container">
+    <a href="@Url.Action("Registrarse","Usuario")" class="btn btn-primary">Crear Usuario para Doctor</a>
     <br />
     <br />
 </div>
@@ -32,18 +34,23 @@
                         {
                             <tr>
                                 <td>@item.Correo</td>
-                                <td>@listRoles.FirstOrDefault( m => m.idRol == item.idRol)?.NombreRol</td>
-                                <td></td>
+                                <td>@listRoles.FirstOrDefault(m => m.idRol == item.idRol)?.NombreRol</td>
                                 <td>
-                                    <a asp-controller="Admin" asp-action="EditarUsuario" asp-route-idUsuario="@item.idUsuario"
-                                       class="btn btn-primary">Editar Usuario</a>
-                                    <a asp-controller="Admin" asp-action="EliminarUsuario" asp-route-idUsuario="@item.idUsuario"
-                                       class="btn btn-primary">Eliminar Usuario</a>
+                                    @{
+                                        var operacionesRol = listRolOperaciones
+                                        .Where(ro => ro.idRol == item.idRol)
+                                        .Select(ro => listOperaciones.FirstOrDefault(op => op.idOperacion == ro.idOperacion)?.NombreOperacion);
+                                    }
+                                    @string.Join(", ", operacionesRol)
+                                </td>
+                                <td>
+                                    <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@item.idUsuario" class="btn btn-primary">Editar Usuario</a>
+                                    <a asp-controller="Usuario" asp-action="Eliminar" asp-route-id="@item.idUsuario" class="btn btn-primary">Eliminar Usuario</a>
                                 </td>
                             </tr>
                         }
                     </tbody>
-                </table>
+                </table>              
             }
             else
             {
