@@ -34,9 +34,9 @@ namespace MVCClinicaMedica.Repository
     {
         private readonly BaseEFContext _context;
 
-        public CitasRepo(BaseEFContext context)
+        public CitasRepo()
         {
-            _context = context;
+            _context = new BaseEFContext();
         }
 
         public List<Cita> ObtenerCitasMedico(int idMedico)

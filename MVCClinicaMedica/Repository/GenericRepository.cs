@@ -43,6 +43,11 @@ namespace MVCClinicaMedica.Repository
             return dbSet.Where(predicate);
         }
 
+        public T? FindFirstBy(Expression<Func<T, bool>> predicate)
+        {
+            return dbSet.FirstOrDefault(predicate);
+        }
+
         public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate, string include)
         {
             return FindBy(predicate).Include(include);

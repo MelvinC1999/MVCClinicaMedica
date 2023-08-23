@@ -9,22 +9,39 @@ namespace MVCClinicaMedica.Controllers
     internal class MedicoController : Controller
     {
         readonly CitasRepo _citasRepo;
-
+        readonly MedicoBL medicoBL;
         //private readonly BaseEFContext _context;
 
         public MedicoController(CitasRepo citasRepo)
         {
             _citasRepo = citasRepo;
+            medicoBL = new MedicoBL();
+        }
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
         }
 
-        public ActionResult Index(int idMedico)
+        [HttpPost]
+        public ActionResult Login(string correo)
         {
-            var citas = _citasRepo.ObtenerCitasMedico(idMedico);
-            //var citas = _context.Citas
-            //    .Include(c => c.Medico)
-            //    .Include(c => c.Paciente)
-            //    .Where(c => c.idMedico == 3)
-            //    .ToList();
+            int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
+
+            if (idMedico != -1)
+            {
+                return RedirectToAction("Index", "Medico", new { id = idMedico });
+            }
+            else
+            {
+                ModelState.AddModelError("correo", "El correo no existe.");
+                return View();
+            }
+        }
+
+        public ActionResult Index(int id)
+        {
+            var citas = _citasRepo.ObtenerCitasMedico(id);
 
             return View(citas);
         }

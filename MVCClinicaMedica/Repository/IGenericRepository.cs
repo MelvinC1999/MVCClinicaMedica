@@ -23,6 +23,8 @@ namespace MVCClinicaMedica.Repository
         /// <returns>Queryable</returns>
         IQueryable<T> FindBy(Expression<Func<T, bool>> predicate, string include);
 
+        T? FindFirstBy(Expression<Func<T, bool>> predicate);
+
         /// <returns>List of entities</returns>
         IQueryable<T> GetAll();
 
