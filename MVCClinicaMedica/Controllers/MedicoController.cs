@@ -6,17 +6,11 @@ using MVCClinicaMedica.Repository;
 
 namespace MVCClinicaMedica.Controllers
 {
-    internal class MedicoController : Controller
+    public class MedicoController : Controller
     {
-        readonly CitasRepo _citasRepo;
-        readonly MedicoBL medicoBL;
-        //private readonly BaseEFContext _context;
+        readonly CitasRepo citasRepo = new CitasRepo();
+        readonly MedicoBL medicoBL = new MedicoBL();
 
-        public MedicoController(CitasRepo citasRepo)
-        {
-            _citasRepo = citasRepo;
-            medicoBL = new MedicoBL();
-        }
         [HttpGet]
         public ActionResult Login()
         {
@@ -41,7 +35,7 @@ namespace MVCClinicaMedica.Controllers
 
         public ActionResult Index(int id)
         {
-            var citas = _citasRepo.ObtenerCitasMedico(id);
+            var citas = citasRepo.ObtenerCitasMedico(id);
 
             return View(citas);
         }
@@ -53,3 +47,4 @@ namespace MVCClinicaMedica.Controllers
         }
     }
 }
+
