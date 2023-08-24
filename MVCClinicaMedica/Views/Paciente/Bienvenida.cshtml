@@ -7,6 +7,7 @@
     var listaCitas = (List<Cita>)ViewData["citas"];
     var listaPacientes = (List<Paciente>)ViewData["pacientes"];
     var listaMedicos = (List<Medico>)ViewData["medicos"];
+    var listaEspecialidades = (List<Especialidad>)ViewData["especialidades"];
 }
 
 <!DOCTYPE html>
@@ -95,26 +96,25 @@
         <table class="table mt-4">
             <thead>
                 <tr>
-                    <th>ID Cita</th>
-                    <th>ID Paciente</th>
+@*                  <th>ID Cita</th>
+                    <th>ID Paciente</th>*@
                     <th>Nombre Paciente</th>
-                    <th>ID Medico</th>
-                    <th>Nombre Medico</th>
                     <th>Fecha</th>
-                    <!-- Otros campos -->
+                    <th>Nombre Medico</th>
+                    <th>Especialidad</th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach (var cita in listaCitas)
                 {
                     <tr>
-                        <td>@cita.idCita</td>
-                        <td>@cita.idPaciente</td>
                         <td>@listaPacientes.FirstOrDefault(m => m.idPaciente == cita.idPaciente)?.Nombre</td>
-                        <td>@cita.idMedico</td>
-                        <td>@listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Nombre</td>
                         <td>@cita.Fecha</td>
-                        <!-- Otros campos -->
+                        <td>
+                            Dr. @(listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Nombre + " " + listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Apellido)
+                        </td>
+                        <td>@listaEspecialidades.FirstOrDefault(e => e.idEspecialidad == listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.idEspecialidad)?.Descripcion</td>
                     </tr>
                 }
             </tbody>
@@ -122,11 +122,8 @@
     }
     else
     {
-        <h1>NO hay citas</h1>
+        <h1>No hay citas</h1>
     }
-    @*  <div class="botones">
-        <a href="@Url.Action("VerCitas", "Paciente", new { idPaciente = 4 })" class="boton">Ver Citas del Paciente 3</a>
-    </div>*@
 
 </body>
 </html>

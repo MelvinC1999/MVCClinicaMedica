@@ -45,8 +45,6 @@ public class PacienteBL
         {
             var cedulaEncontrada = _baseContext.Set<Paciente>().FirstOrDefault(e => e.Cedula == cedula);
 
-
-
             if (cedulaEncontrada != null)
             {
                 return cedulaEncontrada.idPaciente;
