@@ -5,8 +5,8 @@ using MVCClinicaMedica.Repository.Servicios.Implementacion;
 using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los filtros
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +15,25 @@ builder.Services.AddDbContext<BaseEFContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:Connection"));
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Inicio/IniciarSesion";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
-
-builder.Services.AddControllersWithViews(options => {
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<FacturaBL>();
+builder.Services.AddScoped<ClienteBL>();
+//Para que no puedas regresar al poner Cerrar Sesion
+builder.Services.AddControllersWithViews(options =>
+{
     options.Filters.Add(
         new ResponseCacheAttribute
         {
@@ -32,7 +42,9 @@ builder.Services.AddControllersWithViews(options => {
         }
     );
 });
-
+///************************************************************KALI LINUX /*******************************
+builder.Services.AddScoped<IEmailService, EmailService>();
+///*******************************************************************************************************
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -44,11 +56,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Inicio}/{action=IniciarSesion}/{id?}");
 
 app.Run();
