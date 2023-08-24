@@ -51,3 +51,7 @@ body {
     backdrop-filter: saturate(200%) blur(25px);
     color: hsl(218, 81%, 15%);
 }
+
+.carousel-caption {
+    background-color: #51d1f6;
+}

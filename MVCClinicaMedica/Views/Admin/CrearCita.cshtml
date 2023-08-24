@@ -12,7 +12,7 @@
         Crear de Citas
     </h3>
     <br />
-    <a asp-controller="Admin" asp-action="Citas" class="btn btn-primary" width="10">Volver</a>
+    <a asp-controller="Admin" asp-action="Citas" class="btn btn-warning" width="10"><i class="fas fa-arrow-left"></i> Regresar</a>
 </div>
 
 <script>
@@ -64,7 +64,7 @@
                 <!-- Combo box para los médicos -->
                 <div class="form-group">
                     <span asp-validation-for="idMedico" class="text-danger"></span>
-                    <label>Lista de Medicos</label>
+                    <label for="validationServer04" class="form-label">Lista de Medicos</label>
                     <select id="Medico" class="form-control" asp-for="idMedico">
                         <option value="">Selecciona un médico</option>
                     </select>
@@ -89,7 +89,7 @@
                 
 
                 <div class="form-group">
-                    <input type="submit" value="Crear Cita" class="btn btn-primary" />
+                    <input type="submit" value="Crear Cita" class="btn btn-success mb-3" />
                 </div>
                 
 

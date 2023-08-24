@@ -8,49 +8,59 @@
     var listOperaciones = (List<Operacion>)ViewData["Operaciones"];
     var listRolOperaciones = (List<RolOperacion>)ViewData["RolOperaciones"];
 }
+
 <h1>Administrador de usuarios</h1>
+<!--<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Registrarse","Usuario")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Usuario para Doctor</a>
+        <br />
+        <br />
+    </div>   
+</div>-->
 <div class="container">
-    <a href="@Url.Action("Registrarse","Usuario")" class="btn btn-primary">Crear Usuario para Doctor</a>
-    <br />
-    <br />
-</div>
-<h3>Usuarios</h3>
-<div class="container">
-    <div class="col-lg-10 mb-9 mb-lg-0 position-relative">
+    <div class="col-lg-10 mb-9 mb-lg-0 mx-auto">
         <div class="row">
+            <div class="col-md-4">
+                <!-- Tamaño de columna ajustable según tus necesidades -->
+                <a href="@Url.Action("Registrarse","Usuario")" class="btn btn-success btn-block mb-3"><i class="fas fa-plus-circle"></i> Crear Usuario para Doctor</a>
+            </div>
             @if (Model.Count() > 0)
             {
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Correo</th>
-                            <th>Nombre del Rol</th>
-                            <th>Operaciones permitidas</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.Correo</td>
-                                <td>@listRoles.FirstOrDefault(m => m.idRol == item.idRol)?.NombreRol</td>
-                                <td>
-                                    @{
-                                        var operacionesRol = listRolOperaciones
-                                        .Where(ro => ro.idRol == item.idRol)
-                                        .Select(ro => listOperaciones.FirstOrDefault(op => op.idOperacion == ro.idOperacion)?.NombreOperacion);
-                                    }
-                                    @string.Join(", ", operacionesRol)
-                                </td>
-                                <td>
-                                    <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@item.idUsuario" class="btn btn-primary">Editar Usuario</a>
-                                    <a asp-controller="Usuario" asp-action="Eliminar" asp-route-id="@item.idUsuario" class="btn btn-primary">Eliminar Usuario</a>
-                                </td>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-primary">
+                        <thead class="table-primary">
+                            <tr class="text-center">
+                                <th>Correo</th>
+                                <th>Nombre del Rol</th>
+                                <th>Operaciones permitidas</th>
+                                <th>Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>              
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Correo</td>
+                                    <td>@listRoles.FirstOrDefault(m => m.idRol == item.idRol)?.NombreRol</td>
+                                    <td>
+                                        @{
+                                            var operacionesRol = listRolOperaciones
+                                            .Where(ro => ro.idRol == item.idRol)
+                                            .Select(ro => listOperaciones.FirstOrDefault(op => op.idOperacion == ro.idOperacion)?.NombreOperacion);
+                                        }
+                                        @string.Join(", ", operacionesRol)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Acciones">
+                                            <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@item.idUsuario" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Editar</a>
+                                            <a asp-controller="Usuario" asp-action="Eliminar" asp-route-id="@item.idUsuario" class="btn btn-danger"><i class="fas fa-trash"></i> Eliminar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
             else
             {
