@@ -15,6 +15,7 @@ builder.Services.AddDbContext<BaseEFContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:Connection"));
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);

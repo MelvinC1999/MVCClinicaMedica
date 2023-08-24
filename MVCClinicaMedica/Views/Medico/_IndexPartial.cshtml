@@ -1,8 +1,9 @@
 ﻿@{
     ViewBag.Title = "Inicio de Sesión";
-    var citasMedico = (List<Cita>)ViewBag.citasMedico;
+    //var citasMedico = (List<Cita>)TempData["citasMedico"];
 }
-
+@using MVCClinicaMedica.Session;
+@model List<Cita>
 
 <h2>Listado de Citas</h2>
 
@@ -16,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var cita in citasMedico)
+        @foreach (var cita in Model)
         {
             <tr class="cita-row" data-id-cita="@cita.idCita" onclick="mostrarDetalles(@cita.idCita)">
                 <td>@cita.idCita</td>

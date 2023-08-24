@@ -3,6 +3,11 @@ using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using MVCClinicaMedica.Session;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -11,42 +16,51 @@ namespace MVCClinicaMedica.Controllers
         readonly CitasRepo citasRepo = new CitasRepo();
         readonly MedicoBL medicoBL = new MedicoBL();
 
+        //[HttpGet]
+        //public ActionResult Login()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult Login(string correo)
+        //{
+        //    int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
+
+        //    var citas = citasRepo.ObtenerCitasMedico(idMedico);
+
+        //    return View(citas);
+        //}
+
+
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            var loginViewModel = new LoginViewModel();
+            loginViewModel.IdMedico = HttpContext.Session.GetInt32("idMedico");
+            loginViewModel.CitasMedico = HttpContext.Session.Get<List<Cita>>("citasMedico");
+
+            return View(loginViewModel);
         }
 
         [HttpPost]
         public ActionResult Login(string correo)
         {
             int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
-            ViewBag.idMedico = idMedico;
-
             var citas = citasRepo.ObtenerCitasMedico(idMedico);
-            ViewBag.citasMedico = citas;
-            return View();
+
+            HttpContext.Session.SetInt32("idMedico", idMedico);
+            HttpContext.Session.SetObjectAsJson("citasMedico", citas);
+
+            return RedirectToAction("Login");
         }
 
         public ActionResult Detalles(int idCita)
         {
-            ViewBag.idCita = idCita;
             var cita = citasRepo.ObtenerCitaDeep(idCita);
+
             return View(cita);
         }
-        //public ActionResult Index()
-        //{
-        //    var idMedico = (int)ViewBag.idMedico;
-        //    var citas = citasRepo.ObtenerCitasMedico(idMedico);
-
-        //    return PartialView("_IndexPartial", citas);
-        //}
-
-        //public ActionResult DetallesCita(int idCita)
-        //{
-        //    TempData["idCita"] = idCita;
-        //    return RedirectToAction("Detalles");
-        //}
     }
 }
 
