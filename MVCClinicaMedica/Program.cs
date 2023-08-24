@@ -6,6 +6,7 @@ using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los fil
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,9 @@ builder.Services.AddControllersWithViews(options =>
         }
     );
 });
-
+///************************************************************KALI LINUX /*******************************
+builder.Services.AddScoped<IEmailService, EmailService>();
+///*******************************************************************************************************
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

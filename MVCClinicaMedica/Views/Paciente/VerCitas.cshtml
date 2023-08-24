@@ -4,15 +4,10 @@
 }
 <h2>Lista de Citas</h2>
 
-
-
 @{
     var pacientes = (List<Paciente>)ViewData["pacientes"];
     var medicos = (List<Medico>)ViewData["medicos"];
 }
-
-
-
 
 
 @if (!string.IsNullOrEmpty(ViewBag.Advertencia))
@@ -25,8 +20,6 @@ else if (Model.Count == 0)
 {
     <p>No se encontraron citas para este paciente.</p>
 }
-
-
 
 else
 {
@@ -62,7 +55,5 @@ else
         </tbody>
     </table>
 }
-
-
 
 <a asp-action="Bienvenida" asp-controller="Paciente" class="btn btn-primary">Volver</a>
