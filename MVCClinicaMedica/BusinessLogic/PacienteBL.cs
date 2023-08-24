@@ -8,6 +8,7 @@ using System.Xml;
 public class PacienteBL
 {
     private readonly BaseEFContext _dbContext;
+    BaseEFContext _baseContext = new BaseEFContext();   
     IGenericRepository<Paciente> repoPaciente = new GenericRepository<Paciente>();
     ///******************************************************KART LINUX ***********************************************
     
@@ -38,9 +39,7 @@ public class PacienteBL
     {
         try
         {
-            var cedulaEncontrada = _dbContext.Set<Paciente>().FirstOrDefault(e => e.Cedula == cedula);
-
-
+            var cedulaEncontrada = _baseContext.Set<Paciente>().FirstOrDefault(e => e.Cedula == cedula);
 
             if (cedulaEncontrada != null)
             {

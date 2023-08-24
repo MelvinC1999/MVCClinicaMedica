@@ -28,6 +28,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<FacturaBL>();
 builder.Services.AddScoped<ClienteBL>();
 //Para que no puedas regresar al poner Cerrar Sesion

@@ -66,6 +66,8 @@ namespace MVCClinicaMedica.DBContext
         => optionsBuilder.UseSqlServer("Data Source=USER-PC\\SQLEXPRESS01;Initial Catalog=MVCClinicaMedica;Integrated Security=True; TrustServerCertificate= true");
 
 
+
+
         // Para la tabla de rompimiento 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
