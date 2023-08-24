@@ -5,6 +5,7 @@ using MVCClinicaMedica.Models;
 using static System.Formats.Asn1.AsnWriter;
 using System.Transactions;
 using MVCClinicaMedica.BusinessLogic;
+using MVCClinicaMedica.BussinesLogic;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -15,11 +16,13 @@ namespace MVCClinicaMedica.Controllers
         MedicoBL medicoBL = new MedicoBL(); 
         PacienteBL pacienteBL = new PacienteBL();
         TipoPagoBL pagoBL = new TipoPagoBL();
+        ConsultorioBL cons = new ConsultorioBL();
         TransactionScope scope;
         public IActionResult OpcionesAdmin()
         {
             return View();
         }
+     
         public IActionResult Citas()
         {
             ///No olvidadar iniciar el init
@@ -95,6 +98,9 @@ namespace MVCClinicaMedica.Controllers
             if (ModelState.IsValid)
             {
                 Console.WriteLine("Ingresa al model valid"+ _cita.idPaciente);
+                var ced = pacienteBL.ObtenerListaPacientePorId(_cita.idPaciente);
+                var consu = cons.ObtenerConsultorioPorMed(_cita.idMedico);
+                string cedulla=ced.Cedula;
                 try
                 {
                     using (scope = new TransactionScope())
@@ -103,7 +109,9 @@ namespace MVCClinicaMedica.Controllers
                         citaBL.GuadarCambios();
                         scope.Complete();
                     }
-                    return RedirectToAction("Citas");
+                    //usamos redirect para enviar a vistas fuera de este controlador y carpeta
+                    //primero accion luego controlador
+                    return RedirectToAction("Factura","Facturas",new { idpac=ced.idPaciente, cedula = cedulla, paciente=ced.Nombre, idcit=_cita.idCita, idConsul=consu.idConsultorio, precio=consu.PrecioConsulta });
                 }
                 catch (Exception e)
                 {
