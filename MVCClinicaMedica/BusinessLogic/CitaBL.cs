@@ -7,6 +7,7 @@ using MVCClinicaMedica.Validador;
 public class CitaBL
 {
     private readonly BaseEFContext _dbContext;
+    BaseEFContext _baseEFContext = new BaseEFContext();   
     ValidadorCita valeCita = new ValidadorCita();
     IGenericRepository<Cita> repoCita = new GenericRepository<Cita>();
     Cita cita = new Cita();
@@ -26,10 +27,10 @@ public class CitaBL
         _dbContext = dbContext;
     }
 
-    public async Task<List<Cita>> ObtenerCitasPorIdPaciente(int idPaciente)
+    public List<Cita> ObtenerCitasPorIdPaciente(int idPaciente)
     {
         Console.WriteLine("HOLAAAAAAAAAAA");
-        return await _dbContext.Citas.Where(c => c.idPaciente == idPaciente).ToListAsync();
+        return _baseEFContext.Citas.Where(c => c.idPaciente == idPaciente).ToList();
     }
 
 

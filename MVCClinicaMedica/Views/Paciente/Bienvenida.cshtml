@@ -3,6 +3,11 @@
     Layout = null;
 }
 @model Paciente
+@{
+    var listaCitas = (List<Cita>)ViewData["citas"];
+    var listaPacientes = (List<Paciente>)ViewData["pacientes"];
+    var listaMedicos = (List<Medico>)ViewData["medicos"];
+}
 
 <!DOCTYPE html>
 <html>
@@ -74,9 +79,52 @@
         </div>
     </form>
      
-    
+    <!-- Formulario para búsqueda por cédula -->
+    <form action="@Url.Action("BuscarCedulaPaciente", "Paciente")" method="post" class="mt-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="cedula" placeholder="Ingrese el número de cédula">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Buscar Paciente</button>
+            </div>
+        </div>
+    </form>
 
-  @*  <div class="botones">
+    <!-- Mostrar los resultados -->
+    @if (listaCitas != null)
+    {
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>ID Cita</th>
+                    <th>ID Paciente</th>
+                    <th>Nombre Paciente</th>
+                    <th>ID Medico</th>
+                    <th>Nombre Medico</th>
+                    <th>Fecha</th>
+                    <!-- Otros campos -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cita in listaCitas)
+                {
+                    <tr>
+                        <td>@cita.idCita</td>
+                        <td>@cita.idPaciente</td>
+                        <td>@listaPacientes.FirstOrDefault(m => m.idPaciente == cita.idPaciente)?.Nombre</td>
+                        <td>@cita.idMedico</td>
+                        <td>@listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Nombre</td>
+                        <td>@cita.Fecha</td>
+                        <!-- Otros campos -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h1>NO hay citas</h1>
+    }
+    @*  <div class="botones">
         <a href="@Url.Action("VerCitas", "Paciente", new { idPaciente = 4 })" class="boton">Ver Citas del Paciente 3</a>
     </div>*@
 

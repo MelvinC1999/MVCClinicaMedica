@@ -17,5 +17,10 @@ namespace MVCClinicaMedica.BussinesLogic
             ICollection<Paciente> list = pacienteRepo.ConsultarPorCampo<Paciente>(c => c.Cedula.Equals(ced.Cedula));
             return list;        
         }
+        //public Paciente BuscarporCedulaCliente(Paciente ced)
+        //{
+        //    Paciente list = pacienteRepo.ConsultarPorCampo<Paciente>(c => c.Cedula.Equals(ced.Cedula));
+        //    return list;
+        //}
     }
 }

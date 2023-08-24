@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
+using MVCClinicaMedica.BussinesLogic;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Servicios.Contrato;
@@ -15,6 +17,10 @@ namespace MVCClinicaMedica.Controllers
 {
     public class PacienteController : Controller
     {
+        ClienteBL srvPac = new ClienteBL();
+        PacienteBL pacienteBL = new PacienteBL();
+        CitaBL _citaBL = new CitaBL();
+        MedicoBL medicoBL = new MedicoBL(); 
         public IActionResult Bienvenida()
         {
             return View();
@@ -63,10 +69,6 @@ namespace MVCClinicaMedica.Controllers
 
             Console.WriteLine(paciente.Cedula);
 
-
-
-
-
             //cambio
 
 
@@ -83,23 +85,39 @@ namespace MVCClinicaMedica.Controllers
 
 
 
-            var citas = await citaBL.ObtenerCitasPorIdPaciente(idpacienteCedula);
-
-
-
-
-
+            var citas =  citaBL.ObtenerCitasPorIdPaciente(idpacienteCedula);
             ViewData["citas"] = citas;
             ViewData["pacientes"] = pacientesListas;
             ViewData["medicos"] = medicosListas;
-
-
-
+            ViewBag.Citas = citas;
             return View(citas);
         }
+        //[HttpPost]
+        //public IActionResult BuscarCitasPorCedula(Paciente ced)
+        //{
+        //    ICollection<Paciente> pacientes = srvPac.BuscarporCedula(ced);
 
+        //    ViewBag.Pacientes = pacientes;
+        //    return View("Bienvenida");
+        //}
 
-
+        [HttpPost]
+        public IActionResult BuscarCedulaPaciente(Paciente ced)
+        {
+            int idPaciente = pacienteBL.BuscarPacientePorCedula(ced.Cedula);
+            Console.WriteLine("ID paciente: "+idPaciente);
+            var pacientesListas = pacienteBL.ObtenerListaPacientePorId(idPaciente);
+            var citasLista = _citaBL.ObtenerCitasPorIdPaciente(idPaciente);
+            var medicosListas = medicoBL.ObtenerListaMedicos();
+            
+            ViewBag.Citas = citasLista;
+            ViewData["citas"] = citasLista;
+            ViewData["pacientes"] = pacientesListas;
+            ViewData["medicos"] = medicosListas;
+            //ICollection<Paciente> pacientes = srvPac.BuscarporCedula(ced);
+            //ViewBag.Pacientes = pacientes;
+            return View("Bienvenida");
+        }
 
 
     }
