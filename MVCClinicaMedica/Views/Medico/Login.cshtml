@@ -2,23 +2,24 @@
 
 @{
     ViewBag.Title = "Inicio de Sesión";
+    var idMedico = ViewBag.idMedico;
 }
 
 <h2>Inicio de Sesión</h2>
 
-@using (Html.BeginForm("Login", "Medico", FormMethod.Post))
+<form action="@Url.Action("Login", "Medico")" method="post" class="mt-4">
+    <div class="input-group">
+        <input type="text" class="form-control" name="correo" placeholder="Ingrese el correo">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (idMedico != null && (int)idMedico != -1)
 {
-    <div>
-        @Html.Label("Correo:")
-        @Html.TextBox("correo", "", new { type = "email", required = "required" })
-        @Html.ValidationMessage("correo", "El correo no existe.")
-    </div>
-    <div>
-        <input type="submit" value="Iniciar Sesión" />
-    </div>
+    @Html.Partial("_IndexPartial")
+    @*await Html.PartialAsync("_IndexPartial");*@
 }
 
-@if (!string.IsNullOrEmpty(Model))
-{
-    <p>@Model</p>
-}
+

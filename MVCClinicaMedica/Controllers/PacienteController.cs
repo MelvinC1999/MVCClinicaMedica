@@ -25,13 +25,7 @@ namespace MVCClinicaMedica.Controllers
 
         CitasRepo citasRepo = new CitasRepo();
 
-        public ActionResult Detalles()
-        {
-            int idCita = (int)TempData["idCita"];
-            var cita = citasRepo.ObtenerCitaDeep(idCita);
 
-            return View(cita);
-        }
 
         public async Task<IActionResult> VerCitas(int idPaciente, Paciente paciente)
         {

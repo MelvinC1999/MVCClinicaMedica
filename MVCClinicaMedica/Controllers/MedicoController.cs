@@ -21,30 +21,32 @@ namespace MVCClinicaMedica.Controllers
         public ActionResult Login(string correo)
         {
             int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
+            ViewBag.idMedico = idMedico;
 
-            if (idMedico != -1)
-            {
-                return RedirectToAction("Index", "Medico", new { id = idMedico });
-            }
-            else
-            {
-                ModelState.AddModelError("correo", "El correo no existe.");
-                return View();
-            }
+            var citas = citasRepo.ObtenerCitasMedico(idMedico);
+            ViewBag.citasMedico = citas;
+            return View();
         }
 
-        public ActionResult Index(int id)
+        public ActionResult Detalles(int idCita)
         {
-            var citas = citasRepo.ObtenerCitasMedico(id);
-
-            return View(citas);
+            ViewBag.idCita = idCita;
+            var cita = citasRepo.ObtenerCitaDeep(idCita);
+            return View(cita);
         }
+        //public ActionResult Index()
+        //{
+        //    var idMedico = (int)ViewBag.idMedico;
+        //    var citas = citasRepo.ObtenerCitasMedico(idMedico);
 
-        public ActionResult DetallesCita(int idCita)
-        {
-            TempData["idCita"] = idCita;
-            return RedirectToAction("Detalles", "Paciente");
-        }
+        //    return PartialView("_IndexPartial", citas);
+        //}
+
+        //public ActionResult DetallesCita(int idCita)
+        //{
+        //    TempData["idCita"] = idCita;
+        //    return RedirectToAction("Detalles");
+        //}
     }
 }
 
