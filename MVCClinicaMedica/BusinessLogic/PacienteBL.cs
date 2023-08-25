@@ -22,11 +22,28 @@ public class PacienteBL
         _dbContext = dbContext;
     }
 
+
+    // Jhon
     public Paciente ObtenerListaPacientePorId(int idPaciente)
     {
         var listarPacientes = repoPaciente.Get(idPaciente);
         return listarPacientes;
     }
+
+
+    // Salo
+    public List<Paciente> RetornarListaPacientePorId(int idPaciente)
+    {
+        List<Paciente> listadepacientes = repoPaciente.GetAll().ToList();
+        foreach (var item in listadepacientes)
+        {
+            Console.WriteLine("HOLAAAA" + item);
+        }
+
+        return listadepacientes;
+        
+    }
+
 
     // cambio return 0 cuando la cedula no existe en la bdd
     public bool CedulaEsValida(string cedula)

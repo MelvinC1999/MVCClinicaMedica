@@ -31,56 +31,11 @@ namespace MVCClinicaMedica.Controllers
         }
 
 
-
-        // Ver citas-----------------------------
-
-        public async Task<IActionResult> VerCitas(int idPaciente, Paciente paciente)
-        {
-            var dbContext = new BaseEFContext();
-
-            var pacienteBL = new PacienteBL(dbContext);
-            var citaBL = new CitaBL(dbContext);
-            var medicoBL = new MedicoBL(dbContext);
-            var especialidadBL = new EspecialidadBL(dbContext);
-
-            var idpacienteCedula = pacienteBL.BuscarPacientePorCedula(paciente.Cedula);
-            var pacientesListas = pacienteBL.ObtenerListaPacientePorId(idpacienteCedula);
-            var medicosListas = medicoBL.ObtenerListaMedicos();
-            var especialidadesListas = especialidadBL.ObtenerListaEspecialidades();
-
-            foreach (var item in medicosListas)
-            {
-                Console.WriteLine(" hola nombre " + item.idMedico);
-            }
-
-            Console.WriteLine(paciente.Cedula);
-
-            //cambio
-
-            if (!pacienteBL.CedulaEsValida(paciente.Cedula))
-            {
-                ViewBag.Advertencia = "Ingresa una cédula válida.";
-            }
-
-            if (pacientesListas == null)
-            {
-                ViewBag.Mensaje = "Ingresar una cédula válida"; // Establecer mensaje de advertencia
-            }
-
-            var citas =  citaBL.ObtenerCitasPorIdPaciente(idpacienteCedula);
-            ViewData["citas"] = citas;
-            ViewData["pacientes"] = pacientesListas;
-            ViewData["medicos"] = medicosListas;
-            ViewData["especialidades"] = especialidadesListas;
-            ViewBag.Citas = citas;
-            return View(citas);
-        }
-
         [HttpPost]
         public IActionResult BuscarCedulaPaciente(Paciente ced)
         {
             int idPaciente = pacienteBL.BuscarPacientePorCedula(ced.Cedula);
-            var pacientesListas = pacienteBL.ObtenerListaPacientePorId(idPaciente);
+            var pacientesListas = pacienteBL.RetornarListaPacientePorId(idPaciente);
             var citasLista = _citaBL.ObtenerCitasPorIdPaciente(idPaciente);
             var medicosListas = medicoBL.ObtenerListaMedicos();
             var especialidadesListas = especialidadBL.ObtenerListaEspecialidades();
@@ -91,6 +46,8 @@ namespace MVCClinicaMedica.Controllers
             ViewData["pacientes"] = pacientesListas;
             ViewData["medicos"] = medicosListas;
             ViewData["especialidades"] = especialidadesListas;
+
+
 
             return View("Bienvenida");
         }
