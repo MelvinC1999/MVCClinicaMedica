@@ -18,8 +18,8 @@ namespace MVCClinicaMedica.Repository
         public List<Cita> ObtenerCitasMedico(int idMedico)
         {
             return _context.Citas
-                .Include(c => c.Medico)
-                .Include(c => c.Paciente)
+                .Include(c => c.Medicos)
+                .Include(c => c.Pacientes)
                 .Where(c => c.idMedico == idMedico)  // Usar el parámetro en lugar de un valor fijo
                 .ToList();
         }
@@ -27,7 +27,7 @@ namespace MVCClinicaMedica.Repository
         public Cita? ObtenerCitaDeep(int idCita)
         {
             return _context.Citas
-                .Include(c => c.Paciente)
+                .Include(c => c.Pacientes)
                 .ThenInclude(p => p.RegistrosMedicos)
                 .FirstOrDefault(c => c.idCita == idCita);
         }
