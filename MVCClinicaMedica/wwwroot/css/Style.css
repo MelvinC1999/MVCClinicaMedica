@@ -55,3 +55,144 @@ body {
 .carousel-caption {
     background-color: #51d1f6;
 }
+
+
+/* titulo */
+
+
+.title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px; /* Agrega espacio entre el título y la franja */
+}
+
+    .title::after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -10px; /* Controla la distancia entre la franja y el título */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px; /* Ajusta el ancho de la franja */
+        height: 2px; /* Ajusta el grosor de la franja */
+        background-color: beige; /* Color de la franja */
+    }
+
+
+/* placeholder */
+
+.large-placeholder {
+    text-align: center;
+    display: flex;
+    font-size: 14px;
+    width: 220%;
+    margin-bottom: 20px;
+}
+
+
+/* reducir ancho de la primera columna */
+.custom-table th:first-child,
+.custom-table td:first-child {
+    width: 15%; /* Ajusta el valor según tus preferencias */
+}
+
+/* botones morados degradados Ver Cita y Volver*/
+.button-36 {
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 4rem;
+    padding: 0 1.6rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none; /* Elimina el subrayado */
+    height: 36px;
+    margin-bottom: 20px;
+}
+
+.button-36:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: .1s;
+}
+
+@media (min-width: 768px) {
+    .button-36 {
+        padding: 0 2.6rem;
+    }
+}
+
+/*tabla citas*/
+
+.custom-table {
+    width: 80%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+    .custom-table th, .custom-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+
+
+    .custom-table tbody tr {
+        background-color: rgba(245, 245, 220, 0.7); /* Fondo beige con transparencia */
+        text-align: center;
+        font-size: 14px;
+    }
+
+        .custom-table tbody tr:nth-child(even) {
+            background-color: rgba(128, 0, 128, 0.6); /* Color lila más oscuro */
+        }
+
+
+
+/* boton de buscar citas img */
+.emoticon {
+    width: 20px; /*  ancho del emoticono */
+    height: auto; /* proporción del emoticono */
+    margin-left: 5px; /* espaciado entre el texto y el emoticono */
+}
+
+
+/* mensaje de alerta */
+
+.alert-box {
+    margin-top: 20px;
+    background-color: #f8d7da; /* Color de fondo del cuadro */
+    border: 1px solid #f5c6cb; /* Borde del cuadro */
+    padding: 10px; /* Espaciado dentro del cuadro */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    margin-bottom: 10px;
+}
+
+.alert-icon {
+    width: 20px; /* Ajusta el ancho del icono de alerta */
+    height: auto; /* Mantén la proporción del icono */
+    margin-right: 10px; /* Espaciado entre el icono y el texto */
+}
+
+.alert-text {
+    font-size: 14px; /* Tamaño del texto del mensaje */
+}
