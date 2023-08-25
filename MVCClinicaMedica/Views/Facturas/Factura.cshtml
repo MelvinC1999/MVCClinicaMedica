@@ -1,14 +1,14 @@
 ﻿@model Factura
 @{
-    ViewBag.Title = "Facturacion";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData ["Title"] = "Facturacion";
+    <!--Layout = "~/Views/Shared/_Layout.cshtml";-->
 }
 
-<!DOCTYPE html>
-<html>
+@{
+    //string nombre = string.Empty, cedula = string.Empty;
+}
 <head>
     <title>Factura</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -29,16 +29,14 @@
         </table>
 
         <!-- Formulario para búsqueda por cédula -->
-        <form action="@Url.Action("BuscarCed", "Facturas")" method="post" class="mt-4">
+        <!--<form action="@Url.Action("BuscarCed", "Facturas")" method="post" class="mt-4">
             <div class="input-group">
-                <input type="text" class="form-control" name="cedula" placeholder="Ingrese el número de cédula">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Buscar</button>
-                </div>
+                <input readonly id="cedula" type="text" class="form-control" name="cedula" placeholder="Ingrese el número de cédula">
             </div>
-        </form>
+        </form>-->
 
         <!-- Mostrar los resultados -->
+        @*
         @if (ViewBag.Pacientes != null)
         {
             <table class="table mt-4">
@@ -55,16 +53,24 @@
                     {
                         <tr>
                             <td>@paciente.idPaciente</td>
+                            <td><input type="hidden" value="@paciente.idPaciente" name="idPäciente"></td>
+
                             <td>@paciente.Nombre</td>
                             <td>@paciente.Cedula</td>
                             <!-- Otros campos -->
+                            @{
+                                nombre = paciente.Nombre;
+                                cedula = paciente.Cedula;
+                            }
+                            <!-- Almaceno en variables para despues poner esos valores donde yo quiera -->
                         </tr>
                     }
                 </tbody>
             </table>
         }
-
+        *@
         <!-- Resto del contenido -->
+        <form action="Guardar" method="post">
         <div class="row mt-4">
             <!-- Detalle de Cliente -->
             <div class="col-md-6">
@@ -84,15 +90,14 @@
                                 <!-- Otras opciones -->
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="cliente"><b>Cliente:</b></label>
-                            <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Nombre del cliente">
+                            <input readonly type="text" id="paciente" value="paciente" class="form-control" name="cliente" placeholder="Nombre del cliente">
                         </div>
 
                         <div class="form-group">
                             <label for="identificacion"><b>Identificación:</b></label>
-                            <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Número de identificación">
+                            <input readonly type="text" id="cedula" value="cedula"class="form-control" name="identificacion" placeholder="Número de identificación">
                         </div>
                     </div>
                 </div>
@@ -108,7 +113,7 @@
                         <!-- Estado de Pago -->
                         <div class="form-group">
                             <label><b>Estado de Pago</b></label>
-                            <select class="form-control" id="estadoPago" onchange="handleEstadoPago()">
+                            <select class="form-control" id="estadoPago" name="EstadoPago" onchange="handleEstadoPago()">
                                 <option value="pendiente">Pendiente</option>
                                 <option value="pagado">Pagado</option>
                             </select>
@@ -121,29 +126,40 @@
                             <h5>Total + IVA</h5>
                         </div>
                         <div class="form-group">
-                            <input disabled type="text" id="miCuadro" class="form-control" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
-                            <p id="resultadoParrafo" class="mt-2"></p>
+                            <input readonly type="text" id="precio" class="form-control" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
+                            <input type="text" name="MontoTotal" id="resultadoParrafo">
                         </div>
                         <!-- Botón para Imprimir Factura -->
                         <div class="text-right mt-4">
                             <input type="submit" value="Imprimir Factura" class="btn btn-primary">
                         </div>
+
+                        @*son textos para enviar los datos extra de factura*@
+                        <div class="text-right mt-4">
+                            <input hidden type="text" id="idpac" name="idPaciente">
+                        </div>
+                        <div class="text-right mt-4">
+                            <input hidden type="text" id="idcit" name="idCita">
+                        </div>
+                        <div class="text-right mt-4">
+                            <input hidden type="text" id="idConsul" name="idConsultorio">
+                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        </form>
         <script>
             function handleKeyPress(event) {
                 if (event.keyCode === 13) {
-                    var cuadro = document.getElementById("miCuadro");
+                    var cuadro = document.getElementById("precio");
                     var valor = parseFloat(cuadro.value);
 
                     if (!isNaN(valor)) {
                         var resultado = valor * 0.12;
                         valor = valor + resultado;
                         var parrafo = document.getElementById("resultadoParrafo");
-                        parrafo.textContent = valor;
+                        parrafo.value = valor;
                         cuadro.disabled = true;
                         // Prevenir el comportamiento predeterminado del Enter
                         event.preventDefault();
@@ -152,7 +168,7 @@
             }
             function handleEstadoPago() {
                 var estadoPago = document.getElementById("estadoPago");
-                var cuadro = document.getElementById("miCuadro");
+                var cuadro = document.getElementById("precio");
                 var parrafo = document.getElementById("resultadoParrafo");
 
                 if (estadoPago.value === "pagado") {
@@ -164,6 +180,20 @@
                     parrafo.textContent = "";
                 }
             }
+            // Obtener el valores desde la URL
+            var cedulaValue = new URLSearchParams(window.location.search).get('cedula');
+            var nombreValue = new URLSearchParams(window.location.search).get('paciente');
+            var idpValue = new URLSearchParams(window.location.search).get('idpac');
+            var idcValue = new URLSearchParams(window.location.search).get('idcit');
+            var idcoValue = new URLSearchParams(window.location.search).get('idConsul');
+            var precioValue = new URLSearchParams(window.location.search).get('precio');
+            // Asignar el valor de cedula al campo de entrada de texto
+            document.getElementById('cedula').value = cedulaValue;
+            document.getElementById('paciente').value = nombreValue;
+            document.getElementById('idpac').value =idpValue;
+            document.getElementById('idcit').value = idcValue;
+            document.getElementById('idConsul').value = idcoValue;
+            document.getElementById('precio').value = precioValue;
         </script>
 
     </div>
@@ -172,4 +202,4 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
+

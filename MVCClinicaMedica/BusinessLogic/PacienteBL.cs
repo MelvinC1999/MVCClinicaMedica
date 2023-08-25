@@ -21,14 +21,10 @@ public class PacienteBL
     {
         _dbContext = dbContext;
     }
-    
-    public List<Paciente> ObtenerListaPacientePorId(int idPaciente)
+
+    public Paciente ObtenerListaPacientePorId(int idPaciente)
     {
-        List<Paciente> listarPacientes = repoPaciente.GetAll().ToList();
-        foreach (var item in listarPacientes)
-        {
-            Console.WriteLine("Paciente: |" + item.Nombre + "|");
-        }
+        var listarPacientes = repoPaciente.Get(idPaciente);
         return listarPacientes;
     }
 
