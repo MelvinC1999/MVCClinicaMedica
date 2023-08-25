@@ -3,17 +3,24 @@
     Layout = null;
 }
 @model Paciente
+@{
+    var listaCitas = (List<Cita>)ViewData["citas"];
+    var listaPacientes = (List<Paciente>)ViewData["pacientes"];
+    var listaMedicos = (List<Medico>)ViewData["medicos"];
+    var listaEspecialidades = (List<Especialidad>)ViewData["especialidades"];
+}
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
-    <title>Bienvenido Paciente</title>
+    <link rel="stylesheet" type="text/css" href="~/css/Style.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://cuidadores.unir.net/images/formacion/Cursos/bienestarfamiliar.jpg'); /* Cambia la ruta de la imagen de fondo */
+            background-image: url('../img/family3.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             height: 100vh;
@@ -56,29 +63,65 @@
 </head>
 <body>
     <div class="mensaje">
-        <h1>Bienvenido Paciente</h1>
+        <h1 class="title">Bienvenido Paciente</h1>
     </div>
-    
-@*    <-- extraer el id del paciente que entre para pasarle a los botones y que no este quemado el val -->
-*@    
-    <form method="post" asp-action="VerCitas">
-        <div>
 
-            <span asp-validation-for="Cedula" class="text-danger"></span>
-            <label for="Name">Cedula del Paciente</label>
-            <input asp-for="Cedula" class="form-control" type="text" maxlength="10" />
-
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Ver Citas Medicas" class="btn btn-primary" />
+    <form action="@Url.Action("BuscarCedulaPaciente", "Paciente")" method="post" class="mt-4">
+        <div class="input-group" style="display: flex; justify-content: space-between; align-items: center; margin-left: 5px;">
+            <input type="text" class="form-control large-placeholder" name="cedula" placeholder="Ingresa tu No. de c&eacute;dula">
+            <button class="button-36" type="submit" role="button">
+                Buscar Citas
+                <img src="~/img/lupa2.png" class="emoticon">
+            </button>
         </div>
     </form>
-     
-    
 
-  @*  <div class="botones">
-        <a href="@Url.Action("VerCitas", "Paciente", new { idPaciente = 4 })" class="boton">Ver Citas del Paciente 3</a>
-    </div>*@
+    @if (listaCitas != null)
+    {
+        @if (listaCitas.Any())
+        {
+            <table class="table mt-4 custom-table">
+                <thead>
+                    <tr>
+                        <th>Nombre Paciente</th>
+                        <th>Fecha / Hora</th>
+                        <th>Nombre M&eacute;dico</th>
+                        <th>Especialidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cita in listaCitas)
+                    {
+                        <tr>
+                            <td>@listaPacientes.FirstOrDefault(p => p.idPaciente == cita.idPaciente)?.Nombre</td>
+                            <td>@cita.Fecha</td>
+                            <td>
+                                Dr. @(listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Nombre + " " + listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.Apellido)
+                            </td>
+                            <td>@listaEspecialidades.FirstOrDefault(e => e.idEspecialidad == listaMedicos.FirstOrDefault(m => m.idMedico == cita.idMedico)?.idEspecialidad)?.Descripcion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="alert-box">
+                <img src="~/img/alert.png" class="alert-icon">
+                <h2 class="alert-text">No olvides acudir 15 minutos antes de tu cita.</h2>
+            </div>
+        }
+
+        else
+        {
+            <div class="alert-box">
+                <img src="~/img/activo.png" class="alert-icon">
+                <h2 class="alert-text">Esta c&eacute;dula no existe en base de datos.</h2>
+            </div>
+        }
+    }
+
+    <div>
+        <a href="@Url.Action("Index", "Home")" role="button" class="button-36" style="height: 65px; line-height: 65px;">Volver</a>
+    </div>
 
 </body>
 </html>

@@ -15,10 +15,8 @@ namespace MVCClinicaMedica.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idUsuario { get; set; }
 
-        //[Required(ErrorMessage = "El nombre de usuario es requerido")]
-
+        [Required(ErrorMessage = "El correo es requerido")]
         [StringLength(50)]
-        //validar tipo correo REGEX
         [EmailAddress(ErrorMessage = "Ingrese una dirección de correo válida")]
         public string? Correo { get; set; }
 

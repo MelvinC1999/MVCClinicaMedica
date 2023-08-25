@@ -1,0 +1,18 @@
+﻿/* custom-styles.css */
+.navbar-custom {
+    background-color: #51d1f6; /* Color de fondo verde claro */
+    color: #333; /* Color de texto oscuro */
+}
+
+/* custom-styles.css */
+.navbar-custom .nav-item.btn {
+    background-color: #51d1f6; /* Color de fondo verde claro */
+    color: #333; /* Color de texto oscuro */
+    border-color: #51d1f6; /* Color del borde verde */
+    border-width: 2px; /* Ancho del borde */
+}
+
+.bg-custom {
+    background-color: #ecffff;
+}
+

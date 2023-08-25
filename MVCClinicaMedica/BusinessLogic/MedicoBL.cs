@@ -9,6 +9,7 @@ public class MedicoBL
     private readonly BaseEFContext _dbContext;
     IGenericRepository<Medico> repoMedico = new GenericRepository<Medico>();
     BaseEFContext context = new BaseEFContext();
+
     /// <summary>
     /// Retorno la lsita de los medicos para enviarselo a la vista por ViewBag
     /// </summary>

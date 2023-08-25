@@ -13,5 +13,10 @@ namespace MVCClinicaMedica.BussinesLogic
             facturaRepo.Add(nuevaFactura);
             facturaRepo.SaveChanges();
         }
+        /*public ICollection<Factura> FacturaEager() 
+        {
+
+            return
+        }*/
     }
 }

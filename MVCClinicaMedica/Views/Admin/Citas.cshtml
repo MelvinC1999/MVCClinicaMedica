@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model List<Cita>
+﻿@model List<Cita>
 @{
     ViewData["Title"] = "Citas";
 }
@@ -12,55 +8,41 @@
     var listPagos = (List<TipoPago>)ViewData["TipoPagos"];
 }
 
-<h1>Citas</h1>
-<div class="contairner">
-    
-    <a asp-controller="Admin" asp-action="CrearCita" class="btn btn-primary" width="10">Crear Cita</a>
-    <br />
-    <h3>
-        Lista de clientes
-    </h3>
-    <br />
-</div>
-<div class="contairner">
-    <div class="row">
+<div class="container mt-5">
+    <h1 class="text-center">Citas</h1>
+    <div class="container mt-3">
+        <h3 class="mb-3">Lista de citas</h3>
+        <a asp-controller="Admin" asp-action="CrearCita" class="btn btn-success mb-3"><i class="fas fa-plus-circle"></i> Crear Cita</a>
+
         @if (Model.Count() > 0)
         {
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <td>Id Cita</td>
-                        <td>Fecha de la Cita</td>
-                        <td>Id Medico</td>
-                        <td>Nombre Medico</td>
-                        <td>Id Paciente</td>
-                        <td>Nombre Paciente</td>
-                        <td>Paciente Cedula</td>
-                        <td>iD Pago</td>
-                        <td>Descripcion</td>
+            <table class="table table-bordered table-primary">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th>Fecha de la Cita</th>
+                        <th>Nombre Medico</th>
+                        <th>Nombre Paciente</th>
+                        <th>Paciente Cedula</th>
+                        <th>Descripcion</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-primary">
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.idCita</td>
                             <td>@item.Fecha</td>
-                            <td>@item.idMedico</td>
                             <td>@listMedicos.FirstOrDefault(m => m.idMedico == item.idMedico)?.Nombre</td>
-                            <td>@item.idPaciente</td>
                             <td>@listPacientes.FirstOrDefault(m => m.idPaciente == item.idPaciente)?.Nombre</td>
                             <td>@listPacientes.FirstOrDefault(m => m.idPaciente == item.idPaciente)?.Cedula</td>
-                            <td>@item.idTipoPago</td>
                             <td>@listPagos.FirstOrDefault(m => m.idTipoPago == item.idTipoPago)?.Descripcion</td>
-                            <!--aqui hay que buscar el pais por un select con join-->
-                            <!--de la bdd ya hay que traer los datos ya listos-->
-                            
                             <td>
-                                <a asp-controller="Admin" asp-action="EditarCita" asp-route-fecha="@item.Fecha" asp-route-idCita="@item.idCita"
-                                asp-route-idPaciente="@item.idPaciente" asp-route-idMedico="@item.idMedico" asp-route-idTipoPago="@item.idTipoPago"
-                                   class="btn btn-primary">Editar</a>
-                                <a asp-controller="Admin" asp-action="EliminarCita" asp-route-id="@item.idCita" class="btn btn-primary">Eliminar</a>
+                                <div class="btn-group" role="group">
+                                    <a asp-controller="Admin" asp-action="EditarCita" asp-route-fecha="@item.Fecha" asp-route-idCita="@item.idCita"
+                                       asp-route-idPaciente="@item.idPaciente" asp-route-idMedico="@item.idMedico" asp-route-idTipoPago="@item.idTipoPago"
+                                       class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Editar</a>
+                                    <a asp-controller="Admin" asp-action="EliminarCita" asp-route-id="@item.idCita" class="btn btn-danger"><i class="fas fa-trash"></i> Eliminar</a>
+                                </div>
                             </td>
                         </tr>
                     }
@@ -69,7 +51,7 @@
         }
         else
         {
-            <p>No existe registros mijin</p>
+            <p class="text-center">No existen registros.</p>
         }
     </div>
 </div>
