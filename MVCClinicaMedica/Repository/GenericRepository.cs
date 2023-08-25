@@ -12,9 +12,8 @@ namespace MVCClinicaMedica.Repository
         public GenericRepository()
         {
 
-            _context = new BaseEFContext(); ;
+            _context = new BaseEFContext(); 
 
-            _context = new BaseEFContext();
 
             dbSet = _context.Set<T>();
         }
@@ -42,6 +41,11 @@ namespace MVCClinicaMedica.Repository
         public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             return dbSet.Where(predicate);
+        }
+
+        public T? FindFirstBy(Expression<Func<T, bool>> predicate)
+        {
+            return dbSet.FirstOrDefault(predicate);
         }
 
         public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate, string include)

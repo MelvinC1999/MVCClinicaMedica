@@ -76,6 +76,11 @@ public class MedicoBL
         return horarios;
     }
 
-
+    public int ObtenerIdMedicoPorCorreo(string correo)
+    {
+        var medico = repoMedico.FindFirstBy(m=> m.Correo == correo);
+        if (medico == null) return -1;
+        return medico.idMedico;
+    }
 }
 

@@ -1,101 +1,175 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model Factura
+﻿@model Factura
 @{
     ViewBag.Title = "Facturacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html>
 <head>
     <title>Factura</title>
-    <link rel="stylesheet" type="text/css" href="/css/site.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Factura</h1>
-    @* Formulario para búsqueda por cédula *@
-    <form action="@Url.Action("BuscarCed", "Facturas")" method="post">
-        <input type="text" name="cedula" placeholder="Ingrese el número de cédula">
-        <button type="submit">Buscar</button>
-    </form>
+    <div class="container mt-5">
+        <table class="table">
+            <tr>
+                <td rowspan="3" style="width: 150px;"><img src="~/img/clinica.png" alt="Logo" width="100"></td>
+                <td class="text-right">Email: empresa@example.com</td>
+                <td class="text-left">Dirección: Calle Principal, Ciudad</td>
+            </tr>
+            <tr>
+                <td class="text-right">Teléfono: (123) 456-7890</td>
+                <td class="text-left"></td>
+            </tr>
+            <tr>
+                <td class="text-right">Sitio web: www.empresa.com</td>
+                <td class="text-left"></td>
+            </tr>
+        </table>
 
-    @* Mostrar los resultados *@
-    <table>
+        <!-- Formulario para búsqueda por cédula -->
+        <form action="@Url.Action("BuscarCed", "Facturas")" method="post" class="mt-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="cedula" placeholder="Ingrese el número de cédula">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Mostrar los resultados -->
         @if (ViewBag.Pacientes != null)
         {
-            foreach (var paciente in ViewBag.Pacientes)
-            {
-                <tr>
-                    <td name="idPaciente">@paciente.idPaciente</td>
-                    <td>@paciente.Nombre</td>
-                    <td>@paciente.Cedula</td>
-                    <!-- Otros campos -->
-                </tr>
-            }
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>ID Paciente</th>
+                        <th>Nombre</th>
+                        <th>Cédula</th>
+                        <!-- Otros campos -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var paciente in ViewBag.Pacientes)
+                    {
+                        <tr>
+                            <td>@paciente.idPaciente</td>
+                            <td>@paciente.Nombre</td>
+                            <td>@paciente.Cedula</td>
+                            <!-- Otros campos -->
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
-    </table>
-    @*-----------------------------*@
-    <form method="post" asp-action="Guardar">
-        <div class="cuadro">
-            <p><b>Fecha: </b>@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</p>
-            <input type="hidden" name="fecha" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")">
-            <p><b>Tipo de servicio:</b></p>
-            <p class="derecha"><b>Cliente:</b></p>
-            <p class="identi"><b>Identificacion:</b></p>
-        </div>
-        <h4 style="vertical-align: top; padding-top: 30px"><b>Observaciones</b></h4>
-        <h5 style="vertical-align: top; padding-top: 150px"><b>Estado De Pago</b></h5>
-        <div style="position: absolute; top: 500px; left: 250px">
-            <select name="EstadoPago" id="estadoPago" onchange="handleEstadoPago()">
-                <option value="pendiente">Pendiente</option>
-                <option value="pagado">Pagado</option>
-            </select>
+
+        <!-- Resto del contenido -->
+        <div class="row mt-4">
+            <!-- Detalle de Cliente -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><b>Detalle de Cliente</b></h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><b>Fecha de Emisión:</b> @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                        <input type="hidden" name="fecha" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")">
+
+                        <div class="form-group">
+                            <label for="tipoServicio"><b>Tipo de servicio:</b></label>
+                            <select class="form-control" id="tipoServicio" name="tipoServicio">
+                                <option value="servicio1">Servicio 1</option>
+                                <option value="servicio2">Servicio 2</option>
+                                <!-- Otras opciones -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cliente"><b>Cliente:</b></label>
+                            <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Nombre del cliente">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="identificacion"><b>Identificación:</b></label>
+                            <input type="text" class="form-control" id="identificacion" name="identificacion" placeholder="Número de identificación">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalle de Factura -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><b>Detalle de Factura</b></h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Estado de Pago -->
+                        <div class="form-group">
+                            <label><b>Estado de Pago</b></label>
+                            <select class="form-control" id="estadoPago" onchange="handleEstadoPago()">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="pagado">Pagado</option>
+                            </select>
+                        </div>
+
+                        <!-- Medios de Pago -->
+                        <div class="form-group">
+                            <h4><b>Medios de Pago</b></h4>
+                            <h5>Efectivo</h5>
+                            <h5>Total + IVA</h5>
+                        </div>
+                        <div class="form-group">
+                            <input disabled type="text" id="miCuadro" class="form-control" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
+                            <p id="resultadoParrafo" class="mt-2"></p>
+                        </div>
+                        <!-- Botón para Imprimir Factura -->
+                        <div class="text-right mt-4">
+                            <input type="submit" value="Imprimir Factura" class="btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <h4 style="vertical-align: top; padding-top: 10px"><b>Medios De Pago</b></h4>
-        <h5 style="vertical-align: top; padding-top: 1px; padding-left: 600px"><b>Valor</b></h5>
-        <h5><b>Efectivo</b></h5>
-        <h5>Total+iva</h5>
-        <div style="position: absolute; top: 616px">
-            <input disabled type="text" id="miCuadro" style="position: absolute; top: 0px; left: 585px;width: 100px; height: 22px;" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
-        </div>
-        <b><p id="resultadoParrafo" style="position: absolute; top: 639px; left: 660px;width: 100px; height: 22px;"></p></b>
-        <input type="submit" value="Imprimir Factura">
-    </form>
-    
-    <script>
-        function handleKeyPress(event) {
-            if (event.keyCode === 13) {
-                var cuadro = document.getElementById("miCuadro");
-                var valor = parseFloat(cuadro.value);
+        <script>
+            function handleKeyPress(event) {
+                if (event.keyCode === 13) {
+                    var cuadro = document.getElementById("miCuadro");
+                    var valor = parseFloat(cuadro.value);
 
-                if (!isNaN(valor)) {
-                    var resultado = valor * 0.12;
-                    valor = valor + resultado;
-                    var parrafo = document.getElementById("resultadoParrafo");
-                    parrafo.textContent = valor;
-                    cuadro.disabled = true;
-                    // Prevenir el comportamiento predeterminado del Enter
-                    event.preventDefault();
+                    if (!isNaN(valor)) {
+                        var resultado = valor * 0.12;
+                        valor = valor + resultado;
+                        var parrafo = document.getElementById("resultadoParrafo");
+                        parrafo.textContent = valor;
+                        cuadro.disabled = true;
+                        // Prevenir el comportamiento predeterminado del Enter
+                        event.preventDefault();
+                    }
                 }
             }
-        }
-        function handleEstadoPago() {
-            var estadoPago = document.getElementById("estadoPago");
-            var cuadro = document.getElementById("miCuadro");
-            var parrafo = document.getElementById("resultadoParrafo");
+            function handleEstadoPago() {
+                var estadoPago = document.getElementById("estadoPago");
+                var cuadro = document.getElementById("miCuadro");
+                var parrafo = document.getElementById("resultadoParrafo");
 
-            if (estadoPago.value === "pagado") {
-                cuadro.disabled = false;
-                parrafo.textContent = "";
-            } else {
-                cuadro.disabled = true;
-                cuadro.value = "";
-                parrafo.textContent = "";
+                if (estadoPago.value === "pagado") {
+                    cuadro.disabled = false;
+                    parrafo.textContent = "";
+                } else {
+                    cuadro.disabled = true;
+                    cuadro.value = "";
+                    parrafo.textContent = "";
+                }
             }
-        }
-    </script>
-</body>
+        </script>
 
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

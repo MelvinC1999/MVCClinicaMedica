@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Inicio de Sesión";
+    //var citasMedico = (List<Cita>)TempData["citasMedico"];
+}
+@using MVCClinicaMedica.Session;
+@model List<Cita>
+
+<h2>Listado de Citas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Medico</th>
+            <th>Paciente</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cita in Model)
+        {
+            <tr class="cita-row" data-id-cita="@cita.idCita" onclick="mostrarDetalles(@cita.idCita)">
+                <td>@cita.idCita</td>
+                <td>@cita.Fecha.ToShortDateString()</td>
+                <td>@cita.Medico?.Nombre</td>
+                <td>@cita.Paciente?.Nombre</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function mostrarDetalles(idCita) {
+        window.location.href = "/Medico/Detalles?idCita=" + idCita;
+    }
+</script>
+
+
+
+

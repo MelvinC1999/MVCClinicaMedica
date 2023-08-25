@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MVCClinicaMedica.Controllers
 {
 
-    [Authorize] //solo accede si el usuario esta autorizado
+//    [Authorize] //solo accede si el usuario esta autorizado
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

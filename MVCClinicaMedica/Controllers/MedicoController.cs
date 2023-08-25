@@ -3,36 +3,64 @@ using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using Microsoft.EntityFrameworkCore;
 using MVCClinicaMedica.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using MVCClinicaMedica.Session;
 
 namespace MVCClinicaMedica.Controllers
 {
     public class MedicoController : Controller
     {
-        CitasRepo citasRepo = new CitasRepo();
+        readonly CitasRepo citasRepo = new CitasRepo();
+        readonly MedicoBL medicoBL = new MedicoBL();
 
-        //private readonly BaseEFContext _context;
-
-        //public MedicoController(BaseEFContext context)
+        //[HttpGet]
+        //public ActionResult Login()
         //{
-        //    _context = context;
+        //    return View();
         //}
 
-        public ActionResult Index(int idMedico)
-        {
-            var citas = citasRepo.ObtenerCitasMedico(idMedico);
-            //var citas = _context.Citas
-            //    .Include(c => c.Medico)
-            //    .Include(c => c.Paciente)
-            //    .Where(c => c.idMedico == 3)
-            //    .ToList();
+        //[HttpPost]
+        //public ActionResult Login(string correo)
+        //{
+        //    int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
 
-            return View(citas);
+        //    var citas = citasRepo.ObtenerCitasMedico(idMedico);
+
+        //    return View(citas);
+        //}
+
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            var loginViewModel = new LoginViewModel();
+            loginViewModel.IdMedico = HttpContext.Session.GetInt32("idMedico");
+            loginViewModel.CitasMedico = HttpContext.Session.Get<List<Cita>>("citasMedico");
+
+            return View(loginViewModel);
         }
 
-        public ActionResult DetallesCita(int idCita)
+        [HttpPost]
+        public ActionResult Login(string correo)
         {
-            TempData["idCita"] = idCita;
-            return RedirectToAction("Detalles", "Paciente");
+            int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
+            var citas = citasRepo.ObtenerCitasMedico(idMedico);
+
+            HttpContext.Session.SetInt32("idMedico", idMedico);
+            HttpContext.Session.SetObjectAsJson("citasMedico", citas);
+
+            return RedirectToAction("Login");
+        }
+
+        public ActionResult Detalles(int idCita)
+        {
+            var cita = citasRepo.ObtenerCitaDeep(idCita);
+
+            return View(cita);
         }
     }
 }
+

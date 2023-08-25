@@ -1,0 +1,44 @@
+﻿@*@model List<Cita>
+@{
+    ViewBag.Title = "Inicio de Sesión";
+}
+
+<h2>Inicio de Sesión</h2>
+
+<form action="@Url.Action("Login", "Medico")" method="post" class="mt-4">
+    <div class="input-group">
+        <input type="text" class="form-control" name="correo" placeholder="Ingrese el correo">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (Model != null && Model.Count > 0)
+{
+    @Html.Partial("_IndexPartial", Model)
+}
+*@
+
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Inicio de Sesión";
+}
+
+<h2>Inicio de Sesión</h2>
+
+<form action="@Url.Action("Login", "Medico")" method="post" class="mt-4">
+    <div class="input-group">
+        <input type="text" class="form-control" name="correo" placeholder="Ingrese el correo">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.IdMedico != null && Model.IdMedico != -1)
+{
+    @Html.Partial("_IndexPartial", Model.CitasMedico)
+}
+

@@ -6,6 +6,7 @@ using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los fil
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.Repository;
 using MVCClinicaMedica.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<BaseEFContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:Connection"));
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);
@@ -31,6 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<FacturaBL>();
 builder.Services.AddScoped<ClienteBL>();
+builder.Services.AddScoped<CitasRepo>();
 //Para que no puedas regresar al poner Cerrar Sesion
 builder.Services.AddControllersWithViews(options =>
 {
