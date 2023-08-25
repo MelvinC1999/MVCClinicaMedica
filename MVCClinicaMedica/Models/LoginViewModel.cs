@@ -3,6 +3,7 @@
     public class LoginViewModel
     {
         public int? IdMedico { get; set; }
-        public List<Cita>? CitasMedico { get; set; }
+        public List<Cita> CitasMedico { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

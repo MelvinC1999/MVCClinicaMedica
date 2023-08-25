@@ -15,24 +15,6 @@ namespace MVCClinicaMedica.Controllers
     {
         readonly CitasRepo citasRepo = new CitasRepo();
         readonly MedicoBL medicoBL = new MedicoBL();
-
-        //[HttpGet]
-        //public ActionResult Login()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult Login(string correo)
-        //{
-        //    int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
-
-        //    var citas = citasRepo.ObtenerCitasMedico(idMedico);
-
-        //    return View(citas);
-        //}
-
-
         [HttpGet]
         public ActionResult Login()
         {
@@ -46,14 +28,27 @@ namespace MVCClinicaMedica.Controllers
         [HttpPost]
         public ActionResult Login(string correo)
         {
-            int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
-            var citas = citasRepo.ObtenerCitasMedico(idMedico);
+            try
+            {
+                int idMedico = medicoBL.ObtenerIdMedicoPorCorreo(correo);
+                var citas = citasRepo.ObtenerCitasMedico(idMedico);
 
-            HttpContext.Session.SetInt32("idMedico", idMedico);
-            HttpContext.Session.SetObjectAsJson("citasMedico", citas);
+                HttpContext.Session.SetInt32("idMedico", idMedico);
+                HttpContext.Session.SetObjectAsJson("citasMedico", citas);
 
-            return RedirectToAction("Login");
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                var loginViewModel = new LoginViewModel
+                {
+                    ErrorMessage = ex.Message
+                };
+
+                return View("Login", loginViewModel);
+            }
         }
+
 
         public ActionResult Detalles(int idCita)
         {
