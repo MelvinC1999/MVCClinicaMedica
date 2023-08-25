@@ -79,8 +79,11 @@ public class MedicoBL
 
     public int ObtenerIdMedicoPorCorreo(string correo)
     {
-        var medico = repoMedico.FindFirstBy(m=> m.Correo == correo);
-        if (medico == null) return -1;
+        var medico = repoMedico.FindFirstBy(m => m.Correo == correo);
+        if (medico == null)
+        {
+            throw new Exception("El medico no ha sido encontrado");
+        }
         return medico.idMedico;
     }
 }
