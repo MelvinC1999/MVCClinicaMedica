@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using MVCClinicaMedica.BussinesLogic;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
@@ -41,7 +42,7 @@ namespace MVCClinicaMedica.Controllers
         {
             init();
             srvFac.GuardarFactura(factura);
-            return RedirectToAction("Factura");//cambiar luego la vista
+            return RedirectToAction("CFacturas");//cambiar luego la vista
 
         }  
         [HttpPost]
@@ -50,6 +51,18 @@ namespace MVCClinicaMedica.Controllers
             ICollection<Paciente> pacientes = srvPac.BuscarporCedula(ced);
             ViewBag.Pacientes = pacientes;
             return View("Factura");
+        }
+        public IActionResult CFacturas(Factura factura)
+        {
+            List<Factura> factu = srvFac.FacturaEager().ToList();
+            return View("CFacturas", factu);
+        }
+        [HttpPost]
+        public IActionResult eliminarFactura(int idfac)
+        {
+            Console.WriteLine("yo soy el idfact a eliminar" + idfac);
+            srvFac.EliminarID(idfac);
+            return RedirectToAction("CFacturas");
         }
     }
 }

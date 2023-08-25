@@ -159,7 +159,7 @@
                         var resultado = valor * 0.12;
                         valor = valor + resultado;
                         var parrafo = document.getElementById("resultadoParrafo");
-                        parrafo.value = valor;
+                        parrafo.value = parseFloat(valor).toLocaleString("es-ES", { maximumFractionDigits: 2 });;
                         cuadro.disabled = true;
                         // Prevenir el comportamiento predeterminado del Enter
                         event.preventDefault();
