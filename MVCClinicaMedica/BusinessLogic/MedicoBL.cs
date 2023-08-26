@@ -86,5 +86,14 @@ public class MedicoBL
         }
         return medico.idMedico;
     }
+
+    public Medico CrearMedico(Medico medico)
+    {
+        repoMedico.Add(medico);
+        repoMedico.SaveChanges();
+        return medico;
+    }
+
+    
 }
 

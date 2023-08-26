@@ -59,8 +59,8 @@ namespace MVCClinicaMedica.Models
 
         // Propiedad de navegación para los registros médicos
         public virtual ICollection<RegistroMedico> RegistrosMedicos { get; set; } = new List<RegistroMedico>();
-        public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
-        public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+        //public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
+        //public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 
     }
 }

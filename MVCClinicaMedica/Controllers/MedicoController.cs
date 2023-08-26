@@ -15,6 +15,8 @@ namespace MVCClinicaMedica.Controllers
     {
         readonly CitasRepo citasRepo = new CitasRepo();
         readonly MedicoBL medicoBL = new MedicoBL();
+        readonly EspecialidadBL especialidadBL = new EspecialidadBL();
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -56,6 +58,36 @@ namespace MVCClinicaMedica.Controllers
 
             return View(cita);
         }
+
+        [HttpGet]
+        public IActionResult RegistrarMedico()
+        {
+            ViewBag.Especialidades = especialidadBL.ObtenerListaEspecialidades(); // Obtén la lista de especialidades desde donde sea que las tengas
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegistrarMedico(Medico medico)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    medicoBL.CrearMedico(medico);
+                    // Agregar mensaje de éxito si es necesario
+                    return RedirectToAction("Login");
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Mensaje"] = ex.Message;
+                }
+            }
+
+            ViewBag.Especialidades = especialidadBL.ObtenerListaEspecialidades(); // Obtén la lista de especialidades nuevamente
+            return View(medico);
+        }
+
+
     }
 }
 

@@ -1,0 +1,70 @@
+﻿@model MVCClinicaMedica.Models.Medico
+@{
+    ViewData["Title"] = "Registro de Médico";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Tus enlaces CSS y scripts -->
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4 text-center">
+
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h2 class="card-title">Registrar Médico</h2>
+                        <form asp-controller="Medico" asp-action="RegistrarMedico" method="post" class="d-flex flex-column">
+                            <div class="mb-3">
+                                <input class="form-control" type="text" id="nombre" placeholder="Nombre" required asp-for="Nombre" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="text" id="apellido" placeholder="Apellido" required asp-for="Apellido" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="text" id="telefono" placeholder="Teléfono" required asp-for="Telefono" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="email" id="correo" placeholder="Correo" required asp-for="Correo" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="text" id="horario" placeholder="Horario" required asp-for="Horario" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="especialidad" class="form-label">Especialidad</label>
+                                <select class="form-control" id="especialidad" required asp-for="idEspecialidad">
+                                    @foreach (var especialidad in ViewBag.Especialidades)
+                                    {
+                                        <option value="@especialidad.idEspecialidad">@especialidad.Descripcion</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="col-md-6 mb-3">
+                                    <a href="@Url.Action("Usuarios","Usuario")" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Regresar</a>
+                                </div>
+                                <div class="col-md-6 mb-3 text-md-end">
+                                    <button class="btn btn-primary" type="submit">Registrar</button>
+                                </div>
+                            </div>
+                            @if (ViewData["Mensaje"] != null)
+                            {
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["Mensaje"]
+                                    </div>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tus enlaces a scripts -->
+</body>
+</html>

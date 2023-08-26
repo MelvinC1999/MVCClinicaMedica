@@ -35,4 +35,5 @@ namespace MVCClinicaMedica.Repository
     //internal class HistoriaClinicaRepo : GenericRepository<HistoriaClinica> { }
     internal class PacienteRepo : GenericRepository<Paciente> { }
     internal class RegistroRepo : GenericRepository<RegistroMedico> { }
+    internal class EspecialidadesRepo : GenericRepository<Especialidad>{ }
 }
