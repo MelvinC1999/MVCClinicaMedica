@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authentication;
 using MVCClinicaMedica.Repository.Servicios.Contrato;
 using System.Diagnostics;
 using MVCClinicaMedica.Validador;
+using Microsoft.EntityFrameworkCore;
+using MVCClinicaMedica.BusinessLogic;
+using MVCClinicaMedica.DBContext;
 
 namespace MVCClinicaMedica.Controllers
 {
@@ -23,12 +26,40 @@ namespace MVCClinicaMedica.Controllers
 
         public IActionResult Registrarse()
         {
+
+
+            //// prueba  funciona pero no se guarda en paciente
+            ViewData["Nombre"] = "";
+            ViewData["Apellido"] = "";
+
+
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Registrarse(Usuario modelo)
         {
+            BaseEFContext _dbContext = new BaseEFContext();
+
+            if (ModelState.IsValid)
+            {
+                Paciente paciente = new Paciente
+                {
+                    Nombre = ViewData["Nombre"].ToString(),
+                    Apellido = ViewData["Apellido"].ToString(),
+                    // Asigna otros valores de Paciente utilizando ViewData
+                };
+
+                // Guarda los datos en la base de datos
+                _dbContext.Usuarios.Add(modelo);
+                _dbContext.Pacientes.Add(paciente);
+                _dbContext.SaveChanges();
+
+                return RedirectToAction("RegistroExitoso");
+            }
+
+
             try
             {
                 if (!ValidadorCorreo.EsCorreoValido(modelo.Correo))
@@ -60,6 +91,7 @@ namespace MVCClinicaMedica.Controllers
                 ViewData["Mensaje"] = "Error al registrar el usuario: " + ex.Message;
                 return View("Registrarse", modelo); // Devuelve la vista con el mensaje
             }
+
         }
 
 
@@ -105,5 +137,10 @@ namespace MVCClinicaMedica.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
+
+
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@model MVCClinicaMedica.Models.Usuario;
+﻿@*@model MVCClinicaMedica.Models.Usuario;
 @{
     Layout = null;
 }
@@ -57,5 +57,76 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+*@
+
+@model MVCClinicaMedica.Models.Usuario
+@{
+    Layout = null;
+}
+
+@ViewData<Paciente> 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Style.css" />
+</head>
+<body style="background-image: url('/img/background.jpg'); background-size: cover; background-repeat: no-repeat;">
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-4 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Registrate
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Inicio" asp-action="Registrarse" method="post">
+                        <!-- Campos existentes -->
+                        <input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Correo" />
+                        <input class="form-control mb-3" type="password" placeholder="Contraseña" required asp-for="Password" />
+
+                        <!-- Campos del modelo Paciente.cs -->
+                                <input class="form-control mb-3" type="text" placeholder="Nombre" required value="@ViewData["Nombre"]" />
+                                <input class="form-control mb-3" type="text" placeholder="Apellido" required value="@ViewData["Apellido"]" />
+@*                        <input class="form-control mb-3" type="text" placeholder="Cédula" required asp-for="Cedula" />
+                        <input class="form-control mb-3" type="date" required asp-for="FechaNacimiento" />
+                        <input class="form-control mb-3" type="number" placeholder="Edad" required asp-for="Edad" />
+                        <input class="form-control mb-3" type="text" placeholder="Estado Civil" required asp-for="EstadoCivil" />
+                        <input class="form-control mb-3" type="text" placeholder="Dirección" required asp-for="Direccion" />
+                        <input class="form-control mb-3" type="tel" placeholder="Teléfono" required asp-for="Telefono" />*@
+
+                        <!-- Resto del formulario -->
+                        <div class="d-grid gap-2 mb-3">
+                            <button class="btn btn-primary" type="submit">Registrate</button>
+                        </div>
+                        <!-- Código para mostrar el mensaje de error si existe -->
+                        @if (ViewData["Mensaje"] != null)
+                        {
+                            <div class="form-group">
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["Mensaje"]
+                                </div>
+                            </div>
+                        }
+                        <div class="text-center mt-3">
+                            ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion","Inicio")" class="btn btn-secondary btn-sm"> Iniciar Sesion</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
