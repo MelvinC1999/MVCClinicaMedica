@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Utilitario;
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -31,7 +29,6 @@ namespace MVCClinicaMedica.Controllers
             //ViewData["pass"] = modelo.Password;
             return View();
         }
-
 
 
         [HttpPost]
@@ -69,10 +66,8 @@ namespace MVCClinicaMedica.Controllers
                 
                 var password = modelo.Password;
 
-                //TempData["pass"] = password;
-
-
                 Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modelo);
+                pacienteBL.CrearGuardarPaciente(paciente);
 
                 if (usuario_creado.idUsuario > 0)
                     return RedirectToAction("IniciarSesion");

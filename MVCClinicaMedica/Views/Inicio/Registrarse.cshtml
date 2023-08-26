@@ -1,7 +1,7 @@
 ﻿@model MVCClinicaMedica.Models.Paciente;
 @{
     Layout = null;
-    var contra = (Usuario)ViewData["contrasena"];
+    var Password = (Usuario)ViewData["contrasena"];
 }
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
                             <input class="form-control mb-3" type="text" placeholder="Direccion" required asp-for="Direccion" />
 
                             @*este campo password es para Usuarios*@
-                            <input class="form-control mb-3" type="password" placeholder="Ingresa una clave" required asp-for="@contra.Password" />
+                            <input class="form-control mb-3" type="password" placeholder="Ingresa una clave" required asp-for="@Password" />
 
 
                             <div class="d-grid gap-2 mb-3">

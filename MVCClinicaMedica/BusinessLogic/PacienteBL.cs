@@ -10,6 +10,8 @@ public class PacienteBL
     private readonly BaseEFContext _dbContext;
     BaseEFContext _baseContext = new BaseEFContext();   
     IGenericRepository<Paciente> repoPaciente = new GenericRepository<Paciente>();
+
+
     ///******************************************************KART LINUX ***********************************************
     
     ///****************************************************************************************************************
@@ -44,7 +46,16 @@ public class PacienteBL
         
     }
 
-
+    public void CrearGuardarPaciente(Paciente paciente)
+    {
+        //Validaciones
+        if (true)
+        {
+            repoPaciente.Add(paciente);
+            Console.WriteLine("paciente: |" + paciente.Nombre + " " + paciente.Apellido );
+            repoPaciente.SaveChanges();
+        }
+    }
 
 
 
