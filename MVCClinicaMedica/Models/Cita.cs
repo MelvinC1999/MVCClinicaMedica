@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MVCClinicaMedica.Models
@@ -39,6 +40,7 @@ namespace MVCClinicaMedica.Models
         [Column("idPaciente")]
         public int idPaciente { get; set; }
         [ForeignKey("idPaciente")]
+        [JsonIgnore]
         public virtual Paciente? Pacientes { get; set; }
              
     }

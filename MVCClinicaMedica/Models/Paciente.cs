@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVCClinicaMedica.BussinesLogic;
+using System.Text.Json.Serialization;
 
 namespace MVCClinicaMedica.Models
 {
@@ -59,6 +60,7 @@ namespace MVCClinicaMedica.Models
 
         // Propiedad de navegación para los registros médicos
         public virtual ICollection<RegistroMedico> RegistrosMedicos { get; set; } = new List<RegistroMedico>();
+        //[JsonIgnore]
         //public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
         //public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 

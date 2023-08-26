@@ -1,40 +1,4 @@
-﻿@*@model List<Cita>
-
-<div class="row">
-    <div class="col-md-3">
-        <h3>Citas</h3>
-        <ul class="list-group">
-            @foreach (var cita in Model)
-            {
-                <li class="list-group-item cita-item" data-cita-id="@cita.idCita">@cita.Fecha.ToShortDateString()</li>
-            }
-        </ul>
-    </div>
-    <div class="col-md-9">
-        <div id="detalles-cita">
-            <!-- Detalles de la cita se cargarán aquí -->
-        </div>
-    </div>
-</div>
-
-
-<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var citaItems = document.querySelectorAll(".cita-item");
-            citaItems.forEach(function (citaItem) {
-                citaItem.addEventListener("click", function () {
-                    var idCita = citaItem.getAttribute("data-cita-id");
-                    fetch("/Medico/DetallesCita?idCita=" + idCita)
-                        .then(response => response.text())
-                        .then(data => {
-                            document.getElementById("detalles-cita").innerHTML = data;
-                        })
-                        .catch(error => console.error("Error:", error));
-                });
-            });
-        });
-</script>*@
-
+﻿
 @model List<Cita>
 
 <h2>Listado de Citas</h2>
