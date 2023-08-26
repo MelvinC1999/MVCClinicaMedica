@@ -8,6 +8,7 @@ public class MedicoBL
 {
     private readonly BaseEFContext _dbContext;
     IGenericRepository<Medico> repoMedico = new GenericRepository<Medico>();
+    IGenericRepository<RegistroMedico> repoRegistro = new GenericRepository<RegistroMedico>();
     BaseEFContext context = new BaseEFContext();
 
     /// <summary>
@@ -94,6 +95,13 @@ public class MedicoBL
         return medico;
     }
 
-    
+    public RegistroMedico CrearRegistroMedico(RegistroMedico registroMedico)
+    {
+        repoRegistro.Add(registroMedico);
+        repoRegistro.SaveChanges();
+        return registroMedico;
+    }
+
+
 }
 
