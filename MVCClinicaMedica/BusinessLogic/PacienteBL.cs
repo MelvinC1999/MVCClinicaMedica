@@ -45,6 +45,10 @@ public class PacienteBL
     }
 
 
+
+
+
+
     // cambio return 0 cuando la cedula no existe en la bdd
     public bool CedulaEsValida(string cedula)
     {

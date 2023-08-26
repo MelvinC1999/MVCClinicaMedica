@@ -54,6 +54,39 @@ namespace MVCClinicaMedica.Controllers
 
 
 
+        //Vista UsuarioPaciente
+
+        public IActionResult UsuarioPaciente()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UsuarioPaciente(Paciente paciente)
+        {
+            if (ModelState.IsValid)
+            {
+
+                //Para probar que valga
+
+                BaseEFContext _dbContext  = new BaseEFContext();
+
+
+                // Guardar los datos del paciente en la base de datos
+                _dbContext.Pacientes.Add(paciente);
+                _dbContext.SaveChanges();
+
+                // Redirigir a una página de éxito o realizar otras acciones
+                return RedirectToAction("RegistroExitoso");
+            }
+
+            // Si el modelo no es válido, regresar a la vista con los errores
+            return View();
+        }
+
+
+
+
 
 
 

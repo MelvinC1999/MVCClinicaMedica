@@ -18,55 +18,44 @@ namespace MVCClinicaMedica.Controllers
     public class InicioController : Controller
     {
         private readonly IUsuarioService _usuarioServicio;
+        PacienteBL pacienteBL = new PacienteBL();
+
 
         public InicioController(IUsuarioService usuarioServicio)
         {
             _usuarioServicio = usuarioServicio;
         }
 
-        public IActionResult Registrarse()
+        public IActionResult Registrarse(Usuario modelo)
         {
-
-
-            //// prueba  funciona pero no se guarda en paciente
-            ViewData["Nombre"] = "";
-            ViewData["Apellido"] = "";
-
-
-
+            //ViewData["pass"] = modelo.Password;
             return View();
         }
 
+
+
         [HttpPost]
-        public async Task<IActionResult> Registrarse(Usuario modelo)
+        public async Task<IActionResult> Registrarse(Usuario modelo, Paciente paciente)
         {
-            BaseEFContext _dbContext = new BaseEFContext();
-
-            if (ModelState.IsValid)
-            {
-                Paciente paciente = new Paciente
-                {
-                    Nombre = ViewData["Nombre"].ToString(),
-                    Apellido = ViewData["Apellido"].ToString(),
-                    // Asigna otros valores de Paciente utilizando ViewData
-                };
-
-                // Guarda los datos en la base de datos
-                _dbContext.Usuarios.Add(modelo);
-                _dbContext.Pacientes.Add(paciente);
-                _dbContext.SaveChanges();
-
-                return RedirectToAction("RegistroExitoso");
-            }
-
-
             try
             {
-                if (!ValidadorCorreo.EsCorreoValido(modelo.Correo))
+                 //El correo que entra es para Paciente, hay que replicar la info a Usuarios
+                if (!ValidadorCorreo.EsCorreoValido(paciente.Correo))
                 {
                     ViewData["Mensaje"] = "Correo inválido. Por favor, ingresa un correo válido.";
-                    return View("Registrarse", modelo);
+                    return View("Registrarse", paciente);
                 }
+
+                modelo.Correo = paciente.Correo;
+                // hasta correo esta bien xd
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                //esta password que entra es para Usuarios
+                Console.WriteLine(modelo.Correo);
+                var pass = ViewData["contrasena"];
+                Console.WriteLine(pass);
+
+
 
                 if (!ValidadorPassword.EsPasswordValido(modelo.Password))
                 {
@@ -77,6 +66,11 @@ namespace MVCClinicaMedica.Controllers
                 modelo.idRol = 1;
 
                 modelo.Password = Utilidades.EncriptarClave(modelo.Password);
+                
+                var password = modelo.Password;
+
+                //TempData["pass"] = password;
+
 
                 Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modelo);
 
@@ -85,13 +79,13 @@ namespace MVCClinicaMedica.Controllers
 
                 ViewData["Mensaje"] = "No se pudo crear el usuario";
                 return View("Registrarse", modelo); // Devuelve la vista con el mensaje
+
             }
             catch (Exception ex)
             {
                 ViewData["Mensaje"] = "Error al registrar el usuario: " + ex.Message;
                 return View("Registrarse", modelo); // Devuelve la vista con el mensaje
             }
-
         }
 
 
@@ -144,3 +138,4 @@ namespace MVCClinicaMedica.Controllers
 
     }
 }
+    
