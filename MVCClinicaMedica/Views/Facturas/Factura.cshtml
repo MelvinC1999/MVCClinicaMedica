@@ -82,14 +82,7 @@
                         <p class="card-text"><b>Fecha de Emisión:</b> @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</p>
                         <input type="hidden" name="fecha" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")">
 
-                        <div class="form-group">
-                            <label for="tipoServicio"><b>Tipo de servicio:</b></label>
-                            <select class="form-control" id="tipoServicio" name="tipoServicio">
-                                <option value="servicio1">Servicio 1</option>
-                                <option value="servicio2">Servicio 2</option>
-                                <!-- Otras opciones -->
-                            </select>
-                        </div>
+                   
                         <div class="form-group">
                             <label for="cliente"><b>Cliente:</b></label>
                             <input readonly type="text" id="paciente" value="paciente" class="form-control" name="cliente" placeholder="Nombre del cliente">
@@ -122,13 +115,18 @@
                         <!-- Medios de Pago -->
                         <div class="form-group">
                             <h4><b>Medios de Pago</b></h4>
-                            <h5>Efectivo</h5>
+                            <h5>Subtotal</h5>
+                                <div class="form-group">
+                                    <input readonly type="text" id="precio" class="form-control" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
+                                    
+                                </div>
                             <h5>Total + IVA</h5>
+                            <div class="form-group">
+                                    <input readonly type="text" name="MontoTotal" id="resultadoParrafo" class="form-control">
+                            </div>
+                               
                         </div>
-                        <div class="form-group">
-                            <input readonly type="text" id="precio" class="form-control" placeholder="Ingrese el valor" onkeypress="handleKeyPress(event)">
-                            <input type="text" name="MontoTotal" id="resultadoParrafo">
-                        </div>
+                        
                         <!-- Botón para Imprimir Factura -->
                         <div class="text-right mt-4">
                             <input type="submit" value="Imprimir Factura" class="btn btn-primary">

@@ -10,7 +10,7 @@
         <h3 class="mb-3">Lista de Facturas</h3>
 @if (Model.Count() >0)
 {
-    <table class="table mt-4">
+        <table class="table mt-4 table-bordered table-striped" style="background-color: lightblue;">
         <thead>
             <tr>
                 <th>ID Factura</th>
@@ -40,7 +40,7 @@
                     <td>@factura.Citas.Medicos.Nombre</td>
                     <td>
                                 <!--uso asp route para pasar el ur tambien se puede usar action="(arroba)Url.Action("EliminarFactura", "NombreDelControlador")")-->
-                                <form method="post" asp-controller="Facturas" asp-action="eliminarFactura">
+                                <form method="post" asp-controller="Facturas" asp-action="eliminarFactura" onsubmit="return confirm('¿Está seguro de eliminar esta factura?');">
                                     <input type="hidden" name="idfac" value="@factura.idFactura" />
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Eliminar</button>
                                 </form>
