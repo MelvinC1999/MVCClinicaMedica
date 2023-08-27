@@ -76,8 +76,9 @@
         </div>
     </form>
 
-    @if (listaCitas != null)
-    {
+
+   @if (listaCitas != null)
+   {
         @if (listaCitas.Any())
         {
             <table class="table mt-4 custom-table">
@@ -110,14 +111,17 @@
             </div>
         }
 
-        else
+        // para cuando no hay nada de citas
+        else if(!listaCitas.Any())
         {
             <div class="alert-box">
                 <img src="~/img/activo.png" class="alert-icon">
-                <h2 class="alert-text">Esta c&eacute;dula no existe en base de datos.</h2>
+                <h2 class="alert-text"> Verifica la c&eacute;dula ingresada o paciente sin citas registradas </h2>
             </div>
+
         }
-    }
+   }
+
 
     <div>
         <a href="@Url.Action("Index", "Home")" role="button" class="button-36" style="height: 65px; line-height: 65px;">Volver</a>
