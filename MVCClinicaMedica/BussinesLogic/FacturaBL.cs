@@ -13,10 +13,22 @@ namespace MVCClinicaMedica.BussinesLogic
             facturaRepo.Add(nuevaFactura);
             facturaRepo.SaveChanges();
         }
-        /*public ICollection<Factura> FacturaEager() 
+        public List<Factura> FacturaEager() 
         {
+            IQueryable<Factura> list = facturaRepo.todosEager<Factura>(c => c.Consultorios, c => c.Citas, c => c.Citas.Medicos, c => c.Pacientes);
+            foreach (var item in list)
+            {
+                Console.WriteLine("IdFactura: " + " " + item.idCita + " fecha: " + "" + item.Fecha + " " + " nombreCliente:" + item.Pacientes.Nombre + " " + " medico:" + item.Citas.Medicos.Nombre + " " + " consultorio:" + item.Consultorios.idConsultorio);
 
-            return
-        }*/
+            }
+            return list.ToList();
+        }
+        public void EliminarID(int idfac)
+        {
+            Console.WriteLine("eliminado correctamente el" + idfac);
+            var factu = facturaRepo.Get(idfac);
+            facturaRepo.HardDelete(factu);
+            facturaRepo.SaveChanges();
+        }
     }
 }

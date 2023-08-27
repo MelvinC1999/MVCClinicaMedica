@@ -6,9 +6,12 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Transactions;
 using MVCClinicaMedica.BusinessLogic;
 using MVCClinicaMedica.BussinesLogic;
+using Microsoft.AspNetCore.Authorization;
+using MVCClinicaMedica.Filtros;
 
 namespace MVCClinicaMedica.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         BaseEFContext context = new BaseEFContext();
@@ -18,11 +21,14 @@ namespace MVCClinicaMedica.Controllers
         TipoPagoBL pagoBL = new TipoPagoBL();
         ConsultorioBL cons = new ConsultorioBL();
         TransactionScope scope;
+
+        [AutorizarUsuario(3)]
         public IActionResult OpcionesAdmin()
         {
             return View();
         }
-     
+
+        [AutorizarUsuario(3)] // Permitir idOperacion 1, 2 y 3
         public IActionResult Citas()
         {
             ///No olvidadar iniciar el init
@@ -90,6 +96,8 @@ namespace MVCClinicaMedica.Controllers
         /// <param name="_cita"></param>
         /// <returns></returns>
         // el metodo nos redirige a una html con el nombre Guardar
+
+        [AutorizarUsuario(3)]
         public IActionResult GuardarCita(Cita _cita)
         {
             ///llamamos el metodo para inciciar las listas, falta iniciar lo demas
@@ -146,6 +154,8 @@ namespace MVCClinicaMedica.Controllers
         /// los combos box
         /// </summary>
         /// <returns></returns>
+
+        [AutorizarUsuario(3)]
         public IActionResult EditarCita(Cita _cita)
         {
             /// para enviar las listas y busque por eager 
@@ -154,6 +164,8 @@ namespace MVCClinicaMedica.Controllers
             init2();
             return View(_cita);
         }
+
+        [AutorizarUsuario(3)]
         public IActionResult ActualizarCita(Cita _cita, int id)
         {
             ///llamamos el metodo para inciciar las listas, falta iniciar lo demas
@@ -202,6 +214,8 @@ namespace MVCClinicaMedica.Controllers
         }
         ///------------------------------------------------------------------------------------------------
         //NOTIFIACIONES
+
+        [AutorizarUsuario(3)]
         public IActionResult Notificaciones()
         {
             return View();

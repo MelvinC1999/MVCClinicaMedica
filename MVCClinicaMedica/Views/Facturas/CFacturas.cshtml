@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Factura>
+<div class="container mt-5">
+    <h1 class="text-center">Facturas</h1>
+    <div class="container mt-3">
+        <h3 class="mb-3">Lista de Facturas</h3>
+@if (Model.Count() >0)
+{
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>ID Factura</th>
+                <th>Fecha</th>
+                <th>Monto Total</th>
+                <th>Estado de pago</th>
+                <th>Nombre Paciente</th>
+                <th>Apellido Paciente</th>
+                <th>Cedula</th>
+                <th>Consultorio</th>
+                <th>Medico</th>
+                <!-- Otros campos -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var factura in Model)
+            {
+                <tr>
+                    <td>@factura.idFactura</td>
+                    <td>@factura.Fecha</td>
+                    <td>@factura.MontoTotal</td>
+                    <td>@factura.EstadoPago</td>
+                    <td>@factura.Pacientes.Nombre</td>
+                    <td>@factura.Pacientes.Apellido</td>
+                    <td>@factura.Pacientes.Cedula</td>
+                    <td>@factura.idConsultorio</td>
+                    <td>@factura.Citas.Medicos.Nombre</td>
+                    <td>
+                                <!--uso asp route para pasar el ur tambien se puede usar action="(arroba)Url.Action("EliminarFactura", "NombreDelControlador")")-->
+                                <form method="post" asp-controller="Facturas" asp-action="eliminarFactura">
+                                    <input type="hidden" name="idfac" value="@factura.idFactura" />
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Eliminar</button>
+                                </form>
+                    </td>
+                    <!-- Otros campos -->
+                    @*@{
+                        nombre = paciente.Nombre;
+                        cedula = paciente.Cedula;
+                    }*@
+                    <!-- Almaceno en variables para despues poner esos valores donde yo quiera -->
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+    
+}
+        else
+        {
+    <p class="text-center">No existen registros.</p>
+        }
+    </div>
+</div>
+<a asp-controller="Home" asp-action="Index" class="btn btn-warning" width="10"><i class="fas fa-arrow-left"></i> Menu Principal</a>

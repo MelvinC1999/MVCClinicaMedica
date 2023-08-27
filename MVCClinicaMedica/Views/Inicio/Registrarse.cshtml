@@ -1,6 +1,7 @@
-﻿@model MVCClinicaMedica.Models.Usuario;
+﻿@model MVCClinicaMedica.Models.Paciente;
 @{
     Layout = null;
+    var Password = (Usuario)ViewData["contrasena"];
 }
 
 <!DOCTYPE html>
@@ -22,13 +23,25 @@
 
                 <div class="card">
                     <div class="card-header">
-                       Registrate
+                        Registrate
                     </div>
                     <div class="card-body">
 
-                        <form asp-controller="Inicio" asp-action="Registrarse" method="post">                         
-                            <input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Correo" />           
-                            <input class="form-control mb-3" type="password" placeholder="Contraseña" required asp-for="Password" />
+                        <form asp-controller="Inicio" asp-action="Registrarse" method="post">
+                            <input class="form-control mb-3" type="text" placeholder="Nombre" required asp-for="Nombre" />
+                            <input class="form-control mb-3" type="text" placeholder="Apellido" required asp-for="Apellido" />
+                            <input class="form-control mb-3" type="text" placeholder="Cedula" required asp-for="Cedula" />
+                            <input class="form-control mb-3" type="text" placeholder="Direccion" required asp-for="Direccion" />
+                            <input class="form-control mb-3" type="date" placeholder="FechaNacimiento" required asp-for="FechaNacimiento" />
+                            <input class="form-control mb-3" type="text" placeholder="Edad" required asp-for="Edad" />
+                            <input class="form-control mb-3" type="text" placeholder="Estado Civil" required asp-for="EstadoCivil" />
+                            <input class="form-control mb-3" type="text" placeholder="Telefono" required asp-for="Telefono" />
+                            <input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Correo" />
+
+                            @*este campo password es para Usuarios*@
+                            <input class="form-control mb-3" type="password" placeholder="Ingresa una clave" required asp-for="@Password" />
+
+
                             <div class="d-grid gap-2 mb-3">
                                 <button class="btn btn-primary" type="submit">Registrate</button>
                             </div>
@@ -42,10 +55,10 @@
                                 </div>
                             }
                             <div class="text-center mt-3">
-                            ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion","Inicio")" class=" btn btn-secondary btn-sm"> Iniciar Sesion</a>
+                                ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion","Inicio")" class=" btn btn-secondary btn-sm"> Iniciar Sesion</a>
                             </div>
                         </form>
-                       
+
                     </div>
 
                 </div>
