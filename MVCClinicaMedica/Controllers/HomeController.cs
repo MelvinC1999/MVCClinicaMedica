@@ -26,25 +26,6 @@ namespace MVCClinicaMedica.Controllers
             return View();
         }
 
-        [AutorizarUsuario(1)] // Permitir idOperacion 1 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [AutorizarUsuario(2)] // Permitir idOperacion 1 y 2
-        public IActionResult Estadisticas()
-        {
-            return View();
-        }
-
-        [AutorizarUsuario(3)] // Permitir idOperacion 1, 2 y 3
-        public IActionResult Citas()
-        {
-            return View();
-        }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using MVCClinicaMedica.BussinesLogic;
 using MVCClinicaMedica.DBContext;
+using MVCClinicaMedica.Filtros;
 using MVCClinicaMedica.Models;
 
 namespace MVCClinicaMedica.Controllers
 {
+    [Authorize] //solo accede si el usuario esta autorizado
     public class FacturasController : Controller
     {
         FacturaBL srvFac;
@@ -23,6 +26,7 @@ namespace MVCClinicaMedica.Controllers
          {
              _dbContext = dbContext;
          }*/
+        [AutorizarUsuario(3)] // Permitir idOperacion 1, 2 y 3
         public IActionResult Factura()
         {
             //init();
@@ -52,6 +56,8 @@ namespace MVCClinicaMedica.Controllers
             ViewBag.Pacientes = pacientes;
             return View("Factura");
         }
+
+        [AutorizarUsuario(3)] // Permitir idOperacion 1, 2 y 3
         public IActionResult CFacturas(Factura factura)
         {
             List<Factura> factu = srvFac.FacturaEager().ToList();
