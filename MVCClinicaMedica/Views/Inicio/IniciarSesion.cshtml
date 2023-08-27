@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
 }
 
@@ -10,6 +10,23 @@
     <title>IniciarSesion</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Style.css" /> <!-- Enlace al archivo CSS externo -->
+    <style>
+        body {
+            background-image: url('/img/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.7); /* Fondo transparente */
+            backdrop-filter: blur(10px);
+        }
+    </style>
 </head>
 <body style="background-image: url('/img/background.jpg'); background-size: cover; background-repeat: no-repeat;">
     <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" style="color: hsl(218, 81%, 15%);">
@@ -23,6 +40,16 @@
                 <div class="card bg-glass">
                     <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5" style="color: hsl(218, 81%, 15%);">
                         <form asp-controller="Inicio" asp-action="IniciarSesion" method="post">
+                            <div class="form-outline mb-4">
+                                <select class="form-select form-select-lg mb-3" aria-label="Tipo de Usuario">
+                                    <option selected>Selecciona un tipo de usuario</option>
+                                    <option value="Usuario">Usuario</option>
+                                    <option value="Doctor">Doctor</option>
+                                    <option value="Administrador">Administrador</option>
+                                </select>
+                             
+                            </div>
+
                             <div class="form-outline mb-4">
                                 <input type="email" id="correo" name="correo" class="form-control" style="background-color: hsla(0, 0%, 100%, 0.9) !important; backdrop-filter: saturate(200%) blur(25px); color: hsl(218, 81%, 15%);" />
                                 <label class="form-label" for="correo" style="color: hsl(218, 81%, 50%);">Correo</label>
