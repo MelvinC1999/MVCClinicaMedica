@@ -25,6 +25,10 @@ public class MedicoBL
         }
         return listarMedicos;
     }
+    public List<String> ObtenerHorariosMedicos()
+    {
+        return new List<String> {"7:00-9:00", "9:00-11:00", "11:00-13:00", "14:00-16:00", "16:00-18:00" };
+    }
     /// <summary>
     /// Construcctor con parametro
     /// </summary>
@@ -100,6 +104,11 @@ public class MedicoBL
         repoRegistro.Add(registroMedico);
         repoRegistro.SaveChanges();
         return registroMedico;
+    }
+
+    public void EliminarMedico(Medico medico)
+    {
+        repoMedico.HardDelete(medico);
     }
 
 

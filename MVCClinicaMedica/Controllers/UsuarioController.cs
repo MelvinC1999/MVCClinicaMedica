@@ -23,6 +23,8 @@ namespace MVCClinicaMedica.Controllers
         RolBL rolBL = new RolBL(); // Instancia de RolBL
         RolOperacionBL rolOperacionBL = new RolOperacionBL(); // Instancia de RolOperacionBL
         TransactionScope scope; // Transacción
+        readonly MedicoBL medicoBL = new MedicoBL();
+        readonly EspecialidadBL especialidadBL = new EspecialidadBL();
 
         private readonly IUsuarioService _usuarioServicio; // Servicio de usuario
 
@@ -42,6 +44,8 @@ namespace MVCClinicaMedica.Controllers
         // Acción para la vista de registro
         public IActionResult Registrarse()
         {
+            ViewBag.Especialidades = especialidadBL.ObtenerListaEspecialidades();
+            ViewBag.Horarios = medicoBL.ObtenerHorariosMedicos();
             return View();
         }
 
@@ -74,6 +78,7 @@ namespace MVCClinicaMedica.Controllers
 
             var listadoRolOperaciones = rolOperacionBL.retornarRolOperacionesBL();
             ViewData["RolOperaciones"] = listadoRolOperaciones;
+
         }
 
         // Acción para la vista de creación de usuarios
@@ -121,44 +126,48 @@ namespace MVCClinicaMedica.Controllers
                 Text = p.idRol + " " + p.idOperacion
             }).ToList();
             ViewBag.ItemsRolOperaciones = itemsRolOperaciones;
+            ViewBag.Especialidades = especialidadBL.ObtenerListaEspecialidades();
         }
 
         // Acción para registrar un doctor
-        public async Task<IActionResult> RegistrarDoctor(Usuario modelo)
+        public async Task<IActionResult> RegistrarDoctor(UsuarioMedicoViewModel modeloUM)
         {
             try
             {
+                modeloUM.Usuario.Correo = modeloUM.Medico.Correo;
                 // Validar el formato del correo
-                if (!ValidadorCorreo.EsCorreoValido(modelo.Correo))
+                if (!ValidadorCorreo.EsCorreoValido(modeloUM.Usuario.Correo))
                 {
                     ViewData["Mensaje"] = "Correo inválido. Por favor, ingresa un correo válido.";
-                    return View("Registrarse", modelo);
+                    return View("Registrarse", modeloUM);
                 }
 
                 // Validar la contraseña
-                if (!ValidadorPassword.EsPasswordValido(modelo.Password))
+                if (!ValidadorPassword.EsPasswordValido(modeloUM.Usuario.Password))
                 {
                     ViewData["Mensaje"] = "Contraseña inválida. La contraseña debe tener al menos 8 caracteres.";
                     return View();
                 }
 
                 // Asignar directamente idRol = 2 (Doctor)
-                modelo.idRol = 2;
+                modeloUM.Usuario.idRol = 2;
 
-                modelo.Password = Utilidades.EncriptarClave(modelo.Password);
+                modeloUM.Usuario.Password = Utilidades.EncriptarClave(modeloUM.Usuario.Password);
 
-                Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modelo);
+                Usuario usuario_creado = await _usuarioServicio.SaveUsuario(modeloUM.Usuario);
+                medicoBL.CrearMedico(modeloUM.Medico);
 
                 if (usuario_creado.idUsuario > 0)
                     return RedirectToAction("Usuarios");
 
                 ViewData["Mensaje"] = "No se pudo crear el usuario";
-                return View("Usuarios", modelo); // Devuelve la vista con el mensaje
+                
+                return View("Usuarios", modeloUM); // Devuelve la vista con el mensaje
             }
             catch (Exception ex)
             {
                 ViewData["Mensaje"] = "Error al registrar el usuario: " + ex.Message;
-                return View("Usuarios", modelo); // Devuelve la vista con el mensaje
+                return View("Usuarios", modeloUM); // Devuelve la vista con el mensaje
             }
         }
 
@@ -223,10 +232,11 @@ namespace MVCClinicaMedica.Controllers
         }
 
         // Acción para eliminar un usuario
-        public IActionResult Eliminar(int id)
+        public IActionResult Eliminar(int idUsuario,int idMedico)
         {
-            Console.WriteLine("id eliminar: " + id);
-            usuarioBL.EliminarUsuarioDB(id);
+            Console.WriteLine("idUsuario eliminar: " + idUsuario);
+            usuarioBL.EliminarUsuarioDB(idUsuario);
+            //medicoBL.EliminarMedico(idMedico);
             usuarioBL.GuadarCambios();
             return RedirectToAction("Usuarios");
         }

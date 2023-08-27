@@ -8,9 +8,13 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http;
 using MVCClinicaMedica.Session;
+using Microsoft.AspNetCore.Authorization;
+using MVCClinicaMedica.Filtros;
 
 namespace MVCClinicaMedica.Controllers
+
 {
+    [Authorize]
     public class MedicoController : Controller
     {
         readonly CitasRepo citasRepo = new CitasRepo();
@@ -18,6 +22,7 @@ namespace MVCClinicaMedica.Controllers
         readonly EspecialidadBL especialidadBL = new EspecialidadBL();
 
         [HttpGet]
+        [AutorizarUsuario(2)]
         public ActionResult Login()
         {
             var loginViewModel = new LoginViewModel();

@@ -1,4 +1,4 @@
-﻿@model MVCClinicaMedica.Models.Usuario;
+﻿@model MVCClinicaMedica.Models.UsuarioMedicoViewModel;
 @{
     ViewData["Title"] = "Registro Usuario para Médico";
 }
@@ -41,13 +41,44 @@
                     <div class="card-body text-center">
                         <h2 class="card-title">Crear Doctor</h2>
                         <form asp-controller="Usuario" asp-action="RegistrarDoctor" method="post" class="d-flex flex-column">
+
                             <div class="mb-3">
-                                <!--<label for="correo" class="form-label">Correo</label>-->
-                                <input class="form-control" type="email" id="correo" placeholder="Correo" required asp-for="Correo" />
+                                <input class="form-control" type="text" id="nombre" placeholder="Nombre" required asp-for="@Model.Medico.Nombre" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="text" id="apellido" placeholder="Apellido" required asp-for="@Model.Medico.Apellido" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="number" id="telefono" placeholder="Teléfono" required asp-for="@Model.Medico.Telefono" />
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="email" id="correoMedico" placeholder="Correo" required asp-for="@Model.Medico.Correo" />
                             </div>
                             <div class="mb-3">
                                 <!--<label for="password" class="form-label">Contraseña</label>-->
-                                <input class="form-control" type="password" id="password" placeholder="Contraseña" required asp-for="Password" />
+                                <input class="form-control" type="password" id="password" placeholder="Contraseña" required asp-for="@Model.Usuario.Password" />
+                            </div>
+
+                            <div class="mb-3">
+                           
+                                @*<label for="horario" class="form-label">Especialidad</label>*@
+                                <select class="form-control" id="horario" required asp-for="@Model.Medico.Horario">
+                                    <option value="" disabled selected>Seleccione un horario</option>
+                                    @foreach (var horario in ViewBag.Horarios)
+                                    {
+                                        <option value="@horario">@horario</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                @*<label for="especialidad" class="form-label">Especialidad</label>*@
+                                <select class="form-control" id="especialidad" required asp-for="@Model.Medico.idEspecialidad">
+                                    <option value="" disabled selected>Seleccione una especialidad</option>
+                                    @foreach (var especialidad in ViewBag.Especialidades)
+                                    {
+                                        <option value="@especialidad.idEspecialidad">@especialidad.Descripcion</option>
+                                    }
+                                </select>
                             </div>
                             <div class="row justify-content-between">
                                 <div class="col-md-6 mb-3">
