@@ -127,10 +127,6 @@ namespace MVCClinicaMedica.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-
-
-
     }
 }
     

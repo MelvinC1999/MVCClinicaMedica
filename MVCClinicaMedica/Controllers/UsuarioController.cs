@@ -232,11 +232,10 @@ namespace MVCClinicaMedica.Controllers
         }
 
         // Acción para eliminar un usuario
-        public IActionResult Eliminar(int idUsuario,int idMedico)
+        public IActionResult Eliminar(int id)
         {
-            Console.WriteLine("idUsuario eliminar: " + idUsuario);
-            usuarioBL.EliminarUsuarioDB(idUsuario);
-            //medicoBL.EliminarMedico(idMedico);
+            Console.WriteLine("id eliminar: " + id);
+            usuarioBL.EliminarUsuarioDB(id);
             usuarioBL.GuadarCambios();
             return RedirectToAction("Usuarios");
         }

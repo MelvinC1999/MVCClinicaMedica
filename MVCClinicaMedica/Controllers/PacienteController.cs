@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
-using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.BusinessLogic;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Servicios.Contrato;

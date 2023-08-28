@@ -5,9 +5,9 @@ using MVCClinicaMedica.Repository.Servicios.Implementacion;
 using MVCClinicaMedica.Filtros; // Asegúrate de importar el namespace de los filtros
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using MVCClinicaMedica.BussinesLogic;
 using MVCClinicaMedica.Repository;
 using MVCClinicaMedica.Services;
+using MVCClinicaMedica.BusinessLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
