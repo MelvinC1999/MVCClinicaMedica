@@ -111,6 +111,8 @@ namespace MVCClinicaMedica.Controllers
                 Console.WriteLine("Ingresa al model valid"+ _cita.idPaciente);
                 var ced = pacienteBL.ObtenerListaPacientePorId(_cita.idPaciente);
                 var consu = cons.ObtenerConsultorioPorMed(_cita.idMedico);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Consultario: "+consu.idMedico);
                 string cedulla=ced.Cedula;
                 try
                 {
