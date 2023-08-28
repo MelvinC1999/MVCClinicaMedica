@@ -6,7 +6,7 @@
     ViewData["Title"] = "Crear Citas";
     var medicoslist = ViewBag.Medicos;
 }
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="contairner">
     <h3>
         Crear de Citas
@@ -122,6 +122,26 @@
                         });
                         $('#Medico').html(options);
                     });
+                });
+                //validar fechas
+                $(document).ready(function () {
+                    // Validar la fecha al cargar la página
+                    validateDate();
+
+                    // Validar la fecha cuando cambia el valor del campo
+                    $("#datepicker").change(function () {
+                        validateDate();
+                    });
+
+                    function validateDate() {
+                        var selectedDate = new Date($("#datepicker").val());
+                        var currentDate = new Date();
+
+                        if (selectedDate < currentDate) {
+                            $("#datepicker").val(""); // Limpiar el valor si es una fecha anterior
+                            alert("No se permiten fechas menores a la fecha actual.");
+                        }
+                    }
                 });
             </script>
         }

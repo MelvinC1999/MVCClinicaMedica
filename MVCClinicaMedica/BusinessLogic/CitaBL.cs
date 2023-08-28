@@ -46,15 +46,19 @@ public class CitaBL
     /// <returns></returns>
     public List<Cita> retornarCitasBL()
     {
+        DateTime fech = DateTime.Now;
         List<Cita> listarCitas = repoCita.GetAll().ToList();
+        List<Cita> citasFiltradas = listarCitas.Where(item => item.Fecha > fech).ToList();
         foreach (var item in listarCitas)
         {
-            Console.WriteLine("Id Cita: |" + item.idCita + "|" +
-                " Fecha Cita: |" + item.Fecha + "|" +
-                " Id Medico: |" + item.idMedico + "|" +
-                " Id Paciente: |" + item.idPaciente + "|");
+                Console.WriteLine("Id Cita: |" + item.idCita + "|" +
+                                " Fecha Cita: |" + item.Fecha + "|" +
+                                " Id Medico: |" + item.idMedico + "|" +
+                                " Id Paciente: |" + item.idPaciente + "|");
+                
+                
         }
-        return listarCitas;
+        return citasFiltradas;
     }
     /// <summary>
     /// Metodo que crea un cita en la base de datos cuando se le pasa
@@ -102,6 +106,5 @@ public class CitaBL
         Console.WriteLine("Guardado Positivamente :)");
     }
     ///***************************************************************************************************************
-
 
 }

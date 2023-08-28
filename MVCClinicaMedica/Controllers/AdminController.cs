@@ -64,6 +64,8 @@ namespace MVCClinicaMedica.Controllers
         public IActionResult CrearCita()
         {
             init2();
+
+
             return View();
         }
         public void init2()
