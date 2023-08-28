@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.BusinessLogic;
 using System.Text.Json.Serialization;
 
 namespace MVCClinicaMedica.Models
