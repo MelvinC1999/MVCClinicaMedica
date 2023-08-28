@@ -1,65 +1,111 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
 @model List<EmailDTO>
 
 @{
     ViewData["Title"] = "Rest Client Email";
 }
-<div class="contairner">
-    <h1>Configuracion de Notificaciones</h1>
-    <h3>
-        API Rest Client Email
-    </h3>
-    @* <h4>No hay como validar los datos por el modelo tipo Lista.</h4> *@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configuración de Notificaciones</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Style.css" /> <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="~/css/custom-style.css" />
+    <style>
+        body {
+            background-image: url('/img/doctor1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    <h2>@ViewBag.StatusCode</h2>
+        .custom-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(10px);
+            max-width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
 
-    <!--Aqui ponemos el controlador para el CLIENTE que consume nuestra API-->
-    @* <a asp-controller="ApiclienteEmail" asp-action="Get" class="btn btn-primary" width="10">Get</a> *@
+        .btn-custom {
+            background-color: #007BFF;
+            border-color: #007BFF;
+        }
 
-    @* <a asp-controller="ApiclienteEmail" asp-action="DesactivarEnvioEmails" class="btn btn-primary">Desactivar</a> *@
-    <br />
-    <!--Aqui debo encontrar talvez la manera de enviar de manera repetitiva a cada correo-->
-    <form method="post" asp-action="ActivarEnvioEmails">
-        @* <div class="form-group">
-            <label for="Para">Para:</label>
-            <input class="form-control" name="Para" />
-        </div> *@
-        <div class="form-group">
-            <label for="Asunto">Asunto:</label>
-            <input class="form-control" name="Asunto" />
-        </div>
-        <div class="form-group">
-            <label for="Contenido">Contenido:</label>
-           @*  <input class="form-control" name="Contenido" /> *@
-            <textarea class="form-control" name="Contenido" rows="6"></textarea>
-        </div>
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
 
-        <div class="text-center panel-body">
-            <button type="submit" class="btn btn-sm btn-primary">Enviar Email</button>
-        </div>
-    </form>
+        .form-control-custom {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+            color: hsl(218, 81%, 15%);
+        }
 
-    <table class="table table-sm table-striped table-bordered m-2">
-        <thead>
-            <tr>
-                <th>Asunto</th>
-                <th>Contenido</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        .form-label-custom {
+            color: hsl(218, 81%, 50%);
+        }
+
+        .custom-h1 {
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        .custom-h3 {
+            color: #bdc3c7;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center custom-h1 text-dark">Configuración de Notificaciones</h1>
+        <h3 class="text-center custom-h3 text-danger">API Rest Client Email</h3>
+        
+        <form method="post" asp-action="ActivarEnvioEmails" class="custom-card p-4">
+            <div class="form-group">
+                <label for="Asunto" class="form-label-custom">Asunto:</label>
+                <input class="form-control form-control-custom" name="Asunto" />
+            </div>
+            <div class="form-group">
+                <label for="Contenido" class="form-label-custom">Contenido:</label>
+                <textarea class="form-control form-control-custom custom-textarea" name="Contenido" rows="6"></textarea>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-custom btn-sm">Enviar Email</button>
+            </div>
+        </form>
+
+        <table class="table table-sm table-striped table-bordered table-dark mt-4">
+            <thead>
                 <tr>
-                    <td>@item.Asunto</td>
-                    <td>@item.Contenido</td>
+                    <th>Asunto</th>
+                    <th>Contenido</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Asunto</td>
+                        <td>@item.Contenido</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-</div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
