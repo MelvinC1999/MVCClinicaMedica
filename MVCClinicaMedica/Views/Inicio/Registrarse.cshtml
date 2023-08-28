@@ -65,6 +65,16 @@
                                </select>
                             <input class="form-control mb-3" type="text" placeholder="Telefono" required asp-for="Telefono" />
                             <input class="form-control mb-3" type="text" placeholder="Direccion" required asp-for="Direccion" />
+                            <input class="form-control mb-3" type="date" placeholder="FechaNacimiento" required asp-for="FechaNacimiento" />
+                            <input class="form-control mb-3" type="text" placeholder="Edad" required asp-for="Edad" />
+                            <select class="form-control mb-3" required asp-for="EstadoCivil">
+                                <option value="" disabled selected>Estado Civil</option>
+                                <option value="casado/a">casado/a</option>
+                                <option value="soltero/a">soltero/a</option>
+                                <option value="viudo/a">viudo/a</option>
+                            </select>
+                            <input class="form-control mb-3" type="text" placeholder="Telefono" required asp-for="Telefono" />
+                            <input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Correo" />
 
                             @*este campo password es para Usuarios*@
                             <input class="form-control mb-3" type="password" placeholder="Ingresa una clave" required asp-for="@Password" />
