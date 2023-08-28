@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using MVCClinicaMedica.BussinesLogic;
+using MVCClinicaMedica.BusinessLogic;
 using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Filtros;
 using MVCClinicaMedica.Models;

@@ -2,7 +2,7 @@
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Repository;
 
-namespace MVCClinicaMedica.BussinesLogic
+namespace MVCClinicaMedica.BusinessLogic
 {
     public class ClienteBL
     {
@@ -12,10 +12,10 @@ namespace MVCClinicaMedica.BussinesLogic
             IQueryable<Paciente> list = pacienteRepo.GetAll();
             return list;
         }
-        public ICollection<Paciente> BuscarporCedula (Paciente ced)
+        public ICollection<Paciente> BuscarporCedula(Paciente ced)
         {
             ICollection<Paciente> list = pacienteRepo.ConsultarPorCampo<Paciente>(c => c.Cedula.Equals(ced.Cedula));
-            return list;        
+            return list;
         }
         //public Paciente BuscarporCedulaCliente(Paciente ced)
         //{

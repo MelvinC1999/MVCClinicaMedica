@@ -3,7 +3,8 @@ using MVCClinicaMedica.DBContext;
 using MVCClinicaMedica.Models;
 using MVCClinicaMedica.Utilitario;
 using MVCClinicaMedica.Repository;
-namespace MVCClinicaMedica.BussinesLogic
+
+namespace MVCClinicaMedica.BusinessLogic
 {
     public class FacturaBL
     {
@@ -13,7 +14,7 @@ namespace MVCClinicaMedica.BussinesLogic
             facturaRepo.Add(nuevaFactura);
             facturaRepo.SaveChanges();
         }
-        public List<Factura> FacturaEager() 
+        public List<Factura> FacturaEager()
         {
             IQueryable<Factura> list = facturaRepo.todosEager<Factura>(c => c.Consultorios, c => c.Citas, c => c.Citas.Medicos, c => c.Pacientes);
             foreach (var item in list)
@@ -43,7 +44,7 @@ namespace MVCClinicaMedica.BussinesLogic
                     break;
                 }
             }
-            Console.WriteLine(">Eliminar IDCITA: "+ idCita + " = "+facturaEncontrada.idCita);
+            Console.WriteLine(">Eliminar IDCITA: " + idCita + " = " + facturaEncontrada.idCita);
             return facturaEncontrada;
         }
     }

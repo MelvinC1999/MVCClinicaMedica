@@ -92,12 +92,9 @@ namespace MVCClinicaMedica.BusinessLogic
         // Método para eliminar un usuario de la base de datos
         public void EliminarUsuarioDB(int id)
         {
-            if (true) // ¡Nota! Aquí debería haber una validación real
-            {
                 usuario = repoUsuario.Get(id);
                 repoUsuario.HardDelete(usuario);
                 Console.WriteLine("Usuario: |" + usuario.idUsuario + "| eliminado correctamente.");
-            }
         }
 
         // Método para guardar los cambios en la base de datos
