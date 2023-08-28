@@ -30,5 +30,21 @@ namespace MVCClinicaMedica.BussinesLogic
             facturaRepo.HardDelete(factu);
             facturaRepo.SaveChanges();
         }
+        public Factura RetornarFacturaConIdCita(int idCita)
+        {
+            List<Factura> listFacturas = facturaRepo.GetAll().ToList();
+            Factura facturaEncontrada = null;
+
+            for (int i = 0; i < listFacturas.Count; i++)
+            {
+                if (listFacturas[i].idCita == idCita)
+                {
+                    facturaEncontrada = listFacturas[i];
+                    break;
+                }
+            }
+            Console.WriteLine(">Eliminar IDCITA: "+ idCita + " = "+facturaEncontrada.idCita);
+            return facturaEncontrada;
+        }
     }
 }

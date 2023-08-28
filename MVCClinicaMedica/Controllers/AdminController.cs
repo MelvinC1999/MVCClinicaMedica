@@ -20,6 +20,7 @@ namespace MVCClinicaMedica.Controllers
         PacienteBL pacienteBL = new PacienteBL();
         TipoPagoBL pagoBL = new TipoPagoBL();
         ConsultorioBL cons = new ConsultorioBL();
+        FacturaBL facturaBL = new FacturaBL();
         TransactionScope scope;
 
         [AutorizarUsuario(3)]
@@ -208,6 +209,13 @@ namespace MVCClinicaMedica.Controllers
         public IActionResult EliminarCita(int id)
         {
             Console.WriteLine("id eliminar: "+ id);
+            ///recuperamos la factura 
+            var factAeliminar = facturaBL.RetornarFacturaConIdCita(id);
+            ///Primero eliminamos la factura porque nos va a dar error ya que necesita el id de la cita para existit la
+            ///factura
+            facturaBL.EliminarID(factAeliminar.idFactura);
+            ///luego una vesz eliminada la factura se procede a borrar la cita
+            
             citaBL.EliminarCitaDB(id);
             citaBL.GuadarCambios();
             return RedirectToAction("Citas");
