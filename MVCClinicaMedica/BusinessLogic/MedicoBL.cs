@@ -27,7 +27,7 @@ public class MedicoBL
     }
     public List<String> ObtenerHorariosMedicos()
     {
-        return new List<String> {"7:00-9:00", "9:00-11:00", "11:00-13:00", "14:00-16:00", "16:00-18:00" };
+        return new List<String> { "9 AM - 5 PM", "10 AM - 6 PM", "8 AM - 4 PM" };
     }
     /// <summary>
     /// Construcctor con parametro

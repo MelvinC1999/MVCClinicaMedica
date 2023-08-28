@@ -61,7 +61,6 @@
 
                             <div class="mb-3">
                            
-                                @*<label for="horario" class="form-label">Especialidad</label>*@
                                 <select class="form-control" id="horario" required asp-for="@Model.Medico.Horario">
                                     <option value="" disabled selected>Seleccione un horario</option>
                                     @foreach (var horario in ViewBag.Horarios)
