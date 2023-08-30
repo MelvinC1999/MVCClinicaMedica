@@ -1,4 +1,4 @@
-﻿@model MVCClinicaMedica.Models.Paciente;
+@model MVCClinicaMedica.Models.Paciente;
 @{
     Layout = null;
     var Password = (Usuario)ViewData["contrasena"];
@@ -31,16 +31,44 @@
                             <input class="form-control mb-3" type="text" placeholder="Nombre" required asp-for="Nombre" />
                             <input class="form-control mb-3" type="text" placeholder="Apellido" required asp-for="Apellido" />
                             <input class="form-control mb-3" type="text" placeholder="Cedula" required asp-for="Cedula" />
-                            <input class="form-control mb-3" type="text" placeholder="Direccion" required asp-for="Direccion" />
-                            <input class="form-control mb-3" type="date" placeholder="FechaNacimiento" required asp-for="FechaNacimiento" />
-                            <input class="form-control mb-3" type="text" placeholder="Edad" required asp-for="Edad" />
-                            <input class="form-control mb-3" type="text" placeholder="Estado Civil" required asp-for="EstadoCivil" />
-                            <input class="form-control mb-3" type="text" placeholder="Telefono" required asp-for="Telefono" />
                             <input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Correo" />
+                            <input id="FechaNacimiento" class="form-control mb-3" type="date" placeholder="Fecha de Nacimiento" required asp-for="FechaNacimiento" />
+                            @*                             Se setea la edad dada la fecha de nacimiento anterior    *@
+                            <div class="input-group mb-3">
+                                <input id="Edad" class="form-control" type="text" placeholder="Edad" readonly asp-for="Edad" />
+                                <span class="input-group-text">años</span>
+                            </div>
+
+                            @*                             javascript para calcular la edad actual
+                            *@                           <script>
+                                                             document.getElementById("FechaNacimiento").addEventListener("change", function () {
+                                                                 var fechaNacimiento = new Date(this.value);
+                                                                 var fechaActual = new Date();
+                                                                 var edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+                                                                 // Ajustar la edad si aún no ha llegado el cumpleaños de este año
+                                                                 if (fechaNacimiento.getMonth() > fechaActual.getMonth() ||
+                                                                     (fechaNacimiento.getMonth() === fechaActual.getMonth() && fechaNacimiento.getDate() > fechaActual.getDate())) {
+                                                                     edad--;
+                                                                 }
+
+                                                                 document.getElementById("Edad").value = edad;
+                                                             });
+                            </script>
+
+                            @*                            para elegir las opciones de estado civil solo las dadas
+                            *@                            <select class="form-control mb-3" asp-for="EstadoCivil" required>
+                                <option value="">Selecciona estado civil</option>
+                                <option value="Soltero/a">Soltero/a</option>
+                                <option value="Casado/a">Casado/a</option>
+                                <option value="Viudo/a">Viudo/a</option>
+                                <option value="Divorciado/a">Divorciado/a</option>
+                            </select>
+                            <input class="form-control mb-3" type="text" placeholder="Telefono" required asp-for="Telefono" />
+                            <input class="form-control mb-3" type="text" placeholder="Direccion" required asp-for="Direccion" />
 
                             @*este campo password es para Usuarios*@
                             <input class="form-control mb-3" type="password" placeholder="Ingresa una clave" required asp-for="@Password" />
-
 
                             <div class="d-grid gap-2 mb-3">
                                 <button class="btn btn-primary" type="submit">Registrate</button>
